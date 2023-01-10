@@ -1,24 +1,26 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
-import { useState, useContext } from "react";
-import Joi from "joi-browser";
-import CarparkContext from "../Context/CarparkContext";
+import { useState } from 'react';
+import Joi from 'joi-browser';
 
 function Form({ getUserData }) {
+  // State for form handler to receive user data inputs
   const [user, setUser] = useState({
-    name: "",
-    email: "",
+    name: '',
+    email: '',
   });
   const [error, setError] = useState({});
 
   // Redirect
   const navigate = useNavigate();
 
+  // Joi Schema
   const schema = {
     name: Joi.string().min(1).max(20).required(),
     email: Joi.string().email().required(),
   };
 
+  // Handler onChange for User Form
   const handlerOnChange = (event) => {
     const { name, value } = event.target;
     const errorMessage = validate(event);
@@ -37,6 +39,7 @@ function Form({ getUserData }) {
     setError(errorData);
   };
 
+  // Joi Validation
   const validate = (event) => {
     const { name, value } = event.target;
 
@@ -49,13 +52,14 @@ function Form({ getUserData }) {
     return error ? error.details[0].message : null;
   };
 
+  // Submit Form
   const handlerOnSubmit = (event) => {
     event.preventDefault();
     const result = Joi.validate(user, schema, { abortEarly: false });
     const { error } = result;
     if (!error) {
       getUserData(user);
-      navigate("/search");
+      navigate('/search');
       return user;
     } else {
       const errorData = {};
@@ -71,27 +75,40 @@ function Form({ getUserData }) {
   };
 
   return (
-    <div>
-      <h2>Form</h2>
+    <div className="p-16 shadow-xl rounded-lg">
+      <h2 className="font-bold text-2xl mb-4">HDB Carpark App</h2>
       <form onSubmit={handlerOnSubmit}>
-        <label>Name:</label>
-        <input
-          type="text"
-          name="name"
-          placeholder="Enter name"
-          onChange={handlerOnChange}
-        />
-        <br />
-        <label>Email:</label>
-        <input
-          type="email"
-          name="email"
-          placeholder="Enter email address"
-          onChange={handlerOnChange}
-        />
-        <br />
-        <br />
-        <button>Submit</button>
+        {/* NAME INPUT */}
+        <div className="flex flex-col items-baseline gap-2">
+          <label className="font-bold">Name:</label>
+          <input
+            type="text"
+            value={user.name}
+            name="name"
+            placeholder="Enter name"
+            className="input input-bordered input-primary w-[300px] max-w-xs"
+            onChange={handlerOnChange}
+          />
+        </div>
+        {/* EMAIL INPUT */}
+        <div className="flex flex-col items-baseline gap-2 mt-4">
+          <label className="font-bold">Email:</label>
+          <input
+            type="email"
+            value={user.email}
+            name="email"
+            placeholder="Enter email"
+            className="input input-bordered input-primary w-[300px] max-w-xs"
+            onChange={handlerOnChange}
+          />
+        </div>
+
+        <button
+          type="submit"
+          className="btn btn-info mt-8 w-[100%] hover:bg-blue-500 hover:text-white"
+        >
+          Submit
+        </button>
       </form>
     </div>
   );
