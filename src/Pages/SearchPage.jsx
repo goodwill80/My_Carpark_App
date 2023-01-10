@@ -39,7 +39,7 @@ function SearchPage() {
   const searchCp = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}${query}+singapore&key=AIzaSyC6nZH6flUP0rUUJpy9mtaJE3LLxwAA8wo`
+        `${BASE_URL}${query}+singapore&key=${process.env.REACT_APP_API_KEY}`
       );
       const coords = response.data.results[0]?.geometry?.location;
       if (coords.hasOwnProperty('lat')) {
@@ -97,9 +97,11 @@ function SearchPage() {
             >
               Generate nearest Carparks
             </button>
+
             <div className="flex">
               <h1 className="font-bold text-lg">OR</h1>
             </div>
+
             {/* 2. USER TYPE IN SEARCH FIELD and SEARCH for CP */}
             <h1 className="text-green-700 font-semibold">
               Search other locations!
