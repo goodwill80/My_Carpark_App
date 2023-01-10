@@ -63,7 +63,7 @@ function SearchPage() {
   return (
     <>
       {isLoading ? (
-        <div className="h-[100vh] flex justify-between items-center">
+        <div className="h-[100vh] flex justify-center items-center">
           <img className="h-[250px]" src={Loading_icon} alt="Loading_icon" />
         </div>
       ) : (
