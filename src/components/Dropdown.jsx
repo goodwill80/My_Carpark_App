@@ -9,10 +9,12 @@ function Dropdown({ options, value, onChange }) {
     const handler = (e) => {
       if (!divEl.current) {
         return;
+        //if not divElement
       }
       if (!divEl.current.contains(e.target)) {
         setIsOpen(false);
       }
+      //close dropdown list if user did not select
     };
     document.addEventListener("click", handler, true);
 
@@ -45,6 +47,7 @@ function Dropdown({ options, value, onChange }) {
   return (
     <div ref={divEl}>
       <div onClick={handleClick}>{value?.label || "Select Filter"}</div>
+      {/* if no option selected set "Select Filter" */}
       {isOpen && <div>{renderedOptions}</div>}
     </div>
   );

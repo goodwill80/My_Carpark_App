@@ -61,13 +61,14 @@ function SearchPage() {
     }
   };
 
+  //Dropdown List
   const [selected, setSelected] = useState(null);
 
   const handleSelect = (option) => {
     setSelected(option);
   };
 
-  //Dropdown List (filter options)
+  // filter options
   const options = [
     { label: "Available", value: "lots_available" },
     { label: "Free Parking", value: "free_parking" },
