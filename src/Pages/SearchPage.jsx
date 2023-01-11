@@ -1,16 +1,17 @@
-import { useContext, useState } from 'react';
-import { CarparkContext } from '../Context/CarparkContext';
-import Loading_icon from '../images/spinner.gif';
-import * as geolib from 'geolib';
-import axios from 'axios';
+import { useContext, useState } from "react";
+import { CarparkContext } from "../Context/CarparkContext";
+import Loading_icon from "../images/spinner.gif";
+import * as geolib from "geolib";
+import axios from "axios";
+import Dropdown from "../components/Dropdown";
 
-const BASE_URL = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
+const BASE_URL = "https://maps.googleapis.com/maps/api/geocode/json?address=";
 
 function SearchPage() {
   const { user, isLoading, carparks } = useContext(CarparkContext); // states from context
   const [results, setResults] = useState([]); // New list of carparks with distances
   const [preferredDist, setPreferredDist] = useState(1); // User's choice of distance radius
-  const [query, setQuery] = useState(''); // Search field query entered by user
+  const [query, setQuery] = useState(""); // Search field query entered by user
 
   // Load Carparkss near User's position when btn clicked
   const loadCarParks = () => {
@@ -42,7 +43,7 @@ function SearchPage() {
         `${BASE_URL}${query}+singapore&key=${process.env.REACT_APP_API_KEY}`
       );
       const coords = response.data.results[0]?.geometry?.location;
-      if (coords.hasOwnProperty('lat')) {
+      if (coords.hasOwnProperty("lat")) {
         const carparkList = carparks.map((item) => {
           const dist =
             geolib.getDistance(coords, { lat: item.lat, lon: item.lon }) / 1000;
@@ -53,12 +54,27 @@ function SearchPage() {
         );
         console.log(filterCarparksByDist);
         setResults(() => [...filterCarparksByDist]);
-        setQuery('');
+        setQuery("");
       }
     } catch (e) {
       console.log(e.message);
     }
   };
+
+  const [selected, setSelected] = useState(null);
+
+  const handleSelect = (option) => {
+    setSelected(option);
+  };
+
+  //Dropdown List (filter options)
+  const options = [
+    { label: "Available", value: "lots_available" },
+    { label: "Free Parking", value: "free_parking" },
+    { label: "Distance", value: "distance" },
+    { label: "Night Parking", value: "night_parking" },
+    { label: "Car Park Type", value: "car_park_type" },
+  ];
 
   return (
     <>
@@ -72,7 +88,7 @@ function SearchPage() {
             <div className="flex flex-col justify-center items-center">
               <h1 className="text-4xl font-bold mb-4">Search for Carparks</h1>
               <p>
-                Hello,{' '}
+                Hello,{" "}
                 <span className="font-bold text-xl text-orange-400">
                   {user.name}
                 </span>
@@ -137,6 +153,11 @@ function SearchPage() {
               Here are where the search filters are i.e. distance radius, free
               parking...
             </div>
+            <Dropdown
+              options={options}
+              value={selected}
+              onChange={handleSelect}
+            />
           </div>
         )
       )}

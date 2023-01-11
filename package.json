@@ -10,6 +10,7 @@
     "daisyui": "^2.46.1",
     "geolib": "^3.3.3",
     "joi-browser": "^13.4.0",
+    "multiselect-react-dropdown": "^2.0.25",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.6.2",
