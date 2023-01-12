@@ -4,6 +4,7 @@ import Loading_icon from "../images/spinner.gif";
 import * as geolib from "geolib";
 import axios from "axios";
 import Dropdown from "../components/Dropdown";
+import Checkbox from "../components/Checkbox.jsx";
 
 const BASE_URL = "https://maps.googleapis.com/maps/api/geocode/json?address=";
 
@@ -64,17 +65,24 @@ function SearchPage() {
   //Dropdown List
   const [selected, setSelected] = useState(null);
 
+  //setState for filtering distance
   const handleSelect = (option) => {
     setSelected(option);
+    setPreferredDist(option.value);
   };
 
   // filter options
   const options = [
-    { label: "Available", value: "lots_available" },
-    { label: "Free Parking", value: "free_parking" },
-    { label: "Distance", value: "distance" },
-    { label: "Night Parking", value: "night_parking" },
-    { label: "Car Park Type", value: "car_park_type" },
+    { label: "Within 1 KM", value: 1 },
+    { label: "Within 2 KM", value: 2 },
+    { label: "Within 3 KM", value: 3 },
+    { label: "Within 4 KM", value: 4 },
+    { label: "Within 5 KM", value: 5 },
+    { label: "Within 6 KM", value: 6 },
+    { label: "Within 7 KM", value: 7 },
+    { label: "Within 8 KM", value: 8 },
+    { label: "Within 9 KM", value: 9 },
+    { label: "Within 10 KM", value: 10 },
   ];
 
   return (
@@ -159,6 +167,8 @@ function SearchPage() {
               value={selected}
               onChange={handleSelect}
             />
+            <Checkbox label="Free Parking" />
+            <Checkbox label="Night Parking" />
           </div>
         )
       )}

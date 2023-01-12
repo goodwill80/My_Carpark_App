@@ -46,8 +46,10 @@ function Dropdown({ options, value, onChange }) {
 
   return (
     <div ref={divEl}>
-      <div onClick={handleClick}>{value?.label || "Select Filter"}</div>
-      {/* if no option selected set "Select Filter" */}
+      <div onClick={handleClick}>
+        {value?.label || "Select Preferred Distance"}
+      </div>
+      {/* if no option selected set "Select Preferred Distance" */}
       {isOpen && <div>{renderedOptions}</div>}
     </div>
   );
