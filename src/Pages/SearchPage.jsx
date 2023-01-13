@@ -5,6 +5,7 @@ import * as geolib from "geolib";
 import axios from "axios";
 import Dropdown from "../components/Dropdown";
 import Checkbox from "../components/Checkbox.jsx";
+import Table from "../components/Table";
 
 const BASE_URL = "https://maps.googleapis.com/maps/api/geocode/json?address=";
 
@@ -13,6 +14,11 @@ function SearchPage() {
   const [results, setResults] = useState([]); // New list of carparks with distances
   const [preferredDist, setPreferredDist] = useState(1); // User's choice of distance radius
   const [query, setQuery] = useState(""); // Search field query entered by user
+
+
+
+  
+
 
   // Load Carparkss near User's position when btn clicked
   const loadCarParks = () => {
@@ -53,6 +59,7 @@ function SearchPage() {
         const filterCarparksByDist = carparkList.filter(
           (item) => item.distance <= preferredDist
         );
+        
         console.log(filterCarparksByDist);
         setResults(() => [...filterCarparksByDist]);
         setQuery("");
@@ -169,6 +176,7 @@ function SearchPage() {
             />
             <Checkbox label="Free Parking" />
             <Checkbox label="Night Parking" />
+            <Table results={results} />
           </div>
         )
       )}
