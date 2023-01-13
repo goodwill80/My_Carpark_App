@@ -15,6 +15,20 @@ function SearchPage() {
   const [preferredDist, setPreferredDist] = useState(1); // User's choice of distance radius
   const [query, setQuery] = useState(""); // Search field query entered by user
 
+  // const combinedFilter = (resultsArr) => {
+  //   const filter1 =
+  //     preferredDist !== ""
+  //       ? resultsArr.filter((item) => item.lots_available === "Yes")
+  //       : resultsArr;
+  //   const filter2 = FreeParking
+  //     ? filter1.filter((item) => item.free_parking !== "No")
+  //     : filter1;
+  //   const filter3 = NightParking
+  //     ? filter2.filter((item) => item.night_parking !== "No")
+  //     : filter2;
+  //   return filter3;
+  // };
+
   // Load Carparkss near User's position when btn clicked
   const loadCarParks = () => {
     const userCoords = user.coordinates;
@@ -90,10 +104,6 @@ function SearchPage() {
     { label: "Within 9 KM", value: "9" },
     { label: "Within 10 KM", value: "10" },
   ];
-
-  // const [isChecked, setIsChecked] = useState(false);
-
-  // const handleChange = (value) => setIsChecked((prev) => !prev);
 
   return (
     <>
@@ -177,16 +187,8 @@ function SearchPage() {
               value={selected}
               onChange={handleSelect}
             />
-            <Checkbox
-              label="Free Parking"
-              // value={isChecked}
-              // onChange={handleChange}
-            />
-            <Checkbox
-              label="Night Parking"
-              // value={isChecked}
-              // onChange={handleChange}
-            />
+            <Checkbox label="Free Parking" />
+            <Checkbox label="Night Parking" />
             <Table results={results} />
           </div>
         )

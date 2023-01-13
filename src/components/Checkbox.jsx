@@ -7,9 +7,9 @@ function Checkbox({ label }) {
     <div>
       <label>
         <input
-          onChange={() => setIsChecked((prev) => !prev)}
           type="checkbox"
-          value={isChecked}
+          checked={isChecked}
+          onChange={() => setIsChecked((prev) => !prev)}
         />
         <span>{label}</span>
       </label>
