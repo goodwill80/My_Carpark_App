@@ -15,11 +15,6 @@ function SearchPage() {
   const [preferredDist, setPreferredDist] = useState(1); // User's choice of distance radius
   const [query, setQuery] = useState(""); // Search field query entered by user
 
-
-
-  
-
-
   // Load Carparkss near User's position when btn clicked
   const loadCarParks = () => {
     const userCoords = user.coordinates;
@@ -34,8 +29,10 @@ function SearchPage() {
     const filteredList = userCarparks
       .filter((item) => item.distance < preferredDist)
       .sort((a, b) => a.distance - b.distance);
+    // const filteredPreference = combinedFilter(filteredPreference)
     console.log(filteredList);
     setResults(filteredList);
+    // setResults(filteredPreference);
   };
 
   // Handler for search Form
@@ -57,9 +54,11 @@ function SearchPage() {
           return { ...item, distance: dist };
         });
         const filterCarparksByDist = carparkList.filter(
-          (item) => item.distance <= preferredDist
+          (item) =>
+            item.distance <=
+            preferredDist.sort((a, b) => a.distance - b.distance)
         );
-        
+
         console.log(filterCarparksByDist);
         setResults(() => [...filterCarparksByDist]);
         setQuery("");
@@ -80,16 +79,16 @@ function SearchPage() {
 
   // filter options
   const options = [
-    { label: "Within 1 KM", value: 1 },
-    { label: "Within 2 KM", value: 2 },
-    { label: "Within 3 KM", value: 3 },
-    { label: "Within 4 KM", value: 4 },
-    { label: "Within 5 KM", value: 5 },
-    { label: "Within 6 KM", value: 6 },
-    { label: "Within 7 KM", value: 7 },
-    { label: "Within 8 KM", value: 8 },
-    { label: "Within 9 KM", value: 9 },
-    { label: "Within 10 KM", value: 10 },
+    { label: "Within 1 KM", value: "1" },
+    { label: "Within 2 KM", value: "2" },
+    { label: "Within 3 KM", value: "3" },
+    { label: "Within 4 KM", value: "4" },
+    { label: "Within 5 KM", value: "5" },
+    { label: "Within 6 KM", value: "6" },
+    { label: "Within 7 KM", value: "7" },
+    { label: "Within 8 KM", value: "8" },
+    { label: "Within 9 KM", value: "9" },
+    { label: "Within 10 KM", value: "10" },
   ];
 
   return (

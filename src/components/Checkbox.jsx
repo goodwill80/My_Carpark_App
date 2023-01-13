@@ -9,7 +9,7 @@ function Checkbox({ label }) {
         <input
           onChange={() => setIsChecked((prev) => !prev)}
           type="checkbox"
-          checked={isChecked}
+          value={isChecked}
         />
         <span>{label}</span>
       </label>
