@@ -10,7 +10,9 @@ function Table({ results }) {
             <th onClick='sortTable(1)'>Address</th>
             <th>Distance</th>
             <th>Lots available</th>
+            <th>Total lots</th>
             <th>Last updated</th>
+            <th></th>
             <th>Free parking</th>
             <th>Night parking</th>
           </tr>
@@ -22,13 +24,15 @@ function Table({ results }) {
                 <td>{item.carpark_number}</td>
                 <td>{item.address}</td>
                 <td>{item.distance} KM</td>
-                {/* <td>{item.carpark_info.lots_available}</td> */}
-                {item.carpark_info.map((item2, j) => (
+                <td>{item.carpark_info[0].lots_available}</td>
+                <td>{item.carpark_info[0].total_lots}</td>
+                {/* {item.carpark_info.map((item2, j) => (
                   <tr key={j}>
                     <td>{item2.lots_available}</td>
                   </tr>
-                ))}
-                <td>{item.update_datetime}</td>
+                ))} */}
+                <td>{item.update_datetime.substring(0,10)}</td>
+                <td>{item.update_datetime.substring(11,19)}</td>
                 <td>{item.free_parking}</td>
                 <td>{item.night_parking}</td>
               </tr>

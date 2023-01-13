@@ -49,9 +49,10 @@ function SearchPage() {
             geolib.getDistance(coords, { lat: item.lat, lon: item.lon }) / 1000;
           return { ...item, distance: dist };
         });
-        const filterCarparksByDist = carparkList.filter(
-          (item) => item.distance <= preferredDist
-        );
+        const filterCarparksByDist = carparkList
+          .filter((item) => item.distance < preferredDist)
+          .sort((a, b) => a.distance - b.distance);
+        
         console.log(filterCarparksByDist);
         setResults(() => [...filterCarparksByDist]);
         setQuery('');
