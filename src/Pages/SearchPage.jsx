@@ -91,6 +91,10 @@ function SearchPage() {
     { label: "Within 10 KM", value: "10" },
   ];
 
+  // const [isChecked, setIsChecked] = useState(false);
+
+  // const handleChange = (value) => setIsChecked((prev) => !prev);
+
   return (
     <>
       {isLoading ? (
@@ -173,8 +177,16 @@ function SearchPage() {
               value={selected}
               onChange={handleSelect}
             />
-            <Checkbox label="Free Parking" />
-            <Checkbox label="Night Parking" />
+            <Checkbox
+              label="Free Parking"
+              // value={isChecked}
+              // onChange={handleChange}
+            />
+            <Checkbox
+              label="Night Parking"
+              // value={isChecked}
+              // onChange={handleChange}
+            />
             <Table results={results} />
           </div>
         )
