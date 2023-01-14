@@ -15,7 +15,6 @@ function SearchPage() {
   // Load Carparkss near User's position when btn clicked
   const loadCarParks = () => {
     const userCoords = user.coordinates;
-    console.log(userCoords);
     // Loop all car parks and calculate dist
     const userCarparks = carparks.map((item) => {
       const distance =
@@ -26,6 +25,7 @@ function SearchPage() {
     const filteredList = userCarparks
       .filter((item) => item.distance < preferredDist)
       .sort((a, b) => a.distance - b.distance);
+
     console.log(filteredList);
     setResults(filteredList);
   };
@@ -38,19 +38,22 @@ function SearchPage() {
   // Load Carparks based on user search
   const searchCp = async () => {
     try {
+      // get coordinates from API {lat, lon} based on query typed in search field
       const response = await axios.get(
         `${BASE_URL}${query}+singapore&key=${process.env.REACT_APP_API_KEY}`
       );
       const coords = response.data.results[0]?.geometry?.location;
+      // If API OBJ has a property named 'lat - Loop all CPs, cal dist and add into ea Obj
       if (coords.hasOwnProperty('lat')) {
         const carparkList = carparks.map((item) => {
           const dist =
             geolib.getDistance(coords, { lat: item.lat, lon: item.lon }) / 1000;
           return { ...item, distance: dist };
         });
-        const filterCarparksByDist = carparkList.filter(
-          (item) => item.distance <= preferredDist
-        );
+        // Filter CPs by distance
+        const filterCarparksByDist = carparkList
+          .filter((item) => item.distance <= preferredDist)
+          .sort((a, b) => a.distance - b.distance);
         console.log(filterCarparksByDist);
         setResults(() => [...filterCarparksByDist]);
         setQuery('');
@@ -70,68 +73,74 @@ function SearchPage() {
         user.name && (
           <div className="min-h-[100vh] h-auto flex flex-col justify-start items-center px-24 gap-4 mt-12">
             <div className="flex flex-col justify-center items-center">
-              <h1 className="text-4xl font-bold mb-4">Search for Carparks</h1>
-              <p>
+              {/* <h1 className="text-4xl font-bold mb-4">Search for Carparks</h1> */}
+              <h1 className="text-4xl mb-6">
                 Hello,{' '}
-                <span className="font-bold text-xl text-orange-400">
+                <span className="font-bold text-4xl text-green-500">
                   {user.name}
                 </span>
                 !
-              </p>
+              </h1>
 
               <p className="font-semibold">We have found your location at</p>
-              <p className="text-blue-400 font-bold">{user.location}</p>
+              <p className="text-green-500 font-bold">{user.location}</p>
             </div>
             <div>
-              <h1 className="text-2xl text-red-400 font-semibold">
+              <h1 className="text-2xl text-orange-400 font-semibold">
                 What would you like to do today?
               </h1>
             </div>
-            {/* 1. USER SERACH CP FROM OWN LOCATION */}
-            <h1 className="text-green-700 font-semibold">
-              Find Carpark near you!
-            </h1>
-            <button
-              className="btn btn-success btn-outline btn-sm"
-              onClick={loadCarParks}
-            >
-              Generate nearest Carparks
-            </button>
-
-            <div className="flex">
-              <h1 className="font-bold text-lg">OR</h1>
-            </div>
-
-            {/* 2. USER TYPE IN SEARCH FIELD and SEARCH for CP */}
-            <h1 className="text-green-700 font-semibold">
-              Search other locations!
-            </h1>
-            {/* Search Form Input field */}
-            <div className="input-group flex justify-center">
-              <input
-                name={query}
-                value={query}
-                onChange={searchHandler}
-                type="text"
-                placeholder="Type in steet name…"
-                className="input input-bordered"
-              />
-              <button onClick={searchCp} className="btn btn-success">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-6 w-6"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
+            <div className="flex justify-center items-baseline gap-6">
+              {/* 1. USER SERACH CP FROM OWN LOCATION */}
+              <div className="flex flex-col justify-center items-center gap-2">
+                <h1 className="text-green-700 font-semibold">
+                  Find carparks near you!
+                </h1>
+                <button
+                  className="btn btn-success btn-outline btn-sm h-[50px] w-[265px]"
+                  onClick={loadCarParks}
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  Generate nearest Carparks
+                </button>
+              </div>
+
+              <div className="flex flex-col justify-center items-center">
+                <h1 className="font-bold text-lg">OR</h1>
+              </div>
+
+              {/* 2. USER TYPE IN SEARCH FIELD and SEARCH for CP */}
+              <div className="flex flex-col justify-center items-center gap-2">
+                <h1 className="text-green-700 font-semibold">
+                  Search other locations!
+                </h1>
+                {/* Search Form Input field */}
+                <div className="input-group flex justify-center">
+                  <input
+                    name={query}
+                    value={query}
+                    onChange={searchHandler}
+                    type="text"
+                    placeholder="Type in steet name…"
+                    className="input input-bordered"
                   />
-                </svg>
-              </button>
+                  <button onClick={searchCp} className="btn btn-success">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-6 w-6"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+              </div>
             </div>
             <div className="p-4 border border-red-400 h-[100px] w-[500px] flex justify-center items-center">
               Here are where the search filters are i.e. distance radius, free
@@ -145,3 +154,5 @@ function SearchPage() {
 }
 
 export default SearchPage;
+
+
