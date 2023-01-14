@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { CarparkContext } from '../Context/CarparkContext';
 import Loading_icon from '../images/spinner.gif';
 import * as geolib from 'geolib';
@@ -12,6 +12,12 @@ function SearchPage() {
   const [results, setResults] = useState([]); // New list of carparks with distances
   const [preferredDist, setPreferredDist] = useState(1); // User's choice of distance radius
   const [query, setQuery] = useState(''); // Search field query entered by user
+
+  const [ copyArray, setCopyArray] = useState([]);
+
+  useEffect(()=> {
+    setCopyArray(results);
+  }, [results]);
 
   // Load Carparkss near User's position when btn clicked
   const loadCarParks = () => {
@@ -141,7 +147,7 @@ function SearchPage() {
               Here are where the search filters are i.e. distance radius, free
               parking...
             </div>
-            <Table results={results}/>
+            <Table results={results} copyArray={copyArray} setCopyArray={setCopyArray}/>
           </div>
         )
       )}
