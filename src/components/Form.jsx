@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import Joi from 'joi-browser';
 
-function Form({ getUserData }) {
+function Form({ getUserData, setSignIn }) {
   // State for form handler to receive user data inputs
   const [user, setUser] = useState({
     name: '',
@@ -59,6 +59,7 @@ function Form({ getUserData }) {
     const { error } = result;
     if (!error) {
       getUserData(user);
+      setSignIn(true);
       navigate('/search');
       return user;
     } else {
