@@ -31,10 +31,6 @@ function Table({ results, carparksShownOnPage, totalPages, page }) {
           </tr>
         </thead>
         <tbody>
-          {/* useEffect(() => {freeParking()}, []); filteredResult =
-          results.map((item, i) => key={i}
-          {item.free_parking !== "NO"}) */}
-
           {carparksShownOnPage.map((item, i) => (
             <>
               <tr
@@ -74,7 +70,7 @@ function Table({ results, carparksShownOnPage, totalPages, page }) {
       </table>
       <br></br>
       <div className="flex flex-col justify-center items-center">
-        <p>
+        <p className="font-bold text-gray-500">
           Page {page} of {totalPages}
         </p>
       </div>

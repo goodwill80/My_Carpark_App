@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import { CarparkContext } from '../Context/CarparkContext';
-import Loading_icon from '../images/spinner.gif';
+import Loading_icon from '../images/signal.gif';
 import * as geolib from 'geolib';
 import axios from 'axios';
 
@@ -19,6 +19,7 @@ function SearchPage() {
   const [selected, setSelected] = useState(null); //  //Dropdown List
   const [freeParking, setFreeParking] = useState(false); //Free Parking
   const [nightParking, setNightParking] = useState(false); //Night Parking
+  const [searchResultLocation, setSearchResultLocation] = useState('');
 
   // Pagination Logic
   const [numOfCpPerPage, setNumOfCpPerPage] = useState(10);
@@ -53,6 +54,7 @@ function SearchPage() {
 
     console.log(filteredList);
     setResults(filteredList);
+    setSearchResultLocation(user.location);
   };
 
   // Handler for search Form
@@ -69,6 +71,7 @@ function SearchPage() {
       );
       const coords = response.data.results[0]?.geometry?.location;
       if (coords.hasOwnProperty('lat')) {
+        setSearchResultLocation(query);
         const carparkList = carparks.map((item) => {
           const dist =
             geolib.getDistance(coords, { lat: item.lat, lon: item.lon }) / 1000;
@@ -123,12 +126,15 @@ function SearchPage() {
   return (
     <>
       {isLoading ? (
-        <div className="h-[100vh] flex justify-center items-center">
+        <div className="h-[100vh] flex flex-col justify-center items-center pb-16">
           <img className="h-[250px]" src={Loading_icon} alt="Loading_icon" />
+          <p className="font-semibold text-gray-600">
+            Retrieving your location. Please stay with us!
+          </p>
         </div>
       ) : (
         user.name && (
-          <div className="min-h-[100vh] h-auto flex flex-col justify-start items-center px-24 gap-4 mt-12">
+          <div className="min-h-[100vh] h-auto flex flex-col justify-start items-center px-24 gap-4 pt-10">
             <div className="flex flex-col justify-center items-center">
               <p className="text-5xl tracking-wide">
                 Hello,{' '}
@@ -224,7 +230,9 @@ function SearchPage() {
             {results.length > 0 ? (
               <>
                 <p className="text-md text-gray-400">
-                  {results.length} carparks found
+                  {results.length} carparks found near "
+                  <span>{searchResultLocation.replace('Singapore', 'SG')}</span>
+                  "
                 </p>
                 <button className="btn btn-outline btn-accent btn-sm">
                   Show Map
