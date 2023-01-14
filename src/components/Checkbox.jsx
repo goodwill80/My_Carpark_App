@@ -1,15 +1,13 @@
-import { useState } from "react";
-
-function Checkbox({ label }) {
-  const [isChecked, setIsChecked] = useState(false);
-
+function Checkbox({
+  label,
+ handleChange
+}) {
   return (
     <div>
       <label>
         <input
           type="checkbox"
-          checked={isChecked}
-          onChange={() => setIsChecked((prev) => !prev)}
+          onChange={handleChange}
         />
         <span>{label}</span>
       </label>

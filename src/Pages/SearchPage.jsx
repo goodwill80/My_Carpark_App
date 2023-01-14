@@ -14,20 +14,9 @@ function SearchPage() {
   const [results, setResults] = useState([]); // New list of carparks with distances
   const [preferredDist, setPreferredDist] = useState(1); // User's choice of distance radius
   const [query, setQuery] = useState(""); // Search field query entered by user
-
-  // const combinedFilter = (resultsArr) => {
-  //   const filter1 =
-  //     preferredDist !== ""
-  //       ? resultsArr.filter((item) => item.lots_available === "Yes")
-  //       : resultsArr;
-  //   const filter2 = FreeParking
-  //     ? filter1.filter((item) => item.free_parking !== "No")
-  //     : filter1;
-  //   const filter3 = NightParking
-  //     ? filter2.filter((item) => item.night_parking !== "No")
-  //     : filter2;
-  //   return filter3;
-  // };
+  const [selected, setSelected] = useState(null); //  //Dropdown List
+  const [freeParking, setFreeParking] = useState(false); //Free Parking
+  const [nightParking, setNightParking] = useState(false); //Night Parking
 
   // Load Carparkss near User's position when btn clicked
   const loadCarParks = () => {
@@ -42,11 +31,12 @@ function SearchPage() {
     });
     const filteredList = userCarparks
       .filter((item) => item.distance < preferredDist)
+      .filter((item) => (freeParking ? item.free_parking !== "NO" : true))
+      .filter((item) => (nightParking ? item.night_parking !== "NO" : true))
       .sort((a, b) => a.distance - b.distance);
-    // const filteredPreference = combinedFilter(filteredPreference)
+
     console.log(filteredList);
     setResults(filteredList);
-    // setResults(filteredPreference);
   };
 
   // Handler for search Form
@@ -57,6 +47,7 @@ function SearchPage() {
   // Load Carparks based on user search
   const searchCp = async () => {
     try {
+      // filter distance
       const response = await axios.get(
         `${BASE_URL}${query}+singapore&key=${process.env.REACT_APP_API_KEY}`
       );
@@ -67,23 +58,33 @@ function SearchPage() {
             geolib.getDistance(coords, { lat: item.lat, lon: item.lon }) / 1000;
           return { ...item, distance: dist };
         });
-        const filterCarparksByDist = carparkList.filter(
-          (item) =>
-            item.distance <=
-            preferredDist.sort((a, b) => a.distance - b.distance)
-        );
+        const filterCarparksByDist = carparkList
+          .filter((item) => item.distance < preferredDist)
+          .sort((a, b) => a.distance - b.distance)
+          .filter((item) => (freeParking ? item.free_parking !== "NO" : true))
+          .filter((item) =>
+            nightParking ? item.night_parking !== "NO" : true
+          );
 
         console.log(filterCarparksByDist);
         setResults(() => [...filterCarparksByDist]);
         setQuery("");
       }
+
+      // // filter free parking
+      // if (freeParking) {
+      //   const filteredFree = carparks.filter((r) => r.free_parking !== "NO");
+      //   setResults(filteredFree);
+      // }
+      // // filter night parking
+      // if (nightParking) {
+      //   const filteredNight = carparks.filter((r) => r.night_parking !== "NO");
+      //   setResults(filteredNight);
+      // }
     } catch (e) {
       console.log(e.message);
     }
   };
-
-  //Dropdown List
-  const [selected, setSelected] = useState(null);
 
   //setState for filtering distance
   const handleSelect = (option) => {
@@ -104,6 +105,13 @@ function SearchPage() {
     { label: "Within 9 KM", value: "9" },
     { label: "Within 10 KM", value: "10" },
   ];
+  //setState for Free and Night Parking
+  const handleFreeParkingChange = () => {
+    setFreeParking((prev) => !prev);
+  };
+  const handleNightParkingChange = () => {
+    setNightParking((prev) => !prev);
+  };
 
   return (
     <>
@@ -187,9 +195,19 @@ function SearchPage() {
               value={selected}
               onChange={handleSelect}
             />
-            <Checkbox label="Free Parking" />
-            <Checkbox label="Night Parking" />
-            <Table results={results} />
+            <Checkbox
+              label="Free Parking"
+              handleChange={handleFreeParkingChange}
+            />
+            <Checkbox
+              label="Night Parking"
+              handleChange={handleNightParkingChange}
+            />
+            <Table
+              results={results}
+              freeParking={freeParking}
+              nightParking={nightParking}
+            />
           </div>
         )
       )}
