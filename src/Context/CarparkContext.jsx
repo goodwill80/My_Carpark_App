@@ -25,6 +25,7 @@ function CarparkContextProvider({ children }) {
     location: '', // in string
   });
   const [isLoading, setIsLoading] = useState(true);
+  const [signIn, setSignIn] = useState(false);
 
   useEffect(() => {
     fetchCarparks();
@@ -117,6 +118,8 @@ function CarparkContextProvider({ children }) {
     user,
     isLoading,
     setIsLoading,
+    signIn,
+    setSignIn,
   };
 
   return (
