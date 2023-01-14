@@ -1,6 +1,6 @@
-import styles from "./Table.module.css";
+import styles from './Table.module.css';
 
-function Table({ results }) {
+function Table({ results, carparksShownOnPage }) {
   return (
     <div>
       <table className={styles.table}>
@@ -20,7 +20,7 @@ function Table({ results }) {
           results.map((item, i) => key={i}
           {item.free_parking !== "NO"}) */}
 
-          {results.map((item, i) => (
+          {carparksShownOnPage.map((item, i) => (
             <>
               <tr key={i}>
                 <td>{item.carpark_number}</td>
