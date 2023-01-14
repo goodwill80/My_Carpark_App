@@ -130,27 +130,30 @@ function SearchPage() {
         user.name && (
           <div className="min-h-[100vh] h-auto flex flex-col justify-start items-center px-24 gap-4 mt-12">
             <div className="flex flex-col justify-center items-center">
-              <h1 className="text-4xl font-bold mb-4">Search for Carparks</h1>
-              <p>
+              <p className="text-5xl tracking-wide">
                 Hello,{' '}
-                <span className="font-bold text-xl text-orange-400">
+                <span className="font-bold text-red-400 text-6xl tracking-wide">
                   {user.name}
                 </span>
                 !
               </p>
 
-              <p className="font-semibold">We have found your location at</p>
-              <p className="text-green-500 font-bold">{user.location}</p>
+              <p className="font-bold mt-6 text-2xl">
+                We have found your location at
+              </p>
+              <p className="font-bold text-2xl text-green-600">
+                {user.location}
+              </p>
             </div>
             <div>
-              <h1 className="text-2xl text-orange-400 font-semibold">
+              <h1 className="text-2xl text-orange-400 font-semibold mt-2">
                 What would you like to do today?
               </h1>
             </div>
             <div className="flex justify-center items-baseline gap-6">
               {/* 1. USER SERACH CP FROM OWN LOCATION */}
               <div className="flex flex-col justify-center items-center gap-2">
-                <h1 className="text-green-700 font-semibold">
+                <h1 className="text-teal-700 font-semibold text-lg">
                   Find carparks near you!
                 </h1>
                 <button
@@ -162,12 +165,12 @@ function SearchPage() {
               </div>
 
               <div className="flex flex-col justify-center items-center">
-                <h1 className="font-bold text-lg">OR</h1>
+                <h1 className="font-bold text-3xl">OR</h1>
               </div>
 
               {/* 2. USER TYPE IN SEARCH FIELD and SEARCH for CP */}
               <div className="flex flex-col justify-center items-center gap-2">
-                <h1 className="text-green-700 font-semibold">
+                <h1 className="text-teal-700 font-semibold text-lg">
                   Search other locations!
                 </h1>
                 {/* Search Form Input field */}
@@ -199,33 +202,49 @@ function SearchPage() {
                 </div>
               </div>
             </div>
-            <div className="p-4 border border-red-400 h-[100px] w-[500px] flex justify-center items-center">
-              Here are where the search filters are i.e. distance radius, free
-              parking...
-            </div>
+            {/* FILTERS FOR USERS */}
             <Dropdown
               options={options}
               value={selected}
               onChange={handleSelect}
             />
-            <Checkbox
-              label="Free Parking"
-              handleChange={handleFreeParkingChange}
-            />
-            <Checkbox
-              label="Night Parking"
-              handleChange={handleNightParkingChange}
-            />
-            <Pagination
-              results={results}
-              totalPages={totalPages}
-              changePage={changePage}
-              page={page}
-            />
-            <Table
-              carparksShownOnPage={carparksShownOnPage}
-              results={results}
-            />
+            <div className="flex justify-center items-center gap-4">
+              <Checkbox
+                label="Free Parking"
+                handleChange={handleFreeParkingChange}
+                value={freeParking}
+              />
+              <Checkbox
+                label="Night Parking"
+                handleChange={handleNightParkingChange}
+                value={nightParking}
+              />
+            </div>
+
+            {results.length > 0 ? (
+              <>
+                <p className="text-md text-gray-400">
+                  {results.length} carparks found
+                </p>
+                <button className="btn btn-outline btn-accent btn-sm">
+                  Show Map
+                </button>
+                <Pagination
+                  results={results}
+                  totalPages={totalPages}
+                  changePage={changePage}
+                  page={page}
+                />
+                <Table
+                  carparksShownOnPage={carparksShownOnPage}
+                  results={results}
+                  totalPages={totalPages}
+                  page={page}
+                />
+              </>
+            ) : (
+              <p className="text-orange-700 mt-16">No search results</p>
+            )}
           </div>
         )
       )}

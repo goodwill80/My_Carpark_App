@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from "react";
-import { GoChevronDown } from "react-icons/go";
-import Panel from "./Panel";
+import { useState, useEffect, useRef } from 'react';
+// import { GoChevronDown } from 'react-icons/go';
+import Panel from './Panel';
 
 function Dropdown({ options, value, onChange }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,10 +18,10 @@ function Dropdown({ options, value, onChange }) {
       }
       //close dropdown list if user did not select
     };
-    document.addEventListener("click", handler, true);
+    document.addEventListener('click', handler, true);
 
     return () => {
-      document.removeEventListener("click", handler);
+      document.removeEventListener('click', handler);
       //clean up click eventHandler
     };
   }, []);
@@ -56,8 +56,8 @@ function Dropdown({ options, value, onChange }) {
         className="flex justify-between items center cursor-pointer"
         onClick={handleClick}
       >
-        {value?.label || "Select Preferred Distance"}
-        <GoChevronDown className="text-lg" />
+        {/* {value?.label || "Select Preferred Distance"}
+        <GoChevronDown className="text-lg" /> */}
       </Panel>
       {/* if no option selected set "Select Preferred Distance" */}
       {isOpen && <Panel className="absolute top-full">{renderedOptions}</Panel>}
