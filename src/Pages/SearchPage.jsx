@@ -29,6 +29,8 @@ function SearchPage() {
       const newObj = { ...item, distance: distance };
       return newObj;
     });
+
+    //filter functions
     const filteredList = userCarparks
       .filter((item) => item.distance < preferredDist)
       .filter((item) => (freeParking ? item.free_parking !== "NO" : true))
@@ -58,6 +60,8 @@ function SearchPage() {
             geolib.getDistance(coords, { lat: item.lat, lon: item.lon }) / 1000;
           return { ...item, distance: dist };
         });
+
+        //filter functions
         const filterCarparksByDist = carparkList
           .filter((item) => item.distance < preferredDist)
           .sort((a, b) => a.distance - b.distance)
@@ -70,17 +74,6 @@ function SearchPage() {
         setResults(() => [...filterCarparksByDist]);
         setQuery("");
       }
-
-      // // filter free parking
-      // if (freeParking) {
-      //   const filteredFree = carparks.filter((r) => r.free_parking !== "NO");
-      //   setResults(filteredFree);
-      // }
-      // // filter night parking
-      // if (nightParking) {
-      //   const filteredNight = carparks.filter((r) => r.night_parking !== "NO");
-      //   setResults(filteredNight);
-      // }
     } catch (e) {
       console.log(e.message);
     }
