@@ -11,6 +11,7 @@ function Table({
   page,
   copyArray,
   setCopyArray,
+  setPage,
 }) {
   const [switchDist, setSwitchDist] = useState(false);
   const [switchLots, setSwitchLots] = useState(false);
@@ -18,6 +19,12 @@ function Table({
   const classNameForCol =
     'text-sm text-gray-900 font-medium px-6 py-4 whitespace-nowrap';
   const classNameForTh = 'text-sm font-medium text-white px-8 py-4';
+
+  useEffect(() => {
+    if (carparksShownOnPage.length <= 0) {
+      setPage(1);
+    }
+  }, [carparksShownOnPage.length]);
 
   const handlerDelete = (code) => {
     const filteredResult2 = copyArray.filter(

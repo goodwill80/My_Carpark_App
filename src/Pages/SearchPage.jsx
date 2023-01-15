@@ -316,6 +316,7 @@ function SearchPage() {
                   page={page}
                   setCopyArray={setCopyArray}
                   copyArray={copyArray}
+                  setPage={setPage}
                 />
               </>
             ) : (
