@@ -81,6 +81,7 @@ function Form({ getUserData, setSignIn }) {
       }
       setError(errorData);
       console.log(errorData);
+
       Swal.fire({
         title: 'Error!',
         text: 'Please complete all fields, on check on user agreement',

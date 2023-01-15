@@ -14,11 +14,13 @@ import Dropdown from '../components/Dropdown';
 import Checkbox from '../components/Checkbox.jsx';
 import Pagination from '../components/Pagination';
 import Table from '../components/Table';
+import MapModalFull from '../components/MapModalFull';
 
 const BASE_URL = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
 
 function SearchPage() {
-  const { user, isLoading, carparks } = useContext(CarparkContext); // states from context
+  const { user, isLoading, carparks, triggerZoom, setTriggerZoom } =
+    useContext(CarparkContext); // states from context
   const [results, setResults] = useState([]); // New list of carparks with distances
   const [preferredDist, setPreferredDist] = useState(1); // User's choice of distance radius
   const [query, setQuery] = useState(''); // Search field query entered by user
@@ -28,6 +30,7 @@ function SearchPage() {
   const [resultsLoader, setResultsLoader] = useState(false);
   const [searchResultLocation, setSearchResultLocation] = useState('');
   const [copyArray, setCopyArray] = useState([]);
+  const [querySearchCoords, setQuerySearchCoords] = useState(null);
 
   useEffect(() => {
     setCopyArray(results);
@@ -48,6 +51,8 @@ function SearchPage() {
 
   // Load Carparkss near User's position when btn clicked
   const loadCarParks = () => {
+    setTriggerZoom(false);
+    setQuerySearchCoords(null);
     setResultsLoader(true);
     const userCoords = user.coordinates;
     // Loop all car parks and calculate dist
@@ -74,7 +79,7 @@ function SearchPage() {
           : 'Green';
       return { ...item, colour: colourLots };
     });
-    console.log(listLotsColour);
+    // console.log(listLotsColour);
     setResults(listLotsColour);
     setResultsLoader(false);
     setPage(1);
@@ -89,6 +94,7 @@ function SearchPage() {
   // Load Carparks based on user search
   const searchCp = async () => {
     try {
+      setTriggerZoom(true);
       setResultsLoader(true);
       // filter distance
       const response = await axios.get(
@@ -96,6 +102,7 @@ function SearchPage() {
       );
       const coords = response.data.results[0]?.geometry?.location;
       if (coords.hasOwnProperty('lat')) {
+        setQuerySearchCoords(coords);
         setSearchResultLocation(query);
         const carparkList = carparks.map((item) => {
           const dist =
@@ -287,9 +294,15 @@ function SearchPage() {
                   <span>{searchResultLocation.replace('Singapore', 'SG')}</span>
                   "
                 </p>
-                <button className="btn btn-outline btn-accent btn-sm">
-                  Show Map
-                </button>
+                <div className="flex justify-center items-center py-4">
+                  <label
+                    htmlFor="my-modal"
+                    className="btn btn-sm btn-accent btn-outline"
+                  >
+                    Show Map
+                  </label>
+                  {/* <button className="btn btn-sm btn-accent">Show map</button> */}
+                </div>
                 <Pagination
                   results={results}
                   totalPages={totalPages}
@@ -318,6 +331,12 @@ function SearchPage() {
                 )}
               </>
             )}
+            <MapModalFull
+              results={results}
+              user={user}
+              triggerZoom={triggerZoom}
+              querySearchCoords={querySearchCoords}
+            />
           </div>
         )
       )}
