@@ -8,6 +8,7 @@ function Table({
   carparksShownOnPage,
   totalPages,
   page,
+  copyArray,
   setCopyArray,
 }) {
   const [switchDist, setSwitchDist] = useState(false);
@@ -16,6 +17,13 @@ function Table({
   const classNameForCol =
     'text-sm text-gray-900 font-medium px-6 py-4 whitespace-nowrap';
   const classNameForTh = 'text-sm font-medium text-white px-8 py-4';
+
+  const handlerDelete = (code) => {
+    const filteredResult2 = copyArray.filter(
+      (item) => item.carpark_number !== code
+    );
+    setCopyArray(filteredResult2);
+  };
 
   // Carparks in Desc order based on dist
   const sortDistanceDesc = () => {
@@ -164,6 +172,7 @@ function Table({
             <th className={classNameForTh}>Time</th>
             <th className={classNameForTh}>Free parking</th>
             <th className={classNameForTh}>Night parking</th>
+            <td className={classNameForTh}>Delete</td>
           </tr>
         </thead>
         <tbody>
@@ -185,9 +194,12 @@ function Table({
                   </div>
                 </td>
                 <td className={classNameForCol}>{item.distance} KM</td>
-                <td className={classNameForCol}>
-                  {item.carpark_info[0].lots_available}
+                <td className="'text-sm text-gray-900 font-bold text-center px-6 py-4 whitespace-nowrap'">
+                  <font color={item.colour}>
+                    {item.carpark_info[0].lots_available}
+                  </font>
                 </td>
+
                 <td className={classNameForCol}>
                   {item.carpark_info[0].total_lots}
                 </td>
@@ -199,6 +211,12 @@ function Table({
                 </td>
                 <td className={classNameForCol}>{item.free_parking}</td>
                 <td className={classNameForCol}>{item.night_parking}</td>
+                <td
+                  className="text-sm text-gray-900 font-medium px-6 py-4 whitespace-nowrap cursor-pointer"
+                  onClick={() => handlerDelete(item.carpark_number)}
+                >
+                  ❌
+                </td>
               </tr>
             </>
           ))}

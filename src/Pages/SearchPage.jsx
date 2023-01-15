@@ -65,8 +65,17 @@ function SearchPage() {
       .filter((item) => (nightParking ? item.night_parking !== 'NO' : true))
       .sort((a, b) => a.distance - b.distance);
 
-    console.log(filteredList);
-    setResults(filteredList);
+    const listLotsColour = filteredList.map((item) => {
+      const colourLots =
+        item.carpark_info[0].lots_available < 30
+          ? item.carpark_info[0].lots_available < 10
+            ? 'Red'
+            : 'Yellow'
+          : 'Green';
+      return { ...item, colour: colourLots };
+    });
+    console.log(listLotsColour);
+    setResults(listLotsColour);
     setResultsLoader(false);
     setPage(1);
     setSearchResultLocation(user.location);
@@ -103,8 +112,18 @@ function SearchPage() {
             nightParking ? item.night_parking !== 'NO' : true
           );
 
-        console.log(filterCarparksByDist);
-        setResults(() => [...filterCarparksByDist]);
+        const listLotsColour = filterCarparksByDist.map((item) => {
+          const colourLots =
+            item.carpark_info[0].lots_available < 30
+              ? item.carpark_info[0].lots_available < 10
+                ? 'Red'
+                : 'Yellow'
+              : 'Green';
+          return { ...item, colour: colourLots };
+        });
+
+        console.log(listLotsColour);
+        setResults(() => [...listLotsColour]);
         setResultsLoader(false);
         setPage(1);
         setQuery('');
@@ -283,6 +302,7 @@ function SearchPage() {
                   totalPages={totalPages}
                   page={page}
                   setCopyArray={setCopyArray}
+                  copyArray={copyArray}
                 />
               </>
             ) : (
