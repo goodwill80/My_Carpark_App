@@ -174,7 +174,7 @@ function SearchPage() {
                 {user.location}
               </p>
             </div>
-            <div className="flex flex-col justify-center items-center py-4 rounded-md sm:px-40 lg:pb-8 lg:shadow-xl md:w-[80vw]">
+            <div className="flex flex-col justify-center items-center py-4 rounded-md sm:px-40 lg:pb-8 lg:shadow-sm md:w-[80vw]">
               <div>
                 <h1 className="text-2xl text-orange-400 font-semibold text-center">
                   What would you like to do today?

@@ -76,8 +76,8 @@ function Form({ getUserData, setSignIn }) {
   };
 
   return (
-    <div className="p-16 shadow-xl rounded-lg">
-      <h2 className="font-bold text-2xl mb-4">HDB Carpark App</h2>
+    <div className="p-16 px-35 shadow-xl rounded-lg">
+      <h2 className="font-bold text-3xl mb-4">HDB Carpark App</h2>
       <form onSubmit={handlerOnSubmit}>
         {/* NAME INPUT */}
         <div className="flex flex-col items-baseline gap-2">
@@ -104,7 +104,7 @@ function Form({ getUserData, setSignIn }) {
           />
         </div>
 
-        <div className="flex items-baseline gap-3 form-group form-check text-center mb-6">
+        <div className="flex items-baseline gap-3 form-group form-check text-center mb-6 w-[300px] mt-6">
           <input
             // onChange={handleAgreement}
             // checked={agree}
@@ -127,7 +127,7 @@ function Form({ getUserData, setSignIn }) {
 
         <button
           type="submit"
-          className="btn btn-info mt-8 w-[100%] hover:bg-blue-500 hover:text-white"
+          className="btn btn-info w-[100%] hover:bg-blue-500 hover:text-white"
         >
           Submit
         </button>
