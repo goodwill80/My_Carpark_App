@@ -2,7 +2,7 @@ import { useState } from "react";
 import styles from "./Table.module.css";
 
 function Table({ results, carparksShownOnPage, copyArray, setCopyArray }) {
-  
+
   const sortDistanceDesc = () => {
     const newArr = [...results];
     setCopyArray([
