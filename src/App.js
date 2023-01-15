@@ -7,6 +7,8 @@ import {
   Routes,
   Route,
 } from 'react-router-dom';
+
+import Layout from './Layouts/Layout';
 import SearchPage from './Pages/SearchPage';
 import HomePage from './Pages/HomePage';
 
@@ -17,13 +19,15 @@ function App() {
 
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route
-          path="/search"
-          element={!signIn ? <Navigate to="/" /> : <SearchPage />}
-        />
-      </Routes>
+      <Layout>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route
+            path="/search"
+            element={!signIn ? <Navigate to="/" /> : <SearchPage />}
+          />
+        </Routes>
+      </Layout>
     </Router>
   );
 }

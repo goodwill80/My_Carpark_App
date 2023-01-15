@@ -1,6 +1,6 @@
-import { useState, useEffect, useRef } from "react";
-import { GoChevronDown } from "react-icons/go";
-import Panel from "./Panel";
+import { useState, useEffect, useRef } from 'react';
+// import { GoChevronDown } from 'react-icons/go';
+import Panel from './Panel';
 
 function Dropdown({ options, value, onChange }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -18,10 +18,10 @@ function Dropdown({ options, value, onChange }) {
       }
       //close dropdown list if user did not select
     };
-    document.addEventListener("click", handler, true);
+    document.addEventListener('click', handler, true);
 
     return () => {
-      document.removeEventListener("click", handler);
+      document.removeEventListener('click', handler);
       //clean up click eventHandler
     };
   }, []);
@@ -51,13 +51,18 @@ function Dropdown({ options, value, onChange }) {
   });
 
   return (
-    <div ref={divEl} className="w-48 relative">
+    <div
+      ref={divEl}
+      className="w-56 relative shadow-lg border rounded-md border-green-500 hover:border-emerald-300 text-teal-400 font-semibold text-center"
+    >
       <Panel
-        className="flex justify-between items center cursor-pointer"
+        className="flex justify-start items center cursor-pointer"
         onClick={handleClick}
       >
-        {value?.label || "Select Preferred Distance"}
-        <GoChevronDown className="text-lg" />
+        <p className="text-semibold">
+          {value?.label || 'Select preferred distance'}
+        </p>
+        {/* <GoChevronDown className="text-lg" /> */}
       </Panel>
       {/* if no option selected set "Select Preferred Distance" */}
       {isOpen && <Panel className="absolute top-full">{renderedOptions}</Panel>}

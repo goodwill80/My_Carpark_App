@@ -1,74 +1,241 @@
-import { useState } from "react";
-import styles from "./Table.module.css";
+import { useEffect, useState } from 'react';
 
-function Table({ results, carparksShownOnPage, copyArray, setCopyArray }) {
+import { FaSort } from 'react-icons/fa';
+import { GoLocation } from 'react-icons/go';
+import { RiDeleteBin6Line } from 'react-icons/ri';
 
+function Table({
+  results,
+  carparksShownOnPage,
+  totalPages,
+  page,
+  copyArray,
+  setCopyArray,
+}) {
+  const [switchDist, setSwitchDist] = useState(false);
+  const [switchLots, setSwitchLots] = useState(false);
+  const [switchTotalLots, setSwitchTotalLots] = useState(false);
+  const classNameForCol =
+    'text-sm text-gray-900 font-medium px-6 py-4 whitespace-nowrap';
+  const classNameForTh = 'text-sm font-medium text-white px-8 py-4';
+
+  const handlerDelete = (code) => {
+    const filteredResult2 = copyArray.filter(
+      (item) => item.carpark_number !== code
+    );
+    setCopyArray(filteredResult2);
+  };
+
+  // Carparks in Desc order based on dist
   const sortDistanceDesc = () => {
     const newArr = [...results];
-    setCopyArray([
+    setCopyArray([...newArr.sort((a, b) => b.distance - a.distance)]);
+  };
+
+  // Carparks in Asc order based on dist
+  const sortDistanceAsc = () => {
+    const newArr = [...results];
+    setCopyArray([...newArr.sort((a, b) => a.distance - b.distance)]);
+  };
+
+  // If switchDist is true, sort dist by Desc, else sort dist by Asc
+  const toggleDistSort = () => {
+    if (switchDist) {
+      return sortDistanceDesc();
+    } else {
+      return sortDistanceAsc();
+    }
+  };
+
+  // Click to toggle switchDist between true or false
+  const switchToggleForDist = () => {
+    setSwitchDist((prev) => !prev);
+  };
+
+  // UseEffect as EventListener to trigger dist sort upon change of switchDist
+  useEffect(() => {
+    toggleDistSort();
+  }, [switchDist]);
+
+  // Sort Lots by Asc
+  const sortLotsByLowest = () => {
+    const newArr = [...results];
+    setCopyArray(() => [
       ...newArr.sort(
         (a, b) =>
-          b.distance - a.distance
+          Number(a.carpark_info[0].lots_available) -
+          Number(b.carpark_info[0].lots_available)
       ),
     ]);
   };
-  const sortLots = () => {
+
+  // Sort Lots by Desc
+  const sortLotsByHighest = () => {
+    const newArr = [...results];
+    setCopyArray(() => [
+      ...newArr.sort(
+        (a, b) =>
+          Number(b.carpark_info[0].lots_available) -
+          Number(a.carpark_info[0].lots_available)
+      ),
+    ]);
+  };
+
+  // Toggle sort functions
+  const toggleSortLots = () => {
+    if (switchLots) {
+      return sortLotsByLowest();
+    } else {
+      return sortLotsByHighest();
+    }
+  };
+
+  // Click to toggle true or false
+  const switchToggleForLots = () => {
+    setSwitchLots((prev) => !prev);
+  };
+
+  useEffect(() => {
+    toggleSortLots();
+  }, [switchLots]);
+
+  const sortTotalLotsByDesc = () => {
     const newArr = [...results];
     setCopyArray([
       ...newArr.sort(
-        (a, b) =>
-          a.carpark_info[0].lots_available - b.carpark_info[0].lots_available
+        (a, b) => a.carpark_info[0].total_lots - b.carpark_info[0].total_lots
       ),
     ]);
   };
-  const sortTotalLots = () => {
+
+  const sortTotalLotsByAsc = () => {
     const newArr = [...results];
     setCopyArray([
       ...newArr.sort(
-        (a, b) =>
-          a.carpark_info[0].total_lots - b.carpark_info[0].total_lots
+        (a, b) => b.carpark_info[0].total_lots - a.carpark_info[0].total_lots
       ),
     ]);
   };
+
+  // switchTotalLots, setSwitchTotalLots
+
+  const toggleTotalLots = () => {
+    if (switchTotalLots) {
+      return sortTotalLotsByDesc();
+    } else {
+      return sortTotalLotsByAsc();
+    }
+  };
+
+  const toggleSwitchTotalLots = () => {
+    setSwitchTotalLots((prev) => !prev);
+  };
+
+  useEffect(() => {
+    toggleTotalLots();
+  }, [switchTotalLots]);
+
   return (
-    <div>
-      <table className={styles.table}>
-        <thead>
+    <div className="m-h-[320px] h-[680px]">
+      <table className="min-w-full w-full text-center shadow-lg">
+        <thead className="border-b bg-gray-800 boder-gray-900 text-left">
           <tr>
-            <th>Carpark number</th>
-            <th>Address</th>
-            <th onClick={sortDistanceDesc}>Distance</th>
-            <th onClick={sortLots}>Lots available</th>
-            <th onClick={sortTotalLots}>Total lots</th>
-            <th>Last updated</th>
-            <th></th>
-            <th>Free parking</th>
-            <th>Night parking</th>
+            <th className={classNameForTh}>CP</th>
+            <th className={classNameForTh}>Address</th>
+            <th
+              onClick={switchToggleForDist}
+              className={`${classNameForTh} cursor-pointer`}
+            >
+              <div className="flex items-baseline justify-center">
+                Distance
+                <FaSort size={18} className="pt-1" />
+              </div>
+            </th>
+            <th
+              onClick={switchToggleForLots}
+              className={`${classNameForTh} cursor-pointer`}
+            >
+              <div className="flex items-baseline justify-center">
+                Lots available
+                <FaSort size={18} className="pt-1" />
+              </div>
+            </th>
+            <th
+              onClick={toggleSwitchTotalLots}
+              className={`${classNameForTh} cursor-pointer`}
+            >
+              <div className="flex items-baseline justify-center">
+                Total lots
+                <FaSort size={18} className="pt-1" />
+              </div>
+            </th>
+            <th className={classNameForTh}>Last updated</th>
+            <th className={classNameForTh}>Time</th>
+            <th className={classNameForTh}>Free parking</th>
+            <th className={classNameForTh}>Night parking</th>
+            <td className={classNameForTh}>Delete</td>
           </tr>
         </thead>
         <tbody>
-          {copyArray.map((item, i) => (
+          {carparksShownOnPage.map((item, i) => (
             <>
-              <tr key={i}>
-                <td>{item.carpark_number}</td>
-                <td>{item.address}</td>
-                <td>{item.distance} KM</td>
-                <td>{item.carpark_info[0].lots_available}</td>
-                <td>{item.carpark_info[0].total_lots}</td>
-                <td>{item.update_datetime.substring(0, 10)}</td>
-                <td>{item.update_datetime.substring(11, 19)}</td>
-                <td>{item.free_parking}</td>
-                <td>{item.night_parking}</td>
+              <tr
+                key={i}
+                className={`border-b text-left  ${
+                  i % 2
+                    ? 'bg-blue-100 border-blue-200'
+                    : 'bg-green-100 border-green-200'
+                } `}
+              >
+                <td className={classNameForCol}>{item.carpark_number}</td>
+                <td className={classNameForCol}>
+                  <div className="flex items-baseline gap-2 cursor-pointer">
+                    <GoLocation color={'red'} size={18} />
+                    {item.address.replace('BLK', '').substring(0, 15)}
+                  </div>
+                </td>
+                <td className={classNameForCol}>{item.distance} KM</td>
+                <td className="text-sm text-gray-900 font-bold text-center px-6 py-4 whitespace-nowrap bg-sky-300 border-b-2 border-blue-300">
+                  <font color={item.colour}>
+                    {item.carpark_info[0].lots_available}
+                  </font>
+                </td>
+
+                <td className={classNameForCol}>
+                  {item.carpark_info[0].total_lots}
+                </td>
+                <td className={classNameForCol}>
+                  {item.update_datetime.substring(0, 10)}
+                </td>
+                <td className={classNameForCol}>
+                  {item.update_datetime.substring(11, 19)}
+                </td>
+                <td className={classNameForCol}>
+                  {item.free_parking === 'SUN & PH FR 7AM-10.30PM'
+                    ? 'ONLY SUN & PH'
+                    : item.free_parking}
+                </td>
+                <td className={classNameForCol}>{item.night_parking}</td>
+                <td
+                  className="text-sm text-gray-900 font-medium px-6 py-4 whitespace-nowrap cursor-pointer text-center"
+                  onClick={() => handlerDelete(item.carpark_number)}
+                >
+                  <RiDeleteBin6Line size={20} color={'red'} />
+                </td>
               </tr>
             </>
           ))}
         </tbody>
       </table>
       <br></br>
-      <p>{results.length} results</p>
+      <div className="flex flex-col justify-center items-center">
+        <p className="font-bold text-gray-500">
+          Page {page} of {totalPages}
+        </p>
+      </div>
+
       <br></br>
     </div>
   );
 }
-
 export default Table;

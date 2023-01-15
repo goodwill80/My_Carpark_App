@@ -20,6 +20,7 @@ function CarparkContextProvider({ children }) {
   const [user, setUser] = useState({
     name: '',
     email: '',
+    agree: false,
     coordinates: {},
     raw_data: {},
     location: '', // in string
