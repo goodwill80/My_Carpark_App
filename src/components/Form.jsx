@@ -1,7 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 
 import { useState } from 'react';
+
 import Joi from 'joi-browser';
+import Swal from 'sweetalert2';
 
 function Form({ getUserData, setSignIn }) {
   // State for form handler to receive user data inputs
@@ -9,6 +11,7 @@ function Form({ getUserData, setSignIn }) {
     name: '',
     email: '',
   });
+  const [agree, setAgree] = useState(false);
   const [error, setError] = useState({});
 
   // Redirect
@@ -39,6 +42,11 @@ function Form({ getUserData, setSignIn }) {
     setError(errorData);
   };
 
+  // Handler for user agree
+  const userAgreement = (e) => {
+    setAgree((prev) => !prev);
+  };
+
   // Joi Validation
   const validate = (event) => {
     const { name, value } = event.target;
@@ -57,8 +65,10 @@ function Form({ getUserData, setSignIn }) {
     event.preventDefault();
     const result = Joi.validate(user, schema, { abortEarly: false });
     const { error } = result;
-    if (!error) {
-      getUserData(user);
+
+    if (!error && agree) {
+      const userInfo = { ...user, agree: agree };
+      getUserData(userInfo);
       setSignIn(true);
       navigate('/search');
       return user;
@@ -71,6 +81,12 @@ function Form({ getUserData, setSignIn }) {
       }
       setError(errorData);
       console.log(errorData);
+      Swal.fire({
+        title: 'Error!',
+        text: 'Please complete all fields, on check on user agreement',
+        icon: 'error',
+        confirmButtonText: 'Okay!',
+      });
       return errorData;
     }
   };
@@ -106,8 +122,9 @@ function Form({ getUserData, setSignIn }) {
 
         <div className="flex items-baseline gap-3 form-group form-check text-center mb-6 w-[300px] mt-6">
           <input
-            // onChange={handleAgreement}
-            // checked={agree}
+            onChange={userAgreement}
+            value={agree}
+            checked={agree}
             name="agree"
             type="checkbox"
             className="form-check-input appearance-none h-4 w-8 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain mr-2 cursor-pointer"

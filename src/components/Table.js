@@ -190,11 +190,11 @@ function Table({
                 <td className={classNameForCol}>
                   <div className="flex items-baseline gap-2 cursor-pointer">
                     <GoLocation color={'red'} size={18} />
-                    {item.address.replace('BLK', '').substring(0, 25)}
+                    {item.address.replace('BLK', '').substring(0, 15)}
                   </div>
                 </td>
                 <td className={classNameForCol}>{item.distance} KM</td>
-                <td className="'text-sm text-gray-900 font-bold text-center px-6 py-4 whitespace-nowrap'">
+                <td className="text-sm text-gray-900 font-bold text-center px-6 py-4 whitespace-nowrap bg-sky-300 border-b-2 border-blue-300">
                   <font color={item.colour}>
                     {item.carpark_info[0].lots_available}
                   </font>
