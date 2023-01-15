@@ -1,5 +1,3 @@
-import { useState } from 'react';
-
 function Pagination({ totalPages, changePage, page }) {
   return (
     <div className="flex flex-col justify-center items-center">

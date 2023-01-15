@@ -3,31 +3,22 @@ import { GoLocation } from 'react-icons/go';
 function Table({ results, carparksShownOnPage, totalPages, page }) {
   const classNameForCol =
     'text-sm text-gray-900 font-medium px-6 py-4 whitespace-nowrap';
+  const classNameForTh = 'text-sm font-medium text-white px-8 py-4';
 
-  const headers = [
-    'Carpark number',
-    'Address',
-    'Distance',
-    'Lots available',
-    'Total lots',
-    'Last updated',
-    'Time',
-    'Free parking',
-    'Night parking',
-  ];
   return (
     <div className="m-h-[320px] h-[680px]">
       <table className="min-w-full w-full text-center shadow-lg">
         <thead className="border-b bg-gray-800 boder-gray-900 text-left">
           <tr>
-            {headers.map((item, index) => (
-              <th
-                key={index}
-                className="text-sm font-medium text-white px-8 py-4"
-              >
-                {item}
-              </th>
-            ))}
+            <th className={classNameForTh}>CP</th>
+            <th className={classNameForTh}>Address</th>
+            <th className={classNameForTh}>Distance</th>
+            <th className={classNameForTh}>Lots available</th>
+            <th className={classNameForTh}>Total lots</th>
+            <th className={classNameForTh}>Last updated</th>
+            <th className={classNameForTh}>Time</th>
+            <th className={classNameForTh}>Free parking</th>
+            <th className={classNameForTh}>Night parking</th>
           </tr>
         </thead>
         <tbody>

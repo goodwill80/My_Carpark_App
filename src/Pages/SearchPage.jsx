@@ -1,6 +1,12 @@
 import { useContext, useState } from 'react';
 import { CarparkContext } from '../Context/CarparkContext';
+
+import { GiHamburgerMenu } from 'react-icons/gi';
+
 import Loading_icon from '../images/signal.gif';
+import Loader from '../images/spinner.gif';
+import HDB from '../images/HDB.png';
+
 import * as geolib from 'geolib';
 import axios from 'axios';
 
@@ -19,6 +25,7 @@ function SearchPage() {
   const [selected, setSelected] = useState(null); //  //Dropdown List
   const [freeParking, setFreeParking] = useState(false); //Free Parking
   const [nightParking, setNightParking] = useState(false); //Night Parking
+  const [resultsLoader, setResultsLoader] = useState(false);
   const [searchResultLocation, setSearchResultLocation] = useState('');
 
   // Pagination Logic
@@ -36,6 +43,7 @@ function SearchPage() {
 
   // Load Carparkss near User's position when btn clicked
   const loadCarParks = () => {
+    setResultsLoader(true);
     const userCoords = user.coordinates;
     // Loop all car parks and calculate dist
     const userCarparks = carparks.map((item) => {
@@ -54,6 +62,7 @@ function SearchPage() {
 
     console.log(filteredList);
     setResults(filteredList);
+    setResultsLoader(false);
     setSearchResultLocation(user.location);
   };
 
@@ -65,6 +74,7 @@ function SearchPage() {
   // Load Carparks based on user search
   const searchCp = async () => {
     try {
+      setResultsLoader(true);
       // filter distance
       const response = await axios.get(
         `${BASE_URL}${query}+singapore&key=${process.env.REACT_APP_API_KEY}`
@@ -89,6 +99,7 @@ function SearchPage() {
 
         console.log(filterCarparksByDist);
         setResults(() => [...filterCarparksByDist]);
+        setResultsLoader(false);
         setQuery('');
       }
     } catch (e) {
@@ -125,38 +136,50 @@ function SearchPage() {
 
   return (
     <>
+      <div className="absolute top-3 right-8 p-4 cursor-pointer">
+        <GiHamburgerMenu size={34} color={'gray'} />
+      </div>
+
+      <div className="absolute top-0 left-3 p-8 cursor-pointer w-[40%] sm:w-[30%] md:w-[25%] lg:w-[20%]">
+        <img src={HDB} alt="HDB" />
+      </div>
+
       {isLoading ? (
         <div className="h-[100vh] flex flex-col justify-center items-center pb-16">
-          <img className="h-[250px]" src={Loading_icon} alt="Loading_icon" />
+          <img
+            className="h-[250px] mix-blend-multiply"
+            src={Loading_icon}
+            alt="Loading_icon"
+          />
           <p className="font-semibold text-gray-600">
             Retrieving your location. Please stay with us!
           </p>
         </div>
       ) : (
         user.name && (
-          <div className="min-h-[100vh] h-auto flex flex-col justify-start items-center px-24 gap-4 pt-10">
+          <div className="min-h-[100vh] h-auto flex flex-col justify-start items-center px-24 gap-4 pt-40">
             <div className="flex flex-col justify-center items-center">
-              <p className="text-5xl tracking-wide">
+              <p className="text-5xl tracking-wide text-center">
                 Hello,{' '}
-                <span className="font-bold text-red-400 text-6xl tracking-wide">
+                <span className="font-bold text-red-400 text-6xl tracking-wide text-center">
                   {user.name}
                 </span>
                 !
               </p>
 
-              <p className="font-bold mt-6 text-2xl">
+              <p className="font-bold mt-6 text-2xl text-center mb-4">
                 We have found your location at
               </p>
-              <p className="font-bold text-2xl text-green-600">
+              <p className="font-bold text-2xl text-green-600 text-center">
                 {user.location}
               </p>
             </div>
             <div>
-              <h1 className="text-2xl text-orange-400 font-semibold mt-2">
+              <h1 className="text-2xl text-orange-400 font-semibold mt-2 text-center">
                 What would you like to do today?
               </h1>
             </div>
-            <div className="flex justify-center items-baseline gap-6">
+            <div className="flex flex-col justify-center gap-6 mb-3 md:flex-row md:items-baseline">
               {/* 1. USER SERACH CP FROM OWN LOCATION */}
               <div className="flex flex-col justify-center items-center gap-2">
                 <h1 className="text-teal-700 font-semibold text-lg">
@@ -229,7 +252,7 @@ function SearchPage() {
 
             {results.length > 0 ? (
               <>
-                <p className="text-md text-gray-400">
+                <p className="text-md text-gray-400 text-center">
                   {results.length} carparks found near "
                   <span>{searchResultLocation.replace('Singapore', 'SG')}</span>
                   "
@@ -251,7 +274,17 @@ function SearchPage() {
                 />
               </>
             ) : (
-              <p className="text-orange-700 mt-16">No search results</p>
+              <>
+                {resultsLoader ? (
+                  <>
+                    <img className="h-40 w-40" src={Loader} alt="Loader" />
+                  </>
+                ) : (
+                  <>
+                    <p className="text-orange-700 mt-16">No search results</p>
+                  </>
+                )}
+              </>
             )}
           </div>
         )
