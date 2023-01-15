@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { CarparkContext } from '../Context/CarparkContext';
 
 import { GiHamburgerMenu } from 'react-icons/gi';
@@ -27,14 +27,19 @@ function SearchPage() {
   const [nightParking, setNightParking] = useState(false); //Night Parking
   const [resultsLoader, setResultsLoader] = useState(false);
   const [searchResultLocation, setSearchResultLocation] = useState('');
+  const [copyArray, setCopyArray] = useState([]);
+
+  useEffect(() => {
+    setCopyArray(results);
+  }, [results]);
 
   // Pagination Logic
   const [numOfCpPerPage, setNumOfCpPerPage] = useState(10);
   const [page, setPage] = useState(1);
   const lastIndex = page * numOfCpPerPage;
   const firstIndex = lastIndex - numOfCpPerPage;
-  const carparksShownOnPage = results?.slice(firstIndex, lastIndex);
-  const totalPages = Math.ceil(results.length / numOfCpPerPage);
+  const carparksShownOnPage = copyArray?.slice(firstIndex, lastIndex);
+  const totalPages = Math.ceil(copyArray.length / numOfCpPerPage);
 
   // Pagination Change page
   const changePage = (number) => {
@@ -63,6 +68,7 @@ function SearchPage() {
     console.log(filteredList);
     setResults(filteredList);
     setResultsLoader(false);
+    setPage(1);
     setSearchResultLocation(user.location);
   };
 
@@ -100,6 +106,7 @@ function SearchPage() {
         console.log(filterCarparksByDist);
         setResults(() => [...filterCarparksByDist]);
         setResultsLoader(false);
+        setPage(1);
         setQuery('');
       }
     } catch (e) {
@@ -275,6 +282,7 @@ function SearchPage() {
                   results={results}
                   totalPages={totalPages}
                   page={page}
+                  setCopyArray={setCopyArray}
                 />
               </>
             ) : (

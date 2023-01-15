@@ -1,9 +1,130 @@
+import { useEffect, useState } from 'react';
+
+import { FaSort } from 'react-icons/fa';
 import { GoLocation } from 'react-icons/go';
 
-function Table({ results, carparksShownOnPage, totalPages, page }) {
+function Table({
+  results,
+  carparksShownOnPage,
+  totalPages,
+  page,
+  setCopyArray,
+}) {
+  const [switchDist, setSwitchDist] = useState(false);
+  const [switchLots, setSwitchLots] = useState(false);
+  const [switchTotalLots, setSwitchTotalLots] = useState(false);
   const classNameForCol =
     'text-sm text-gray-900 font-medium px-6 py-4 whitespace-nowrap';
   const classNameForTh = 'text-sm font-medium text-white px-8 py-4';
+
+  // Carparks in Desc order based on dist
+  const sortDistanceDesc = () => {
+    const newArr = [...results];
+    setCopyArray([...newArr.sort((a, b) => b.distance - a.distance)]);
+  };
+
+  // Carparks in Asc order based on dist
+  const sortDistanceAsc = () => {
+    const newArr = [...results];
+    setCopyArray([...newArr.sort((a, b) => a.distance - b.distance)]);
+  };
+
+  // If switchDist is true, sort dist by Desc, else sort dist by Asc
+  const toggleDistSort = () => {
+    if (switchDist) {
+      return sortDistanceDesc();
+    } else {
+      return sortDistanceAsc();
+    }
+  };
+
+  // Click to toggle switchDist between true or false
+  const switchToggleForDist = () => {
+    setSwitchDist((prev) => !prev);
+  };
+
+  // UseEffect as EventListener to trigger dist sort upon change of switchDist
+  useEffect(() => {
+    toggleDistSort();
+  }, [switchDist]);
+
+  // Sort Lots by Asc
+  const sortLotsByLowest = () => {
+    const newArr = [...results];
+    setCopyArray(() => [
+      ...newArr.sort(
+        (a, b) =>
+          Number(a.carpark_info[0].lots_available) -
+          Number(b.carpark_info[0].lots_available)
+      ),
+    ]);
+  };
+
+  // Sort Lots by Desc
+  const sortLotsByHighest = () => {
+    const newArr = [...results];
+    setCopyArray(() => [
+      ...newArr.sort(
+        (a, b) =>
+          Number(b.carpark_info[0].lots_available) -
+          Number(a.carpark_info[0].lots_available)
+      ),
+    ]);
+  };
+
+  // Toggle sort functions
+  const toggleSortLots = () => {
+    if (switchLots) {
+      return sortLotsByLowest();
+    } else {
+      return sortLotsByHighest();
+    }
+  };
+
+  // Click to toggle true or false
+  const switchToggleForLots = () => {
+    setSwitchLots((prev) => !prev);
+  };
+
+  useEffect(() => {
+    toggleSortLots();
+  }, [switchLots]);
+
+  const sortTotalLotsByDesc = () => {
+    const newArr = [...results];
+    setCopyArray([
+      ...newArr.sort(
+        (a, b) => a.carpark_info[0].total_lots - b.carpark_info[0].total_lots
+      ),
+    ]);
+  };
+
+  const sortTotalLotsByAsc = () => {
+    const newArr = [...results];
+    setCopyArray([
+      ...newArr.sort(
+        (a, b) => b.carpark_info[0].total_lots - a.carpark_info[0].total_lots
+      ),
+    ]);
+  };
+
+  // switchTotalLots, setSwitchTotalLots
+
+  const toggleTotalLots = () => {
+    if (switchTotalLots) {
+      return sortTotalLotsByDesc();
+    } else {
+      return sortTotalLotsByAsc();
+    }
+  };
+
+  const toggleSwitchTotalLots = () => {
+    setSwitchTotalLots((prev) => !prev);
+  };
+
+  useEffect(() => {
+    toggleTotalLots();
+  }, [switchTotalLots]);
 
   return (
     <div className="m-h-[320px] h-[680px]">
@@ -12,9 +133,33 @@ function Table({ results, carparksShownOnPage, totalPages, page }) {
           <tr>
             <th className={classNameForTh}>CP</th>
             <th className={classNameForTh}>Address</th>
-            <th className={classNameForTh}>Distance</th>
-            <th className={classNameForTh}>Lots available</th>
-            <th className={classNameForTh}>Total lots</th>
+            <th
+              onClick={switchToggleForDist}
+              className={`${classNameForTh} cursor-pointer`}
+            >
+              <div className="flex items-baseline justify-center">
+                Distance
+                <FaSort size={18} className="pt-1" />
+              </div>
+            </th>
+            <th
+              onClick={switchToggleForLots}
+              className={`${classNameForTh} cursor-pointer`}
+            >
+              <div className="flex items-baseline justify-center">
+                Lots available
+                <FaSort size={18} className="pt-1" />
+              </div>
+            </th>
+            <th
+              onClick={toggleSwitchTotalLots}
+              className={`${classNameForTh} cursor-pointer`}
+            >
+              <div className="flex items-baseline justify-center">
+                Total lots
+                <FaSort size={18} className="pt-1" />
+              </div>
+            </th>
             <th className={classNameForTh}>Last updated</th>
             <th className={classNameForTh}>Time</th>
             <th className={classNameForTh}>Free parking</th>
@@ -36,7 +181,7 @@ function Table({ results, carparksShownOnPage, totalPages, page }) {
                 <td className={classNameForCol}>
                   <div className="flex items-baseline gap-2 cursor-pointer">
                     <GoLocation color={'red'} size={18} />
-                    {item.address.replace('BLK', '')}
+                    {item.address.replace('BLK', '').substring(0, 25)}
                   </div>
                 </td>
                 <td className={classNameForCol}>{item.distance} KM</td>
