@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styles from "./Table.module.css";
 
-function Table({ results, copyArray, setCopyArray }) {
+function Table({ results, carparksShownOnPage, copyArray, setCopyArray }) {
   
   const sortDistanceDesc = () => {
     const newArr = [...results];
@@ -32,7 +32,7 @@ function Table({ results, copyArray, setCopyArray }) {
   };
   return (
     <div>
-      <table id="myTable" className={styles.table}>
+      <table className={styles.table}>
         <thead>
           <tr>
             <th>Carpark number</th>

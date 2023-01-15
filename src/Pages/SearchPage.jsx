@@ -3,15 +3,35 @@ import { CarparkContext } from '../Context/CarparkContext';
 import Loading_icon from '../images/spinner.gif';
 import * as geolib from 'geolib';
 import axios from 'axios';
+
+import Dropdown from "../components/Dropdown";
+import Checkbox from "../components/Checkbox.jsx";
+import Pagination from "../components/Pagination";
 import Table from "../components/Table";
 
-const BASE_URL = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
+const BASE_URL = "https://maps.googleapis.com/maps/api/geocode/json?address=";
 
 function SearchPage() {
   const { user, isLoading, carparks } = useContext(CarparkContext); // states from context
   const [results, setResults] = useState([]); // New list of carparks with distances
   const [preferredDist, setPreferredDist] = useState(1); // User's choice of distance radius
-  const [query, setQuery] = useState(''); // Search field query entered by user
+  const [query, setQuery] = useState(""); // Search field query entered by user
+  const [selected, setSelected] = useState(null); //  //Dropdown List
+  const [freeParking, setFreeParking] = useState(false); //Free Parking
+  const [nightParking, setNightParking] = useState(false); //Night Parking
+
+  // Pagination Logic
+  const [numOfCpPerPage, setNumOfCpPerPage] = useState(10);
+  const [page, setPage] = useState(1);
+  const lastIndex = page * numOfCpPerPage;
+  const firstIndex = lastIndex - numOfCpPerPage;
+  const carparksShownOnPage = results?.slice(firstIndex, lastIndex);
+  const totalPages = Math.ceil(results.length / numOfCpPerPage);
+
+  // Pagination Change page
+  const changePage = (number) => {
+    setPage(number);
+  };
 
   const [ copyArray, setCopyArray] = useState([]);
 
@@ -30,9 +50,14 @@ function SearchPage() {
       const newObj = { ...item, distance: distance };
       return newObj;
     });
+
+    //filter functions
     const filteredList = userCarparks
       .filter((item) => item.distance < preferredDist)
+      .filter((item) => (freeParking ? item.free_parking !== "NO" : true))
+      .filter((item) => (nightParking ? item.night_parking !== "NO" : true))
       .sort((a, b) => a.distance - b.distance);
+
     console.log(filteredList);
     setResults(filteredList);
   };
@@ -45,29 +70,63 @@ function SearchPage() {
   // Load Carparks based on user search
   const searchCp = async () => {
     try {
+      // filter distance
       const response = await axios.get(
         `${BASE_URL}${query}+singapore&key=${process.env.REACT_APP_API_KEY}`
       );
       const coords = response.data.results[0]?.geometry?.location;
-      if (coords.hasOwnProperty('lat')) {
+      if (coords.hasOwnProperty("lat")) {
         const carparkList = carparks.map((item) => {
           const dist =
             geolib.getDistance(coords, { lat: item.lat, lon: item.lon }) / 1000;
           return { ...item, distance: dist };
         });
+
+        //filter functions
         const filterCarparksByDist = carparkList
           .filter((item) => item.distance < preferredDist)
-          .sort((a, b) => a.distance - b.distance);
-        
+          .sort((a, b) => a.distance - b.distance)
+          .filter((item) => (freeParking ? item.free_parking !== "NO" : true))
+          .filter((item) =>
+            nightParking ? item.night_parking !== "NO" : true
+          );
+
         console.log(filterCarparksByDist);
         setResults(() => [...filterCarparksByDist]);
-        setQuery('');
+        setQuery("");
       }
     } catch (e) {
       console.log(e.message);
     }
   const newResults = [...results]
 
+  };
+
+  //setState for filtering distance
+  const handleSelect = (option) => {
+    setSelected(option);
+    setPreferredDist(option.value);
+  };
+
+  // filter options
+  const options = [
+    { label: "Within 1 KM", value: "1" },
+    { label: "Within 2 KM", value: "2" },
+    { label: "Within 3 KM", value: "3" },
+    { label: "Within 4 KM", value: "4" },
+    { label: "Within 5 KM", value: "5" },
+    { label: "Within 6 KM", value: "6" },
+    { label: "Within 7 KM", value: "7" },
+    { label: "Within 8 KM", value: "8" },
+    { label: "Within 9 KM", value: "9" },
+    { label: "Within 10 KM", value: "10" },
+  ];
+  //setState for Free and Night Parking
+  const handleFreeParkingChange = () => {
+    setFreeParking((prev) => !prev);
+  };
+  const handleNightParkingChange = () => {
+    setNightParking((prev) => !prev);
   };
 
   return (
@@ -82,7 +141,7 @@ function SearchPage() {
             <div className="flex flex-col justify-center items-center">
               <h1 className="text-4xl font-bold mb-4">Search for Carparks</h1>
               <p>
-                Hello,{' '}
+                Hello,{" "}
                 <span className="font-bold text-xl text-orange-400">
                   {user.name}
                 </span>
@@ -147,7 +206,31 @@ function SearchPage() {
               Here are where the search filters are i.e. distance radius, free
               parking...
             </div>
-            <Table results={results} copyArray={copyArray} setCopyArray={setCopyArray}/>
+            <Dropdown
+              options={options}
+              value={selected}
+              onChange={handleSelect}
+            />
+            <Checkbox
+              label="Free Parking"
+              handleChange={handleFreeParkingChange}
+            />
+            <Checkbox
+              label="Night Parking"
+              handleChange={handleNightParkingChange}
+            />
+            <Pagination
+              results={results}
+              totalPages={totalPages}
+              changePage={changePage}
+              page={page}
+            />
+            <Table
+              carparksShownOnPage={carparksShownOnPage}
+              results={results}
+              copyArray={copyArray} 
+              setCopyArray={setCopyArray}
+            />
           </div>
         )
       )}

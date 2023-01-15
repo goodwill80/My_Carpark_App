@@ -7,8 +7,8 @@
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
   }
   .table thead tr {
-    background-color: #007a98;
-    color: #ffffff;
+    background-color: #007A98;
+    color: #FFFFFF;
     text-align: left;
   }
   .table th,
@@ -16,13 +16,11 @@
       padding: 12px 15px;
   }
   .table tbody tr {
-    border-bottom: 1px solid #dddddd;
+    border-bottom: 1px solid #DDDDDD;
   }
-  
   .table tbody tr:nth-of-type(even) {
-    background-color: #f3f3f3;
+    background-color: #F3F3F3;
   }
-  
   .table tbody tr:last-of-type {
     border-bottom: 2px solid #009879;
   }
