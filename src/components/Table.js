@@ -209,7 +209,11 @@ function Table({
                 <td className={classNameForCol}>
                   {item.update_datetime.substring(11, 19)}
                 </td>
-                <td className={classNameForCol}>{item.free_parking}</td>
+                <td className={classNameForCol}>
+                  {item.free_parking === 'SUN & PH FR 7AM-10.30PM'
+                    ? 'ONLY SUN & PH'
+                    : item.free_parking}
+                </td>
                 <td className={classNameForCol}>{item.night_parking}</td>
                 <td
                   className="text-sm text-gray-900 font-medium px-6 py-4 whitespace-nowrap cursor-pointer"
