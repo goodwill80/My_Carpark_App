@@ -14,7 +14,7 @@ function Pagination({ totalPages, changePage, page }) {
           </div>
         ))}
       </div>
-      <p className="mt-2 font-bold text-gray-500">
+      <p className="mt-2 font-bold text-gray-500 mb-4">
         Page {page} of {totalPages}
       </p>
     </div>

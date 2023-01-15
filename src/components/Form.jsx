@@ -104,6 +104,27 @@ function Form({ getUserData, setSignIn }) {
           />
         </div>
 
+        <div className="flex items-baseline gap-3 form-group form-check text-center mb-6">
+          <input
+            // onChange={handleAgreement}
+            // checked={agree}
+            name="agree"
+            type="checkbox"
+            className="form-check-input appearance-none h-4 w-8 border border-gray-300 rounded-sm bg-white checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition duration-200 mt-1 align-top bg-no-repeat bg-center bg-contain mr-2 cursor-pointer"
+            id="exampleCheck96"
+          />
+
+          <label
+            className="form-check-label inline-block text-gray-800"
+            htmlFor="exampleCheck96"
+          >
+            <p className="text-left font-semibold text-sm">
+              I have read and agree to the terms of releasing my current
+              location infomation
+            </p>
+          </label>
+        </div>
+
         <button
           type="submit"
           className="btn btn-info mt-8 w-[100%] hover:bg-blue-500 hover:text-white"

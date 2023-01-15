@@ -174,82 +174,86 @@ function SearchPage() {
                 {user.location}
               </p>
             </div>
-            <div>
-              <h1 className="text-2xl text-orange-400 font-semibold mt-2 text-center">
-                What would you like to do today?
-              </h1>
-            </div>
-            <div className="flex flex-col justify-center gap-6 mb-3 md:flex-row md:items-baseline">
-              {/* 1. USER SERACH CP FROM OWN LOCATION */}
-              <div className="flex flex-col justify-center items-center gap-2">
-                <h1 className="text-teal-700 font-semibold text-lg">
-                  Find carparks near you!
+            <div className="flex flex-col justify-center items-center py-4 rounded-md sm:px-40 lg:pb-8 lg:shadow-xl md:w-[80vw]">
+              <div>
+                <h1 className="text-2xl text-orange-400 font-semibold text-center">
+                  What would you like to do today?
                 </h1>
-                <button
-                  className="btn btn-success btn-outline btn-sm h-[50px] w-[265px]"
-                  onClick={loadCarParks}
-                >
-                  Generate nearest Carparks
-                </button>
               </div>
-
-              <div className="flex flex-col justify-center items-center">
-                <h1 className="font-bold text-3xl">OR</h1>
-              </div>
-
-              {/* 2. USER TYPE IN SEARCH FIELD and SEARCH for CP */}
-              <div className="flex flex-col justify-center items-center gap-2">
-                <h1 className="text-teal-700 font-semibold text-lg">
-                  Search other locations!
-                </h1>
-                {/* Search Form Input field */}
-                <div className="input-group flex justify-center">
-                  <input
-                    name={query}
-                    value={query}
-                    onChange={searchHandler}
-                    type="text"
-                    placeholder="Type in steet name…"
-                    className="input input-bordered"
-                  />
-                  <button onClick={searchCp} className="btn btn-success">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-6 w-6"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                      />
-                    </svg>
+              <div className="flex flex-col justify-center gap-4 mt-4 mb-3 md:flex-row md:items-baseline">
+                {/* 1. USER SERACH CP FROM OWN LOCATION */}
+                <div className="flex flex-col justify-center items-center gap-2">
+                  <h1 className="text-teal-700 font-semibold text-lg">
+                    Find carparks near you!
+                  </h1>
+                  <button
+                    className="btn btn-success btn-outline btn-sm h-[50px] w-[275px]"
+                    onClick={loadCarParks}
+                  >
+                    Generate nearest Carparks
                   </button>
                 </div>
+
+                <div className="flex flex-col justify-center items-center">
+                  <h1 className="font-bold text-3xl">OR</h1>
+                </div>
+
+                {/* 2. USER TYPE IN SEARCH FIELD and SEARCH for CP */}
+                <div className="flex flex-col justify-center items-center gap-2">
+                  <h1 className="text-teal-700 font-semibold text-lg">
+                    Search other locations!
+                  </h1>
+                  {/* Search Form Input field */}
+                  <div className="input-group flex justify-center">
+                    <input
+                      name={query}
+                      value={query}
+                      onChange={searchHandler}
+                      type="text"
+                      placeholder="Type in steet name…"
+                      className="input input-bordered w-[230px]"
+                    />
+                    <button onClick={searchCp} className="btn btn-success">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-6 w-6"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
+              {/* FILTERS FOR USERS */}
+              <div className="py-4">
+                <Dropdown
+                  options={options}
+                  value={selected}
+                  onChange={handleSelect}
+                />
+              </div>
+
+              <div className="flex justify-center items-center gap-4">
+                <Checkbox
+                  label="Free Parking"
+                  handleChange={handleFreeParkingChange}
+                  value={freeParking}
+                />
+                <Checkbox
+                  label="Night Parking"
+                  handleChange={handleNightParkingChange}
+                  value={nightParking}
+                />
               </div>
             </div>
-            {/* FILTERS FOR USERS */}
-            <Dropdown
-              options={options}
-              value={selected}
-              onChange={handleSelect}
-            />
-            <div className="flex justify-center items-center gap-4">
-              <Checkbox
-                label="Free Parking"
-                handleChange={handleFreeParkingChange}
-                value={freeParking}
-              />
-              <Checkbox
-                label="Night Parking"
-                handleChange={handleNightParkingChange}
-                value={nightParking}
-              />
-            </div>
-
             {results.length > 0 ? (
               <>
                 <p className="text-md text-gray-400 text-center">
