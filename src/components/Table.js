@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { FaSort } from 'react-icons/fa';
 import { GoLocation } from 'react-icons/go';
+import { RiDeleteBin6Line } from 'react-icons/ri';
 
 function Table({
   results,
@@ -216,10 +217,10 @@ function Table({
                 </td>
                 <td className={classNameForCol}>{item.night_parking}</td>
                 <td
-                  className="text-sm text-gray-900 font-medium px-6 py-4 whitespace-nowrap cursor-pointer"
+                  className="text-sm text-gray-900 font-medium px-6 py-4 whitespace-nowrap cursor-pointer text-center"
                   onClick={() => handlerDelete(item.carpark_number)}
                 >
-                  ❌
+                  <RiDeleteBin6Line size={20} color={'red'} />
                 </td>
               </tr>
             </>
