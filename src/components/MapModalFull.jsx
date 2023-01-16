@@ -32,8 +32,6 @@ function MapModalFull({ results, user, triggerZoom, querySearchCoords }) {
     []
   );
 
-  console.log(user);
-
   const openInfo = (item) => {
     setSelectedMarker(item);
   };
@@ -52,6 +50,7 @@ function MapModalFull({ results, user, triggerZoom, querySearchCoords }) {
       <input type="checkbox" id="my-modal" className="modal-toggle" />
       <div className="modal">
         <div className="modal-box h-[100vh] w-[100vw] max-w-7xl flex flex-col justify-center items-center">
+          <h1 className="text-2xl pb-2 font-bold text-teal-600">Map view</h1>
           <GoogleMap
             center={center}
             zoom={zoom}
@@ -121,7 +120,7 @@ function MapModalFull({ results, user, triggerZoom, querySearchCoords }) {
                   <div className="flex flex-col justify-center items-center">
                     <h1>{selectedMarker.address}</h1>
                     <p>CP {selectedMarker.car_park_no}</p>
-                    <p>{selectedMarker.distance}km from target location</p>
+                    <p>{selectedMarker.distance}km from searched location</p>
                     <p>
                       {selectedMarker.carpark_info[0].lots_available} lots
                       available
@@ -156,7 +155,7 @@ function MapModalFull({ results, user, triggerZoom, querySearchCoords }) {
             <p>Back</p>
           </div>
           <div className="modal-action">
-            <label htmlFor="my-modal" className="btn">
+            <label htmlFor="my-modal" className="btn btn-success">
               Close
             </label>
           </div>

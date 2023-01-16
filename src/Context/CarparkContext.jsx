@@ -2,6 +2,8 @@ import { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 import { SVY21 } from '../svy21.js';
 
+import Swal from 'sweetalert2';
+
 let cv = new SVY21();
 
 // CP API with lots availability but no addresses (it contains carpark number)
@@ -15,19 +17,22 @@ const API_KEY = process.env.REACT_APP_API_KEY;
 
 export const CarparkContext = createContext();
 
+const initialUserState = {
+  name: '',
+  email: '',
+  agree: false,
+  coordinates: {},
+  raw_data: {},
+  location: '', // in string
+};
+
 function CarparkContextProvider({ children }) {
   const [carparks, setCarparks] = useState();
-  const [user, setUser] = useState({
-    name: '',
-    email: '',
-    agree: false,
-    coordinates: {},
-    raw_data: {},
-    location: '', // in string
-  });
+  const [user, setUser] = useState(initialUserState);
   const [isLoading, setIsLoading] = useState(true);
   const [signIn, setSignIn] = useState(false);
   const [triggerZoom, setTriggerZoom] = useState(false);
+  const [openSideBar, setOpenSideBar] = useState(false);
 
   useEffect(() => {
     fetchCarparks();
@@ -114,6 +119,19 @@ function CarparkContextProvider({ children }) {
     }
   };
 
+  const signout = () => {
+    setSignIn(() => false);
+    setIsLoading(true);
+    setUser(() => initialUserState);
+    setOpenSideBar(false);
+    Swal.fire({
+      title: 'You have signed out successfully!',
+      text: 'You are most welcome back again!',
+      icon: 'success',
+      confirmButtonText: 'Great!',
+    });
+  };
+
   const context = {
     carparks,
     getUserData,
@@ -124,6 +142,10 @@ function CarparkContextProvider({ children }) {
     setSignIn,
     triggerZoom,
     setTriggerZoom,
+    signout,
+    openSideBar,
+    setOpenSideBar,
+    fetchCarparks,
   };
 
   return (

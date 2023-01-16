@@ -74,6 +74,12 @@ function Form({ getUserData, setSignIn }) {
       return user;
     } else {
       const errorData = {};
+      Swal.fire({
+        title: 'Error!',
+        text: 'Please complete all fields, on check on user agreement',
+        icon: 'error',
+        confirmButtonText: 'Okay!',
+      });
       for (let item of error.details) {
         const name = item.path[0];
         const message = item.message;
@@ -82,12 +88,6 @@ function Form({ getUserData, setSignIn }) {
       setError(errorData);
       console.log(errorData);
 
-      Swal.fire({
-        title: 'Error!',
-        text: 'Please complete all fields, on check on user agreement',
-        icon: 'error',
-        confirmButtonText: 'Okay!',
-      });
       return errorData;
     }
   };

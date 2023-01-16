@@ -6,9 +6,7 @@ import CarparkContextProvider from './Context/CarparkContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <CarparkContextProvider>
-      <App />
-    </CarparkContextProvider>
-  </React.StrictMode>
+  <CarparkContextProvider>
+    <App />
+  </CarparkContextProvider>
 );
