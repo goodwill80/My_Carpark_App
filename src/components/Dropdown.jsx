@@ -53,7 +53,7 @@ function Dropdown({ options, value, onChange }) {
   return (
     <div
       ref={divEl}
-      className="w-56 relative shadow-lg border rounded-md border-green-500 hover:border-emerald-300 text-teal-400 font-semibold text-center"
+      className="z-[1] w-56 relative shadow-lg border rounded-md border-green-500 hover:border-emerald-300 text-teal-400 font-semibold text-center"
     >
       <Panel
         className="flex justify-start items center cursor-pointer"

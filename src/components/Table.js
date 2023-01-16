@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 
 import { FaSort } from 'react-icons/fa';
-import { GoLocation } from 'react-icons/go';
-import { RiDeleteBin6Line } from 'react-icons/ri';
+
+import Row from './Row';
 
 function Table({
   results,
@@ -11,13 +11,19 @@ function Table({
   page,
   copyArray,
   setCopyArray,
+  setPage,
 }) {
   const [switchDist, setSwitchDist] = useState(false);
   const [switchLots, setSwitchLots] = useState(false);
   const [switchTotalLots, setSwitchTotalLots] = useState(false);
-  const classNameForCol =
-    'text-sm text-gray-900 font-medium px-6 py-4 whitespace-nowrap';
+
   const classNameForTh = 'text-sm font-medium text-white px-8 py-4';
+
+  useEffect(() => {
+    if (carparksShownOnPage.length <= 0) {
+      setPage(1);
+    }
+  }, [carparksShownOnPage.length]);
 
   const handlerDelete = (code) => {
     const filteredResult2 = copyArray.filter(
@@ -117,8 +123,6 @@ function Table({
     ]);
   };
 
-  // switchTotalLots, setSwitchTotalLots
-
   const toggleTotalLots = () => {
     if (switchTotalLots) {
       return sortTotalLotsByDesc();
@@ -140,7 +144,7 @@ function Table({
       <table className="min-w-full w-full text-center shadow-lg">
         <thead className="border-b bg-gray-800 boder-gray-900 text-left">
           <tr>
-            <th className={classNameForTh}>CP</th>
+            <th className={`${classNameForTh} hidden md:table-cell`}>CP</th>
             <th className={classNameForTh}>Address</th>
             <th
               onClick={switchToggleForDist}
@@ -155,74 +159,57 @@ function Table({
               onClick={switchToggleForLots}
               className={`${classNameForTh} cursor-pointer`}
             >
-              <div className="flex items-baseline justify-center">
-                Lots available
+              <div className="flex items-center justify-center">
+                <p>Lots available</p>
                 <FaSort size={18} className="pt-1" />
               </div>
             </th>
             <th
               onClick={toggleSwitchTotalLots}
-              className={`${classNameForTh} cursor-pointer`}
+              className={`${classNameForTh} cursor-pointer hidden lg:table-cell`}
             >
-              <div className="flex items-baseline justify-center">
-                Total lots
-                <FaSort size={18} className="pt-1" />
+              <div className="items-baseline justify-center">
+                <div className="flex justify-center items-center">
+                  <p>Total lots</p>
+                  <FaSort size={18} className="pt-1" />
+                </div>
               </div>
             </th>
-            <th className={classNameForTh}>Last updated</th>
-            <th className={classNameForTh}>Time</th>
-            <th className={classNameForTh}>Free parking</th>
-            <th className={classNameForTh}>Night parking</th>
-            <td className={classNameForTh}>Delete</td>
+            <th className={`${classNameForTh} hidden lg:table-cell`}>
+              Last updated
+            </th>
+            <th className={`${classNameForTh} hidden lg:table-cell`}>Time</th>
+            <th className={`${classNameForTh} hidden lg:table-cell`}>
+              Free parking
+            </th>
+            <th className={`${classNameForTh} hidden lg:table-cell`}>
+              Night parking
+            </th>
+            <td className={`${classNameForTh} hidden sm:table-cell`}>Delete</td>
           </tr>
         </thead>
         <tbody>
           {carparksShownOnPage.map((item, i) => (
             <>
-              <tr
+              <Row
                 key={i}
-                className={`border-b text-left  ${
-                  i % 2
-                    ? 'bg-blue-100 border-blue-200'
-                    : 'bg-green-100 border-green-200'
-                } `}
-              >
-                <td className={classNameForCol}>{item.carpark_number}</td>
-                <td className={classNameForCol}>
-                  <div className="flex items-baseline gap-2 cursor-pointer">
-                    <GoLocation color={'red'} size={18} />
-                    {item.address.replace('BLK', '').substring(0, 15)}
-                  </div>
-                </td>
-                <td className={classNameForCol}>{item.distance} KM</td>
-                <td className="text-sm text-gray-900 font-bold text-center px-6 py-4 whitespace-nowrap bg-sky-300 border-b-2 border-blue-300">
-                  <font color={item.colour}>
-                    {item.carpark_info[0].lots_available}
-                  </font>
-                </td>
-
-                <td className={classNameForCol}>
-                  {item.carpark_info[0].total_lots}
-                </td>
-                <td className={classNameForCol}>
-                  {item.update_datetime.substring(0, 10)}
-                </td>
-                <td className={classNameForCol}>
-                  {item.update_datetime.substring(11, 19)}
-                </td>
-                <td className={classNameForCol}>
-                  {item.free_parking === 'SUN & PH FR 7AM-10.30PM'
-                    ? 'ONLY SUN & PH'
-                    : item.free_parking}
-                </td>
-                <td className={classNameForCol}>{item.night_parking}</td>
-                <td
-                  className="text-sm text-gray-900 font-medium px-6 py-4 whitespace-nowrap cursor-pointer text-center"
-                  onClick={() => handlerDelete(item.carpark_number)}
-                >
-                  <RiDeleteBin6Line size={20} color={'red'} />
-                </td>
-              </tr>
+                index={i}
+                carpark_number={item.carpark_number}
+                id={item._id}
+                address={item.address}
+                lat={item.lat}
+                lon={item.lon}
+                lots={item.carpark_info[0].lots_available}
+                total_lots={item.carpark_info[0].total_lots}
+                free_parking={item.free_parking}
+                distance={item.distance}
+                colour={item.colour}
+                year={item.update_datetime.substring(0, 10)}
+                time={item.update_datetime.substring(11, 19)}
+                night_parking={item.night_parking}
+                handlerDelete={handlerDelete}
+                results={results}
+              />
             </>
           ))}
         </tbody>
