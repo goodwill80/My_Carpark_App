@@ -6,6 +6,7 @@ import { GiHamburgerMenu } from 'react-icons/gi';
 import Loading_icon from '../images/signal.gif';
 import Loader from '../images/spinner.gif';
 import HDB from '../images/HDB.png';
+import Logo from '../images/Logo.png';
 
 import * as geolib from 'geolib';
 import axios from 'axios';
@@ -181,7 +182,7 @@ function SearchPage() {
       {/* HAMBURGER */}
       {!isLoading && (
         <div className="sticky top-0">
-          <div className="absolute top-0 right-0 p-4 cursor-pointer">
+          <div className="absolute top-3 right-4 p-4 cursor-pointer">
             <GiHamburgerMenu
               onClick={() => setOpenSideBar(true)}
               size={34}
@@ -192,8 +193,8 @@ function SearchPage() {
       )}
       {/* HDB LOGO */}
 
-      <div className="absolute top-0 left-3 p-8 cursor-pointer w-[40%] sm:w-[30%] md:w-[25%] lg:w-[20%]">
-        <img src={HDB} alt="HDB" />
+      <div className="absolute top-0 left-3 p-2 cursor-pointer w-[55%] sm:w-[40%] md:w-[40%] lg:w-[25%]">
+        <img className="mix-blend-multiply" src={Logo} alt="logo" />
       </div>
       <SideBar setResults={setResults} user={user} />
 
