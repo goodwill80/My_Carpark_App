@@ -12,6 +12,7 @@ import Layout from './Layouts/Layout';
 import SearchPage from './Pages/SearchPage';
 import HomePage from './Pages/HomePage';
 import PassengerLandingPage from './Pages/PassengerLandingPage';
+import HelpLanding from './Pages/HelpLandingPage';
 
 import { CarparkContext } from './Context/CarparkContext';
 
@@ -27,7 +28,11 @@ function App() {
             path="/search"
             element={!signIn ? <Navigate to="/" /> : <SearchPage />}
           />
-          <Route path="/passenger/:driveraddress/:drivername" element={<PassengerLandingPage />} />
+          <Route
+            path="/passenger/:driveraddress/:drivername"
+            element={<PassengerLandingPage />}
+          />
+          <Route path="/help/:userlocale/:username" element={<HelpLanding />} />
         </Routes>
       </Layout>
     </Router>

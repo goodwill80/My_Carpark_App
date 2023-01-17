@@ -76,7 +76,7 @@ function Form({ getUserData, setSignIn }) {
       const errorData = {};
       Swal.fire({
         title: 'Error!',
-        text: 'Please complete all fields, on check on user agreement',
+        text: 'Please complete all fields, and check on user agreement',
         icon: 'error',
         confirmButtonText: 'Okay!',
       });

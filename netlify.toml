@@ -1,0 +1,4 @@
+[build]
+CI= 'npm run build'
+functions = 'functions'
+publish = 'build'

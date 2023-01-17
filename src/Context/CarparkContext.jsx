@@ -7,13 +7,12 @@ import Swal from 'sweetalert2';
 let cv = new SVY21();
 
 // CP API with lots availability but no addresses (it contains carpark number)
-const BASE_URL = 'https://api.data.gov.sg/v1/transport/carpark-availability';
+const BASE_URL = '/.netlify/functions/carparkAvailApi';
 
 // CP API with Addresses and Coordinates but no lots availability (it contains carpark number)
-const BASE_URL2 =
-  'https://data.gov.sg/api/action/datastore_search?resource_id=139a3035-e624-4f56-b63f-89ae28d4ae4c&limit=3000&q=';
+const BASE_URL2 = '/.netlify/functions/carparkAddrApi';
 
-const API_KEY = process.env.REACT_APP_API_KEY;
+// 'https://data.gov.sg/api/action/datastore_search?resource_id=139a3035-e624-4f56-b63f-89ae28d4ae4c&limit=3000&q=';
 
 export const CarparkContext = createContext();
 
@@ -44,8 +43,8 @@ function CarparkContextProvider({ children }) {
         axios.get(BASE_URL),
         axios.get(BASE_URL2),
       ]);
-      const carparkWithLots = res1.data.items[0].carpark_data; // [ {}, {}]
-      const carparkWithAddr = res2.data.result.records; // [ {}, {}]
+      const carparkWithLots = res1.data; // [ {}, {}]
+      const carparkWithAddr = res2.data; // [ {}, {}]
 
       const merge = carparkWithLots.map((item) => {
         const findMatching = carparkWithAddr.find(
@@ -84,9 +83,9 @@ function CarparkContextProvider({ children }) {
       const latitude = location.coords.latitude;
       const longitude = location.coords.longitude;
       const response = await axios.get(
-        `https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=${API_KEY}`
+        `/.netlify/functions/geocodeLatLngApi?latitude=${latitude}&&longtitude=${longitude}`
       );
-      const address = response.data.results[0].formatted_address;
+      const address = response.data;
       setUser((prev) => {
         return { ...prev, location: address };
       });

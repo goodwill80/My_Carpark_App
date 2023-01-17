@@ -105,9 +105,11 @@ function SearchPage() {
       setResultsLoader(true);
       // filter distance
       const response = await axios.get(
-        `${BASE_URL}${query}+singapore&key=${process.env.REACT_APP_API_KEY}`
+        `/.netlify/functions/geocodeAddrApi?query=${query}`
       );
-      const coords = response.data.results[0]?.geometry?.location;
+      // `${BASE_URL}${query}+singapore&key=${process.env.REACT_APP_API_KEY}`
+
+      const coords = response.data;
       if (coords.hasOwnProperty('lat')) {
         setQuerySearchCoords(coords);
         setSearchResultLocation(query);
@@ -136,7 +138,7 @@ function SearchPage() {
           return { ...item, colour: colourLots };
         });
 
-        console.log(listLotsColour);
+        // console.log(listLotsColour);
         setResults(() => [...listLotsColour]);
         setResultsLoader(false);
         setPage(1);
@@ -145,8 +147,6 @@ function SearchPage() {
     } catch (e) {
       console.log(e.message);
     }
-  const newResults = [...results]
-
   };
 
   //setState for filtering distance
@@ -157,16 +157,16 @@ function SearchPage() {
 
   // filter options
   const options = [
-    { label: "Within 1 KM", value: "1" },
-    { label: "Within 2 KM", value: "2" },
-    { label: "Within 3 KM", value: "3" },
-    { label: "Within 4 KM", value: "4" },
-    { label: "Within 5 KM", value: "5" },
-    { label: "Within 6 KM", value: "6" },
-    { label: "Within 7 KM", value: "7" },
-    { label: "Within 8 KM", value: "8" },
-    { label: "Within 9 KM", value: "9" },
-    { label: "Within 10 KM", value: "10" },
+    { label: 'Within 1 KM', value: '1' },
+    { label: 'Within 2 KM', value: '2' },
+    { label: 'Within 3 KM', value: '3' },
+    { label: 'Within 4 KM', value: '4' },
+    { label: 'Within 5 KM', value: '5' },
+    { label: 'Within 6 KM', value: '6' },
+    { label: 'Within 7 KM', value: '7' },
+    { label: 'Within 8 KM', value: '8' },
+    { label: 'Within 9 KM', value: '9' },
+    { label: 'Within 10 KM', value: '10' },
   ];
   //setState for Free and Night Parking
   const handleFreeParkingChange = () => {
@@ -195,7 +195,7 @@ function SearchPage() {
       <div className="absolute top-0 left-3 p-8 cursor-pointer w-[40%] sm:w-[30%] md:w-[25%] lg:w-[20%]">
         <img src={HDB} alt="HDB" />
       </div>
-      <SideBar setResults={setResults} user={user}/>
+      <SideBar setResults={setResults} user={user} />
 
       {isLoading ? (
         <div className="h-[100vh] flex flex-col justify-center items-center pb-16">

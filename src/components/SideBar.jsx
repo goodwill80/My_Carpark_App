@@ -6,20 +6,22 @@ import ReactWhatsapp from 'react-whatsapp';
 import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { AiOutlineGlobal } from 'react-icons/ai';
 
-function SideBar({user}) {
+import SosHelp from './SosHelp';
+
+function SideBar({ user, setResults }) {
   const [number, setNumber] = useState('');
   const [buttonVisible, setButtonVisible] = useState(false);
 
-  const { signout, openSideBar, setOpenSideBar, setResults } =
-    useContext(CarparkContext);
+  const { signout, openSideBar, setOpenSideBar } = useContext(CarparkContext);
   const redirect = useNavigate();
 
   useEffect(() => {
-  if (number.length >= 8){
-    setButtonVisible(true);
-  } else {
-    setButtonVisible(false);
-  }}, [number]);
+    if (number.length >= 8) {
+      setButtonVisible(true);
+    } else {
+      setButtonVisible(false);
+    }
+  }, [number]);
 
   const logout = () => {
     signout();
@@ -27,9 +29,9 @@ function SideBar({user}) {
     setOpenSideBar(() => false);
 
     redirect('/');
-  }
+  };
 
-  const message = `Hello, I've reached the destination! Please follow this link to find where I'm parked.\n http://localhost:3000/passenger/${user.location}/${user.name}`;
+  const message = `Hello, I've reached the destination! Please click this link to find where I'm parked.\n http://localhost:8888/passenger/${user.location}/${user.name}`;
 
   return (
     <div className="sidebar sticky top-0 min-h-full z-[50] shadow-lg">
@@ -71,26 +73,31 @@ function SideBar({user}) {
               type="text"
               // placeholder="+65"
               value={number}
-              onChange={e => setNumber(e.target.value)}
+              onChange={(e) => setNumber(e.target.value)}
               className="input input-bordered input-primary w-full max-w-xs mt-3 text-gray-500"
             />
             <div className="flex justify-start mt-4 ml-2">
-              {buttonVisible && 
-              <ReactWhatsapp 
-              number={number}
-              message={message}>
-              <p 
-              className="btn btn-success btn-sm">Send</p>
-              </ReactWhatsapp>
-              }
+              {buttonVisible && (
+                <ReactWhatsapp number={number} message={message}>
+                  <p
+                    onClick={() => setNumber('')}
+                    className="btn btn-success btn-sm"
+                  >
+                    Send
+                  </p>
+                </ReactWhatsapp>
+              )}
             </div>
           </div>
-          <button
-            onClick={logout}
-            className="mt-20 p-2 text-white border border-white rounded-md hover:text-green-300 hover:border-green-300"
-          >
-            Sign out
-          </button>
+          <SosHelp user={user} />
+          <div className="flex lg:justify-center lg:items-center">
+            <button
+              onClick={logout}
+              className="mt-8 p-2 text-white border border-white rounded-md hover:text-green-300 hover:border-green-300 md:mt-7"
+            >
+              Sign out
+            </button>
+          </div>
         </nav>
       </div>
     </div>
