@@ -30,8 +30,8 @@ function SideBar({ user, setResults }) {
 
     redirect('/');
   };
-
-  const message = `Hello, I've reached the destination! Please click this link to find where I'm parked.\n https://sensational-zabaione-393a34.netlify.app/passenger/${user.location}/${user.name}`;
+  const userLocation = user.location.replace(/\s/g, '%20');
+  const message = `Hello, I've reached the destination! Please click this link to find where I'm parked.\n https://sensational-zabaione-393a34.netlify.app/passenger/${userLocation}/${user.name}`;
 
   return (
     <div className="sidebar sticky top-0 min-h-full z-[50] shadow-lg">

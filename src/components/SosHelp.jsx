@@ -58,8 +58,8 @@ function SosHelp({ user }) {
     setnominatedPerson(null);
     setTrigger(false);
   };
-
-  const message = `Help! Help! I'm in trouble! Please come find me thru this link - \n https://sensational-zabaione-393a34.netlify.app/help/${user.location}/${user.name}`;
+  const userLocation = user.location.replace(/\s/g, '%20');
+  const message = `Help! Help! I'm in trouble! Please come find me thru this link - \n https://sensational-zabaione-393a34.netlify.app/help/${userLocation}/${user.name}`;
 
   return (
     <div>
