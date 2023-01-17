@@ -157,7 +157,7 @@ function Table({
             </th>
             <th
               onClick={switchToggleForLots}
-              className={`${classNameForTh} cursor-pointer`}
+              className={`${classNameForTh} hidden sm:table-cell`}
             >
               <div className="flex items-center justify-center">
                 <p>Lots available</p>

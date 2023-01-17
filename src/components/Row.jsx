@@ -71,7 +71,7 @@ function Row({
         </td>
         <td className={classNameForCol}>{distance} KM</td>
         <td
-          className={`text-sm text-gray-900 font-bold text-center px-6 py-4 whitespace-nowrap bg-sky-300 border-b-2 border-blue-300`}
+          className={`text-sm text-gray-900 font-medium px-6 py-4 whitespace-nowrap cursor-pointer text-center hidden sm:table-cell`}
         >
           <p
             className={

@@ -182,7 +182,7 @@ function SearchPage() {
       {/* HAMBURGER */}
       {!isLoading && (
         <div className="sticky top-0">
-          <div className="absolute top-2 right-2 md:top-3 md:right-4 p-4 cursor-pointer">
+          <div className="fixed top-0 right-0  p-4 cursor-pointer">
             <GiHamburgerMenu
               onClick={() => setOpenSideBar(true)}
               size={34}
