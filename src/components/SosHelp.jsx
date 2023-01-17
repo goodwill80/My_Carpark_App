@@ -111,10 +111,7 @@ function SosHelp({ user }) {
             HP: {nominatedPerson?.hp.toUpperCase()}
           </p>
           <div className="flex gap-3">
-            <ReactWhatsapp
-              number={`+65${nominatedPerson?.hp}`}
-              message={message}
-            >
+            <ReactWhatsapp number={nominatedPerson?.hp} message={message}>
               <p className="btn btn-error btn-sm">Help!</p>
             </ReactWhatsapp>
             <button onClick={clearNominee} className="btn btn-warning btn-sm">
