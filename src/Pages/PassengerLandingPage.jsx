@@ -43,14 +43,16 @@ function PassengerLandingPage() {
         <img className="mix-blend-multiply" src={signal} alt="signal gif" />
       ) : (
         <>
-          <h1 className="text-4xl font-bold text-red-300">HDB Carpark App</h1>
-          <p className="text-blue-400 text-2xl font-bold">
+          <h1 className="text-4xl font-bold text-red-300 text-center px-3">
+            HDB Carpark App
+          </h1>
+          <p className="text-blue-400 text-2xl font-bold text-center px-4">
             Hello, {drivername} has sent you his/her current position.
           </p>
-          <p className="text-md text-semibold">
+          <p className="text-md text-semibold text-center px-16">
             Please click on the button below to navigate to his/her location.
           </p>
-          <p className="text-lg text-bold text-red-700">
+          <p className="text-lg text-bold text-red-700 text-center px-16">
             You acknowledged that by doing so, we will be extracting your
             current location
           </p>

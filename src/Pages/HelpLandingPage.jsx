@@ -33,24 +33,28 @@ function HelpLanding() {
   }, []);
 
   return (
-    <div className="min-h-full h-[100vh] w-full flex flex-col justify-center items-center gap-4">
+    <div className="min-h-full h-[100vh] flex flex-col justify-center items-center gap-4">
       {loading ? (
         <img className="mix-blend-multiply" src={Signal} alt="Loading.." />
       ) : (
         <>
-          <h1 className="text-3xl font-bold text-red-400">HDB Carpark App</h1>
-          <h1 className="font-bold text-4xl text-red-600">
+          <h1 className="text-3xl font-bold text-red-400 text-center">
+            HDB Carpark App
+          </h1>
+          <h1 className="font-bold text-4xl text-red-600 text-center px-4">
             {username} is in trouble and needs your help!!!
           </h1>
-          <h1 className="font-bold text-2xl text-blue-400">
+          <h1 className="font-bold text-2xl text-blue-400 text-center px-12">
             We have received his SOS and sent you a route to reach his location
           </h1>
-          <p className="font-semibold">By clicking on the button below</p>
-          <p className="text-red-400 font-semibold">
+          <p className="font-semibold text-center">
+            By clicking on the button below
+          </p>
+          <p className="text-red-400 font-semibold text-center px-12">
             You have agreed to the terms of releasing your location to us
           </p>
           <a
-            href={`https://www.google.com/maps/dir/?api=1&origin=${origin}+singapore&destination=${userlocale}+singapore&travelmode=driving`}
+            href={`https://www.google.com/maps/dir/?api=1&origin=${origin}+singapore&destination=${userlocale}+singapore&travelmode=walking`}
           >
             <button className="btn btn-circle px-4 text-white hover:bg-green-500 hover:border-green-500">
               Go
