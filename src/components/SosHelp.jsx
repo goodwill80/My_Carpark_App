@@ -88,7 +88,7 @@ function SosHelp({ user }) {
             name="hp"
             value={sosUser.hp}
             type="text"
-            placeholder="Exclude +65"
+            placeholder="Phone number"
             className="input input-bordered input-primary w-full max-w-xs mt-3 text-gray-500"
           />
           <div className="flex justify-start mt-4 ml-2">
@@ -116,7 +116,7 @@ function SosHelp({ user }) {
               <p className="btn btn-error btn-sm">Help!</p>
             </ReactWhatsapp>
             <button onClick={clearNominee} className="btn btn-warning btn-sm">
-              Delete Nominated
+              Delete Nominee
             </button>
           </div>
         </div>

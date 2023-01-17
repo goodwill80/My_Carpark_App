@@ -71,7 +71,7 @@ function SideBar({ user, setResults }) {
             </h1>
             <input
               type="text"
-              // placeholder="+65"
+              placeholder="Phone number"
               value={number}
               onChange={(e) => setNumber(e.target.value)}
               className="input input-bordered input-primary w-full max-w-xs mt-3 text-gray-500"
