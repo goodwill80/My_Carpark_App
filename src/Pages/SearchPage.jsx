@@ -195,7 +195,7 @@ function SearchPage() {
       <div className="absolute top-0 left-3 p-8 cursor-pointer w-[40%] sm:w-[30%] md:w-[25%] lg:w-[20%]">
         <img src={HDB} alt="HDB" />
       </div>
-      <SideBar setResults={setResults} />
+      <SideBar setResults={setResults} user={user}/>
 
       {isLoading ? (
         <div className="h-[100vh] flex flex-col justify-center items-center pb-16">
