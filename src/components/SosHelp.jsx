@@ -65,15 +65,16 @@ function SosHelp({ user }) {
   return (
     <div>
       {!trigger ? (
-        <div className="mt-4 hidden lg:block">
+        <div className="mt-2">
           <p className="text-lg font-semibold text-pink-400">
             2. *** New *** Seek help with 2 clicks!
           </p>
           <p className="text-md text-green-200">
-            Seek help when you need it! Assign a nominee and send your location
-            to him/her whenever there is an emergency!
+            Seek help when you need it most! Nominate a contact person!
+            {/* Assign a nominee and send your location
+            to him/her whenever there is an emergency! */}
           </p>
-          <h1 className="mt-6 font-semibold text-lg">
+          <h1 className="mt-2 font-semibold text-lg">
             Enter nominee's particulars:
           </h1>
           <input

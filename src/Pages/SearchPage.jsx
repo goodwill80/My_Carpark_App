@@ -218,7 +218,7 @@ function SearchPage() {
             <div className="flex flex-col justify-center items-center">
               <p className="text-5xl tracking-wide text-center">
                 Hello,{' '}
-                <span className="font-bold text-red-400 text-6xl tracking-wide text-center">
+                <span className="font-bold text-blue-400 text-6xl tracking-wide text-center">
                   {user.name}
                 </span>
                 !

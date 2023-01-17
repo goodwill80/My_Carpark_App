@@ -62,13 +62,12 @@ function SideBar({ user, setResults }) {
         <nav className="mt-12">
           <div>
             <p className="text-lg font-semibold text-yellow-400">
-              *** New *** Come find me!
+              1. *** New *** Come find me!
             </p>
             <p className="text-md text-green-200">
-              Ever had difficulty of getting your passengers finding out your
-              exact location? Try out our latest feature!
+              Ever had difficulty of getting your passengers locate you?
             </p>
-            <h1 className="mt-6 font-semibold text-lg">
+            <h1 className="mt-2 font-semibold text-lg">
               Enter passenger's HP:
             </h1>
             <input

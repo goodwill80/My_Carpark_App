@@ -2,7 +2,7 @@ function Pagination({ totalPages, changePage, page }) {
   return (
     <div className="flex flex-col justify-center">
       <div className="flex flex-col justify-center items-center">
-        <div className="flex justify-center items-center">
+        <div className="flex justify-center items-center flex-wrap">
           {[...new Array(totalPages).fill(true)].map((item, index) => (
             <div
               onClick={() => changePage(index + 1)}
