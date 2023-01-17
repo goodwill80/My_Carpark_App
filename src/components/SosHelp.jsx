@@ -59,7 +59,7 @@ function SosHelp({ user }) {
     setTrigger(false);
   };
 
-  const message = `Help! Help! I'm in trouble! Please come find me thru this link - \n http://localhost:8888/help/${user.location}/${user.name}`;
+  const message = `Help! Help! I'm in trouble! Please come find me thru this link - \n https://sensational-zabaione-393a34.netlify.app/help/${user.location}/${user.name}`;
 
   return (
     <div>
