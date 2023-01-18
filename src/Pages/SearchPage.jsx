@@ -18,8 +18,6 @@ import Pagination from '../components/Pagination';
 import Table from '../components/Table';
 import MapModalFull from '../components/MapModalFull';
 
-const BASE_URL = 'https://maps.googleapis.com/maps/api/geocode/json?address=';
-
 function SearchPage() {
   const {
     user,

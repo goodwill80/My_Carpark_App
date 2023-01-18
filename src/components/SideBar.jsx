@@ -65,7 +65,7 @@ function SideBar({ user, setResults }) {
               1. *** New *** Come find me!
             </p>
             <p className="text-md text-green-200">
-              Ever had difficulty of getting your passengers locate you?
+              Ever had difficulty locating a passenger?
             </p>
             <h1 className="mt-2 font-semibold text-lg">
               Enter passenger's HP:
