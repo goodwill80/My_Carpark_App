@@ -86,7 +86,7 @@ function Row({
             >
               {lots}
             </p>
-            {colour === 'Yellow' ? (
+            {colour === 'Yellow' || colour === 'Red' ? (
               <HiOutlineArrowTrendingDown
                 className="animate-ping"
                 size={15}
