@@ -32,7 +32,7 @@ function SideBar({ user, setResults }) {
   };
   // https://sensational-zabaione-393a34.netlify.app
   const userLocation = user.location.replace(/\s/g, '%20');
-  const message = `Hello, I've reached the destination! Please click this link to find where I'm parked.\n http://localhost:8888/passenger/${userLocation}/${user.name}`;
+  const message = `Hello, I've reached the destination! Please click this link to find where I'm parked.\n https://sensational-zabaione-393a34.netlify.app/passenger/${userLocation}/${user.name}`;
   // http://localhost:8888/
 
   return (
