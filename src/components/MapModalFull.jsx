@@ -157,15 +157,15 @@ function MapModalFull({ results, user, triggerZoom, querySearchCoords }) {
               />
               <p className="hidden md:flex">Back</p>
             </div>
-            <div className="modal-action">
+            {/* <div className="modal-action">
               <label
                 htmlFor="my-modal"
                 className="btn btn-success hidden md:flex md:btn-md md:text-md"
               >
                 Close
               </label>
-            </div>
-            <div className="modal-action absolute top-0 right-5 cursor-pointer md:hidden">
+            </div> */}
+            <div className="modal-action absolute top-0 right-5 cursor-pointer">
               <label htmlFor="my-modal" className="font-bold">
                 X
               </label>
