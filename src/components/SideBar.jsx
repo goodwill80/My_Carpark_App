@@ -41,7 +41,7 @@ function SideBar({ user, setResults }) {
       <div
         className={`${
           openSideBar ? 'visible translate-x-0 ' : 'invisible translate-x-full'
-        } ease-in-out duration-300 fixed z-[30] right-0 min-h-full h-[100vh] bg-gray-900 text-teal-50 text-md w-full sm:w-[390px] md:z-[50] space-y-6 p-8`}
+        } ease-in-out overflow-scroll duration-300 fixed z-[30] right-0 min-h-full h-[100vh] bg-gray-900 text-teal-50 text-md w-full sm:w-[390px] md:z-[50] space-y-6 p-8`}
       >
         {/* Logo */}
         {/* <img className="cursor-pointer w-[60%]" src={HDB} alt="hdb" /> */}

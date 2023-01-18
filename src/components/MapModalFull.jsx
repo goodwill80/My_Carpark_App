@@ -49,12 +49,14 @@ function MapModalFull({ results, user, triggerZoom, querySearchCoords }) {
       {/* MODAL */}
       <input type="checkbox" id="my-modal" className="modal-toggle" />
       <div className="modal">
-        <div className="modal-box h-[100vh] w-[100vw] max-w-7xl flex flex-col justify-center items-center">
-          <h1 className="text-2xl pb-2 font-bold text-teal-600">Map view</h1>
+        <div className="modal-box relative w-[100vw] max-w-7xl h-full flex flex-col justify-center items-center">
+          <h1 className="text-2xl pb-2 font-bold text-teal-600 hidden md:block">
+            Map view
+          </h1>
           <GoogleMap
             center={center}
             zoom={zoom}
-            mapContainerStyle={{ width: '90%', height: '90%' }}
+            mapContainerStyle={{ width: '90%', height: '100%' }}
             onLoad={(map) => setMap(map)}
             options={
               {
@@ -146,18 +148,28 @@ function MapModalFull({ results, user, triggerZoom, querySearchCoords }) {
               </div>
             )}
           </GoogleMap>
-          <div className="flex flex-col justify-center items-center">
-            <BsSkipBackwardCircleFill
-              onClick={() => map.panTo(center)}
-              className="cursor-pointer mt-3"
-              size={20}
-            />
-            <p>Back</p>
-          </div>
-          <div className="modal-action">
-            <label htmlFor="my-modal" className="btn btn-success">
-              Close
-            </label>
+          <div className="flex md:flex-col md:items-center justify-center items-baseline gap-3">
+            <div className="flex flex-col justify-center items-center">
+              <BsSkipBackwardCircleFill
+                onClick={() => map.panTo(center)}
+                className="cursor-pointer mt-3"
+                size={20}
+              />
+              <p className="hidden md:flex">Back</p>
+            </div>
+            <div className="modal-action">
+              <label
+                htmlFor="my-modal"
+                className="btn btn-success hidden md:flex md:btn-md md:text-md"
+              >
+                Close
+              </label>
+            </div>
+            <div className="modal-action absolute top-0 right-5 cursor-pointer md:hidden">
+              <label htmlFor="my-modal" className="font-bold">
+                X
+              </label>
+            </div>
           </div>
         </div>
       </div>
