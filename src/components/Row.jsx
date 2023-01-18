@@ -2,6 +2,7 @@ import { useState, useContext } from 'react';
 
 import { GoLocation } from 'react-icons/go';
 import { RiDeleteBin6Line } from 'react-icons/ri';
+import { HiOutlineArrowTrendingDown } from 'react-icons/hi2';
 
 import { CarparkContext } from '../Context/CarparkContext';
 import MapSingleModal from './MapSingleModal';
@@ -73,17 +74,28 @@ function Row({
         <td
           className={`text-sm text-gray-900 font-medium px-6 py-4 whitespace-nowrap cursor-pointer text-center hidden sm:table-cell`}
         >
-          <p
-            className={
-              colour === 'Red'
-                ? 'text-red-500'
-                : colour === 'Green'
-                ? 'text-green-700'
-                : 'text-yellow-600'
-            }
-          >
-            {lots}
-          </p>
+          <div className="flex justify-center items-center gap-1">
+            <p
+              className={
+                colour === 'Red'
+                  ? 'text-red-800 font-bold text-sm'
+                  : colour === 'Green'
+                  ? 'text-green-700'
+                  : 'text-yellow-600'
+              }
+            >
+              {lots}
+            </p>
+            {colour === 'Yellow' ? (
+              <HiOutlineArrowTrendingDown
+                className="animate-ping"
+                size={15}
+                color={'red'}
+              />
+            ) : (
+              ''
+            )}
+          </div>
         </td>
 
         <td className={`${classNameForCol} hidden lg:table-cell`}>
