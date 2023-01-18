@@ -40,7 +40,7 @@ function AfterSearchFilter({ setCopyArray, results }) {
         value={dropDown}
         className="select select-success w-[170px] max-w-xs text-center"
       >
-        <option value="all">Filter by:</option>
+        <option value="">Filter by:</option>
         <option value="all">All</option>
         <option value="free-parking">Free Parking</option>
         <option value="night-parking">Night Parking</option>

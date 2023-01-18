@@ -5,7 +5,6 @@ import { GiHamburgerMenu } from 'react-icons/gi';
 
 import Loading_icon from '../images/signal.gif';
 import Loader from '../images/spinner.gif';
-import HDB from '../images/HDB.png';
 import Logo from '../images/Logo.png';
 
 import * as geolib from 'geolib';
