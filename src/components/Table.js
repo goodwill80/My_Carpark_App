@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { FaSort } from 'react-icons/fa';
 
 import Row from './Row';
+import AfterSearchFilter from './AfterSearchFilter';
 
 function Table({
   results,
@@ -141,6 +142,7 @@ function Table({
 
   return (
     <div className="m-h-[320px] h-[680px]">
+      <AfterSearchFilter setCopyArray={setCopyArray} results={results} />
       <table className="min-w-full w-full text-center shadow-lg">
         <thead className="border-b bg-gray-800 boder-gray-900 text-left">
           <tr>

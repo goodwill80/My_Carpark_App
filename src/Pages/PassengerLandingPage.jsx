@@ -47,7 +47,8 @@ function PassengerLandingPage() {
             HDB Carpark App
           </h1>
           <p className="text-blue-400 text-2xl font-bold text-center px-4">
-            Hello, {drivername} has sent you his/her current position.
+            Hello, {drivername ? drivername : 'someone'} has sent you his/her
+            current position.
           </p>
           <p className="text-md text-semibold text-center px-16">
             Please click on the button below to navigate to his/her location.

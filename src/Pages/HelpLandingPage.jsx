@@ -42,7 +42,8 @@ function HelpLanding() {
             HDB Carpark App
           </h1>
           <h1 className="font-bold text-4xl text-red-600 text-center px-4">
-            {username} is in trouble and needs your help!!!
+            {username ? username : 'Sender'} is in trouble and needs your
+            help!!!
           </h1>
           <h1 className="font-bold text-2xl text-blue-400 text-center px-12">
             We have received his SOS and sent you a route to reach his location
