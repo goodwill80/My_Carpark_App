@@ -55,7 +55,7 @@ function HelpLanding() {
             You have agreed to the terms of releasing your location to us
           </p>
           <a
-            href={`https://www.google.com/maps/dir/?api=1&origin=${origin}+singapore&destination=${userlocale}+singapore&travelmode=walking`}
+            href={`https://www.google.com/maps/dir/?api=1&origin=${origin}+singapore&destination=${userlocale}+singapore&travelmode=driving`}
           >
             <button className="btn btn-circle px-4 text-white hover:bg-green-500 hover:border-green-500">
               Go
