@@ -60,7 +60,7 @@ function SosHelp({ user }) {
   };
   // https://sensational-zabaione-393a34.netlify.app
   const userLocation = user.location.replace(/\s/g, '%20');
-  const message = `Help! Help! I'm in trouble! Please come find me thru this link - \n https://sensational-zabaione-393a34.netlify.app/help/${userLocation}/${user.name}`;
+  const message = `Help! Help! I'm in trouble! Please come find me thru this link - \n http://localhost:8888/help/${userLocation}/${user.name}`;
   // http://localhost:8888/
   return (
     <div>
