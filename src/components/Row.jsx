@@ -73,17 +73,19 @@ function Row({
         <td
           className={`text-sm text-gray-900 font-medium px-6 py-4 whitespace-nowrap cursor-pointer text-center hidden sm:table-cell`}
         >
-          <p
-            className={
-              colour === 'Red'
-                ? 'text-red-500'
-                : colour === 'Green'
-                ? 'text-green-700'
-                : 'text-yellow-600'
-            }
-          >
-            {lots}
-          </p>
+          <div>
+            <p
+              className={
+                colour === 'Red'
+                  ? 'text-red-800 font-bold text-sm animate-ping'
+                  : colour === 'Green'
+                  ? 'text-green-700'
+                  : 'text-yellow-600'
+              }
+            >
+              {lots}
+            </p>
+          </div>
         </td>
 
         <td className={`${classNameForCol} hidden lg:table-cell`}>
