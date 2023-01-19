@@ -120,12 +120,20 @@ function MapModalFull({ results, user, triggerZoom, querySearchCoords }) {
                   }}
                 >
                   <div className="flex flex-col justify-center items-center">
-                    <h1>{selectedMarker.address}</h1>
-                    <p>CP {selectedMarker.car_park_no}</p>
-                    <p>{selectedMarker.distance}km from searched location</p>
-                    <p>
-                      {selectedMarker.carpark_info[0].lots_available} lots
-                      available
+                    <h1 className="text-center font-semibold">
+                      {selectedMarker.address
+                        .substring(0, 25)
+                        .replace('BLK', '')}
+                    </h1>
+                    <p className="text-center text-red-600 font-semibold">
+                      CP {selectedMarker.car_park_no}
+                    </p>
+                    <p className="text-center">
+                      {selectedMarker.distance}km from searched location
+                    </p>
+                    <p className="text-center font-bold">
+                      {selectedMarker.carpark_info[0].lots_available}
+                      lots available
                     </p>
                     <p className="mt-1 text-blue-600 underline hover:text-blue-900 cursor-pointer">
                       <a
