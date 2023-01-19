@@ -8,6 +8,7 @@ import Loader from '../images/spinner.gif';
 import Logo from '../images/Logo.png';
 
 import * as geolib from 'geolib';
+import Swal from 'sweetalert2';
 import axios from 'axios';
 
 import SideBar from '../components/SideBar';
