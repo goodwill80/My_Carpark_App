@@ -174,7 +174,7 @@ function MapModalFull({ results, user, triggerZoom, querySearchCoords }) {
               </label>
             </div> */}
             <div className="modal-action absolute top-0 right-5 cursor-pointer">
-              <label htmlFor="my-modal" className="font-bold">
+              <label htmlFor="my-modal" className="font-bold cursor-pointer">
                 X
               </label>
             </div>
