@@ -12,8 +12,6 @@ const BASE_URL = '/.netlify/functions/carparkAvailApi';
 // CP API with Addresses and Coordinates but no lots availability (it contains carpark number)
 const BASE_URL2 = '/.netlify/functions/carparkAddrApi';
 
-// 'https://data.gov.sg/api/action/datastore_search?resource_id=139a3035-e624-4f56-b63f-89ae28d4ae4c&limit=3000&q=';
-
 export const CarparkContext = createContext();
 
 const initialUserState = {
@@ -35,6 +33,10 @@ function CarparkContextProvider({ children }) {
 
   useEffect(() => {
     fetchCarparks();
+    const halfHourRefresh = setInterval(() => {
+      fetchCarparks();
+    }, 1800000);
+    return () => clearInterval(halfHourRefresh);
   }, []);
 
   const fetchCarparks = async () => {
