@@ -94,6 +94,7 @@ function Form({ getUserData, setSignIn }) {
   return (
     <div className="p-16 px-35 shadow-xl rounded-lg">
       <h2 className="font-bold text-3xl mb-4">Public Carpark App</h2>
+      <p className="text-center text-gray-400">User Agreement</p>
       <form onSubmit={handlerOnSubmit}>
         {/* NAME INPUT */}
         <div className="flex flex-col items-baseline gap-2">
