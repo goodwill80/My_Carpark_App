@@ -24,13 +24,14 @@ const initialUserState = {
 };
 
 function CarparkContextProvider({ children }) {
-  const [carparks, setCarparks] = useState();
-  const [user, setUser] = useState(initialUserState);
-  const [isLoading, setIsLoading] = useState(true);
-  const [signIn, setSignIn] = useState(false);
-  const [triggerZoom, setTriggerZoom] = useState(false);
-  const [openSideBar, setOpenSideBar] = useState(false);
+  const [carparks, setCarparks] = useState(); // All carparks from the 2 govt APIs
+  const [user, setUser] = useState(initialUserState); // User sign in data
+  const [isLoading, setIsLoading] = useState(true); // Initial loader after sign-in
+  const [signIn, setSignIn] = useState(false); // Sign-in and redirect routing condition
+  const [triggerZoom, setTriggerZoom] = useState(false); // Trigger different zooms on map based on search locations
+  const [openSideBar, setOpenSideBar] = useState(false); // Open and close sidebar
 
+  // Load all Carparks on sign-in Page and refresh every half hour
   useEffect(() => {
     fetchCarparks();
     const halfHourRefresh = setInterval(() => {
@@ -39,6 +40,7 @@ function CarparkContextProvider({ children }) {
     return () => clearInterval(halfHourRefresh);
   }, []);
 
+  // Fetch APIs for all CPs
   const fetchCarparks = async () => {
     try {
       const [res1, res2] = await Promise.all([
@@ -80,6 +82,7 @@ function CarparkContextProvider({ children }) {
     }
   };
 
+  // Heper method for getUserData below to convert coords to string string address using geocoding
   const getAddress = async (location) => {
     try {
       const latitude = location.coords.latitude;
@@ -97,6 +100,7 @@ function CarparkContextProvider({ children }) {
   };
 
   // Get the user permission on a form, once he clicks submit.
+  // Get user cords and state all details in user state
   const getUserData = async (form) => {
     try {
       await navigator.geolocation.getCurrentPosition((location) => {
@@ -120,6 +124,7 @@ function CarparkContextProvider({ children }) {
     }
   };
 
+  // Reset of all tiggers back to default
   const signout = () => {
     setSignIn(() => false);
     setIsLoading(true);

@@ -32,8 +32,8 @@ function SearchPage() {
   const [selected, setSelected] = useState(null); //  //Dropdown List
   const [freeParking, setFreeParking] = useState(false); //Free Parking
   const [nightParking, setNightParking] = useState(false); //Night Parking
-  const [resultsLoader, setResultsLoader] = useState(false);
-  const [searchResultLocation, setSearchResultLocation] = useState('');
+  const [resultsLoader, setResultsLoader] = useState(false); // For loading of seacrch results
+  const [searchResultLocation, setSearchResultLocation] = useState(''); // For storing of results
   const [copyArray, setCopyArray] = useState([]); // Copy of search results for sorting and pagination
   const [querySearchCoords, setQuerySearchCoords] = useState(null); // For display of search results
 
@@ -101,15 +101,18 @@ function SearchPage() {
     try {
       setTriggerZoom(true);
       setResultsLoader(true);
-      
+
       const response = await axios.get(
         `/.netlify/functions/geocodeAddrApi?query=${query}`
       );
 
       const coords = response.data;
       if (coords.hasOwnProperty('lat')) {
+        // Storing the query coords to state for marker on google map
         setQuerySearchCoords(coords);
+        // Storing the query string to be shown in search results
         setSearchResultLocation(query);
+        // Loop thru all cps and calculate dist bet each and the searched cp
         const carparkList = carparks.map((item) => {
           const dist =
             geolib.getDistance(coords, { lat: item.lat, lon: item.lon }) / 1000;
