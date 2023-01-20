@@ -10,6 +10,22 @@ function HomePage() {
     <div className="flex flex-col justify-center items-center min-h-[100vh] h-auto pb-12">
       <Instructions />
       <Form getUserData={getUserData} setSignIn={setSignIn} />
+      <div className="flex flex-col justify-center items-center">
+        <p className="text-sm flex flex-col mt-4 text-center w-[80%] md:w-[30%] text-gray-500">
+          A monthly restriction of API calls had been set for this website to
+          avoid free limits from exceeding. This is a group project done by
+          students from NTU SCTP program. We apologise for the experience. You
+          may visit us at
+        </p>
+        <a
+          className="text-sm text-blue-400"
+          href="https://github.com/orgs/NTU-SCTP-SE-C1-Project-Group-1/people"
+          rel="noreferrer noopener"
+          target="_blank"
+        >
+          Github link
+        </a>
+      </div>
     </div>
   );
 }
