@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect, useMemo } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { CarparkContext } from '../Context/CarparkContext';
 
 import { GiHamburgerMenu } from 'react-icons/gi';
@@ -101,11 +101,10 @@ function SearchPage() {
     try {
       setTriggerZoom(true);
       setResultsLoader(true);
-      // filter distance
+      
       const response = await axios.get(
         `/.netlify/functions/geocodeAddrApi?query=${query}`
       );
-      // `${BASE_URL}${query}+singapore&key=${process.env.REACT_APP_API_KEY}`
 
       const coords = response.data;
       if (coords.hasOwnProperty('lat')) {
