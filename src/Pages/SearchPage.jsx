@@ -42,7 +42,7 @@ function SearchPage() {
   }, [results]);
 
   // Pagination Logic
-  const [numOfCpPerPage, setNumOfCpPerPage] = useState(9);
+  const [numOfCpPerPage, setNumOfCpPerPage] = useState(8);
   const [page, setPage] = useState(1);
   const lastIndex = page * numOfCpPerPage;
   const firstIndex = lastIndex - numOfCpPerPage;
