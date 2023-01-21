@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { FaSort } from 'react-icons/fa';
 
 import Row from './Row';
-import AfterSearchFilter from './AfterSearchFilter';
+// import AfterSearchFilter from './AfterSearchFilter';
 
 function Table({
   results,
