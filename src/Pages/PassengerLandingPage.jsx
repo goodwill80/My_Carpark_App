@@ -20,7 +20,7 @@ function PassengerLandingPage() {
     }
     const pageExpired = setTimeout(() => {
       redirect('/noaccess');
-    }, 180000);
+    }, 60000);
     return () => clearTimeout(pageExpired);
   }, []);
 
