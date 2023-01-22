@@ -46,7 +46,7 @@ function SearchPage() {
   }, [results]);
 
   // Countdown to data refresh
-  let minutes = Math.floor((countdown / 60) % 60);
+  let minutes = Math.floor(countdown / 60);
 
   // Pagination Logic
   const [numOfCpPerPage, setNumOfCpPerPage] = useState(8);
