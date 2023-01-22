@@ -31,6 +31,8 @@ function CarparkContextProvider({ children }) {
   const [triggerZoom, setTriggerZoom] = useState(false); // Trigger different zooms on map based on search locations
   const [openSideBar, setOpenSideBar] = useState(false); // Open and close sidebar
 
+  const [counter, setCounter] = useState(180);
+
   // Load all Carparks on sign-in Page and refresh every half hour
   useEffect(() => {
     fetchCarparks();
@@ -170,6 +172,8 @@ function CarparkContextProvider({ children }) {
     setOpenSideBar,
     fetchCarparks,
     resetPosition,
+    counter,
+    setCounter,
   };
 
   return (

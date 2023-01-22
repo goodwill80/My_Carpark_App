@@ -13,11 +13,12 @@ import SearchPage from './Pages/SearchPage';
 import HomePage from './Pages/HomePage';
 import PassengerLandingPage from './Pages/PassengerLandingPage';
 import HelpLanding from './Pages/HelpLandingPage';
+import NoAccessPage from './Pages/NoAccessPage';
 
 import { CarparkContext } from './Context/CarparkContext';
 
 function App() {
-  const { signIn } = useContext(CarparkContext);
+  const { signIn, accessAllowed } = useContext(CarparkContext);
 
   return (
     <Router>
@@ -33,6 +34,8 @@ function App() {
             element={<PassengerLandingPage />}
           />
           <Route path="/help/:userlocale/:username" element={<HelpLanding />} />
+          <Route path="/noaccess" element={<NoAccessPage />} />
+          <Route path="/*" element={<NoAccessPage />} />
         </Routes>
       </Layout>
     </Router>

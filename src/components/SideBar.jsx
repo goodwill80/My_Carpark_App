@@ -30,6 +30,11 @@ function SideBar({ user, setResults }) {
 
     redirect('/');
   };
+
+  const whatsAppSubmit = () => {
+    setNumber('');
+  };
+
   // https://sensational-zabaione-393a34.netlify.app
   const userLocation = user.location.replace(/\s/g, '%20');
   const message = `Hello, I've reached the destination! Please click this link to find where I'm parked.\n https://sensational-zabaione-393a34.netlify.app/passenger/${userLocation}/${user.name}`;
@@ -81,7 +86,7 @@ function SideBar({ user, setResults }) {
               {buttonVisible && (
                 <ReactWhatsapp number={number} message={message}>
                   <p
-                    onClick={() => setNumber('')}
+                    onClick={whatsAppSubmit}
                     className="btn btn-success btn-sm"
                   >
                     Send
