@@ -2,6 +2,7 @@ import { useContext, useState, useEffect } from 'react';
 import { CarparkContext } from '../Context/CarparkContext';
 
 import { GiHamburgerMenu } from 'react-icons/gi';
+import { IoReloadCircleSharp } from 'react-icons/io5';
 
 import Loading_icon from '../images/signal.gif';
 import Loader from '../images/spinner.gif';
@@ -25,6 +26,8 @@ function SearchPage() {
     triggerZoom,
     setTriggerZoom,
     setOpenSideBar,
+    resetPosition,
+    setIsLoading,
   } = useContext(CarparkContext); // states from context
   const [results, setResults] = useState([]); // New list of carparks with distances
   const [preferredDist, setPreferredDist] = useState(1); // User's choice of distance radius
@@ -176,6 +179,11 @@ function SearchPage() {
     setNightParking((prev) => !prev);
   };
 
+  const reloadOwnPosition = () => {
+    setIsLoading(() => true);
+    resetPosition();
+  };
+
   return (
     <div>
       {/* HAMBURGER */}
@@ -229,6 +237,14 @@ function SearchPage() {
               <p className="font-bold text-2xl text-green-600 text-center">
                 {user.location}
               </p>
+            </div>
+            <div className="flex flex-col justify-center items-center mt-6 cursor-pointer">
+              <IoReloadCircleSharp
+                onClick={reloadOwnPosition}
+                size={25}
+                color={'red'}
+              />
+              <p className="font-semibold">Reload Location</p>
             </div>
             <div className="flex flex-col justify-center items-center py-4 rounded-md sm:px-40 lg:pb-8 lg:shadow-sm md:w-[80vw]">
               <div>

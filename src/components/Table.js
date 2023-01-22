@@ -216,14 +216,12 @@ function Table({
           ))}
         </tbody>
       </table>
-      <br></br>
-      <div className="flex flex-col justify-center items-center">
+
+      <div className="flex flex-col justify-center items-center mt-4">
         <p className="font-bold text-gray-500">
           Page {page} of {totalPages}
         </p>
       </div>
-
-      <br></br>
     </div>
   );
 }

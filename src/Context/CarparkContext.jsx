@@ -124,6 +124,23 @@ function CarparkContextProvider({ children }) {
     }
   };
 
+  const resetPosition = () => {
+    navigator.geolocation.getCurrentPosition((location) => {
+      getAddress(location);
+      setUser((prev) => {
+        return {
+          ...prev,
+          raw_data: location,
+          coordinates: {
+            lat: location.coords.latitude,
+            lon: location.coords.longitude,
+          },
+        };
+      });
+      setIsLoading(false);
+    });
+  };
+
   // Reset of all tiggers back to default
   const signout = () => {
     setSignIn(() => false);
@@ -152,6 +169,7 @@ function CarparkContextProvider({ children }) {
     openSideBar,
     setOpenSideBar,
     fetchCarparks,
+    resetPosition,
   };
 
   return (

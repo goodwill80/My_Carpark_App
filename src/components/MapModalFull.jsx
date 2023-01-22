@@ -39,7 +39,10 @@ function MapModalFull({ results, user, triggerZoom, querySearchCoords }) {
 
   useEffect(() => {
     if (querySearchCoords) {
-      calculateRoute();
+      setTimeout(() => {
+        calculateRoute();
+      }, 3000);
+
       setCenterPosition(querySearchCoords);
       setZoom(() => 13);
     } else {
