@@ -207,7 +207,7 @@ function SearchPage() {
       <div className="absolute top-0 left-3 p-2 w-[55%] sm:w-[40%] md:w-[40%] lg:w-[25%]">
         <img className="mix-blend-multiply" src={Logo} alt="logo" />
         <p className="text-center text-[12px] text-red-500">
-          {minutes} mins remaining for data refresh
+          {minutes} mins remaining for data to refresh
         </p>
       </div>
       <SideBar setResults={setResults} user={user} />
