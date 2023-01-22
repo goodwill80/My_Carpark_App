@@ -28,6 +28,7 @@ function SearchPage() {
     setOpenSideBar,
     resetPosition,
     setIsLoading,
+    countdown,
   } = useContext(CarparkContext); // states from context
   const [results, setResults] = useState([]); // New list of carparks with distances
   const [preferredDist, setPreferredDist] = useState(1); // User's choice of distance radius
@@ -43,6 +44,9 @@ function SearchPage() {
   useEffect(() => {
     setCopyArray(results);
   }, [results]);
+
+  // Countdown to data refresh
+  let minutes = Math.floor((countdown / 60) % 60);
 
   // Pagination Logic
   const [numOfCpPerPage, setNumOfCpPerPage] = useState(8);
@@ -200,8 +204,11 @@ function SearchPage() {
       )}
       {/* HDB LOGO */}
 
-      <div className="absolute top-0 left-3 p-2 cursor-pointer w-[55%] sm:w-[40%] md:w-[40%] lg:w-[25%]">
+      <div className="absolute top-0 left-3 p-2 w-[55%] sm:w-[40%] md:w-[40%] lg:w-[25%]">
         <img className="mix-blend-multiply" src={Logo} alt="logo" />
+        <p className="text-center text-[12px] text-red-500">
+          {minutes} mins remaining for data refresh
+        </p>
       </div>
       <SideBar setResults={setResults} user={user} />
 

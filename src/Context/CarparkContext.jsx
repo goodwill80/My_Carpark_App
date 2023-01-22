@@ -31,7 +31,8 @@ function CarparkContextProvider({ children }) {
   const [triggerZoom, setTriggerZoom] = useState(false); // Trigger different zooms on map based on search locations
   const [openSideBar, setOpenSideBar] = useState(false); // Open and close sidebar
 
-  const [counter, setCounter] = useState(60);
+  const [counter, setCounter] = useState(60); // For passenger page
+  const [countdown, setCountdown] = useState(1800); // For data refresh
 
   // Load all Carparks on sign-in Page and refresh every half hour
   useEffect(() => {
@@ -40,6 +41,14 @@ function CarparkContextProvider({ children }) {
       fetchCarparks();
     }, 1800000);
     return () => clearInterval(halfHourRefresh);
+  }, []);
+
+  useEffect(() => {
+    if (countdown === 0) setCountdown(() => 1800);
+    const timerToRefresh = setInterval(() => {
+      setCountdown((prev) => prev - 1);
+    }, 1000);
+    return () => clearInterval(timerToRefresh);
   }, []);
 
   // Fetch APIs for all CPs
@@ -174,6 +183,7 @@ function CarparkContextProvider({ children }) {
     resetPosition,
     counter,
     setCounter,
+    countdown,
   };
 
   return (
