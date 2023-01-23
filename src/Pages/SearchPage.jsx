@@ -202,14 +202,13 @@ function SearchPage() {
           </div>
         </div>
       )}
-      {/* HDB LOGO */}
-
+      {/* LOGO */}
       <div className="absolute top-0 left-3 p-2 w-[55%] sm:w-[40%] md:w-[40%] lg:w-[25%]">
         <img className="mix-blend-multiply" src={Logo} alt="logo" />
         {results.length > 0 && (
-          <p className="ml-8 text-center text-[12px] text-red-500 w-[70%]">
+          <p className="ml-8 text-center text-[12px] text-red-500 w-[80%]">
             {minutes} mins remaining for data to refresh. Please resubmit query
-            once refresh.
+            upon refresh for viewing of latest vacant lots.
           </p>
         )}
       </div>
