@@ -44,12 +44,15 @@ function CarparkContextProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    if (countdown === 0) setCountdown(() => 1800);
     const timerToRefresh = setInterval(() => {
       setCountdown((prev) => prev - 1);
     }, 1000);
     return () => clearInterval(timerToRefresh);
   }, []);
+
+  useEffect(() => {
+    if (countdown === 0) setCountdown(() => 1800);
+  }, [countdown]);
 
   // Fetch APIs for all CPs
   const fetchCarparks = async () => {
