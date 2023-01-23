@@ -365,6 +365,7 @@ function SearchPage() {
                   setPage={setPage}
                   user={user}
                   triggerZoom={triggerZoom}
+                  querySearchCoords={querySearchCoords}
                 />
               </>
             ) : (

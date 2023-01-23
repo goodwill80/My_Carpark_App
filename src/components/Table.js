@@ -13,6 +13,7 @@ function Table({
   copyArray,
   setCopyArray,
   setPage,
+  querySearchCoords,
 }) {
   const [switchDist, setSwitchDist] = useState(false);
   const [switchLots, setSwitchLots] = useState(false);
@@ -153,7 +154,7 @@ function Table({
               className={`${classNameForTh} cursor-pointer`}
             >
               <div className="flex items-baseline justify-center">
-                Distance
+                {querySearchCoords ? 'Dist (search)' : 'Dist (self)'}
                 <FaSort size={18} className="pt-1" />
               </div>
             </th>
