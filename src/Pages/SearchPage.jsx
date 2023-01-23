@@ -206,9 +206,9 @@ function SearchPage() {
       <div className="absolute top-0 left-3 p-2 w-[55%] sm:w-[40%] md:w-[40%] lg:w-[25%]">
         <img className="mix-blend-multiply" src={Logo} alt="logo" />
         {results.length > 0 && (
-          <p className="ml-8 text-center text-[12px] text-red-500 w-[80%]">
+          <p className="ml-8 text-center text-[11px] text-red-500 w-[80%]">
             {minutes} mins remaining for data refresh. Please resubmit query
-            upon refresh, for viewing of updated vacant lots.
+            upon refresh, for viewing of updated lot info.
           </p>
         )}
       </div>
