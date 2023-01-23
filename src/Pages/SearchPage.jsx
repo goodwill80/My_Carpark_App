@@ -208,7 +208,7 @@ function SearchPage() {
         {results.length > 0 && (
           <p className="ml-8 text-center text-[12px] text-red-500 w-[80%]">
             {minutes} mins remaining for data to refresh. Please resubmit query
-            upon refresh for viewing of latest vacant lots.
+            upon refresh, for viewing of updated vacant lots.
           </p>
         )}
       </div>
