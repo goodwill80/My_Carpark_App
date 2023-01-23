@@ -290,7 +290,7 @@ function SearchPage() {
                       value={query}
                       onChange={searchHandler}
                       type="text"
-                      placeholder="Type in steet name…"
+                      placeholder="Name of location or street"
                       className="input input-bordered w-[230px]"
                     />
                     <button onClick={searchCp} className="btn btn-success">
