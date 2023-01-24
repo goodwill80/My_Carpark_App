@@ -26,12 +26,14 @@ function MapSingleModal({
   results,
   trigger,
 }) {
-  const { addToFavorite } = useContext(CarparkContext);
+  const { addToFavorite, favoriteCp } = useContext(CarparkContext);
   const [map, setMap] = useState(/** @type google.maps.Map */ (null));
   const [directionsResponse, setDirectionsResponse] = useState(null);
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.REACT_APP_API_KEY,
   });
+
+  const isFav = favoriteCp.find((item) => item._id === id);
 
   const center = useMemo(
     () => ({ lat: Number(lat), lng: Number(lon) }),
@@ -80,7 +82,9 @@ function MapSingleModal({
             </h3>
             <button
               onClick={() => addToFavorite(item)}
-              className="text-green-500 text-sm border border-green-500 rounded-lg px-2 hover:border-green-900 hover:text-green-900"
+              className={`text-sm border border-green-500 ${
+                isFav ? 'bg-green-500 text-white' : 'text-green-500'
+              } rounded-lg px-2 hover:border-green-900 hover:text-green-900`}
             >
               Add to Fav
             </button>
