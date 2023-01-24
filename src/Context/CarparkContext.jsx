@@ -30,9 +30,42 @@ function CarparkContextProvider({ children }) {
   const [signIn, setSignIn] = useState(false); // Sign-in and redirect routing condition
   const [triggerZoom, setTriggerZoom] = useState(false); // Trigger different zooms on map based on search locations
   const [openSideBar, setOpenSideBar] = useState(false); // Open and close sidebar
+  const [favoriteCp, setFavoriteCp] = useState([]); // Add favorite carparks
 
   const [counter, setCounter] = useState(60); // For passenger page
   const [countdown, setCountdown] = useState(1800); // For data refresh
+
+  useEffect(() => {
+    const favoriteCarparks =
+      JSON.parse(localStorage.getItem('favoriteCarparks')) || [];
+    setFavoriteCp(favoriteCarparks);
+  }, []);
+
+  // Add Favorite Carpark
+  const addToFavorite = (item) => {
+    const newFavList = [...favoriteCp, item];
+    localStorage.setItem('favoriteCarparks', JSON.stringify(newFavList));
+    setFavoriteCp([...newFavList]);
+    Swal.fire({
+      title: 'Added to favorites',
+      icon: 'success',
+      confirmButtonText: 'Great!',
+    });
+  };
+
+  const removeFrFavorite = (id) => {
+    const fav = favoriteCp.find((item) => item._id === id);
+    const newList = fav
+      ? favoriteCp.filter((item) => item._id !== id)
+      : favoriteCp;
+    localStorage.setItem('favoriteCarparks', JSON.stringify(newList));
+    setFavoriteCp([...newList]);
+    Swal.fire({
+      title: 'Removed from favorites',
+      icon: 'success',
+      confirmButtonText: 'Great!',
+    });
+  };
 
   // Load all Carparks on sign-in Page and refresh every half hour
   useEffect(() => {
@@ -51,7 +84,14 @@ function CarparkContextProvider({ children }) {
   }, []);
 
   useEffect(() => {
-    if (countdown === 0) setCountdown(() => 1800);
+    if (countdown === 0) {
+      setCountdown(() => 1800);
+      Swal.fire({
+        title: 'Carpark data updated!',
+        icon: 'success',
+        confirmButtonText: 'Okay!',
+      });
+    }
   }, [countdown]);
 
   // Fetch APIs for all CPs
@@ -187,6 +227,9 @@ function CarparkContextProvider({ children }) {
     counter,
     setCounter,
     countdown,
+    addToFavorite,
+    favoriteCp,
+    removeFrFavorite,
   };
 
   return (

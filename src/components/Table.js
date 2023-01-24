@@ -196,6 +196,7 @@ function Table({
             <>
               <Row
                 key={i}
+                item={item}
                 index={i}
                 carpark_number={item.carpark_number}
                 id={item._id}

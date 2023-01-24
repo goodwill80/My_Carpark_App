@@ -1,4 +1,6 @@
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo, useState, useEffect, useContext } from 'react';
+
+import { CarparkContext } from '../Context/CarparkContext';
 
 import { BsSkipBackwardCircleFill } from 'react-icons/bs';
 
@@ -12,6 +14,7 @@ import Spinner from '../images/spinner.gif';
 
 function MapSingleModal({
   id,
+  item,
   carpark_number,
   address,
   lots,
@@ -23,6 +26,7 @@ function MapSingleModal({
   results,
   trigger,
 }) {
+  const { addToFavorite } = useContext(CarparkContext);
   const [map, setMap] = useState(/** @type google.maps.Map */ (null));
   const [directionsResponse, setDirectionsResponse] = useState(null);
   const { isLoaded } = useJsApiLoader({
@@ -70,12 +74,21 @@ function MapSingleModal({
       <input type="checkbox" id={`my-modal-${id}`} className="modal-toggle" />
       <label htmlFor={`my-modal-${id}`} className="modal cursor-pointer">
         <label className="modal-box relative h-[85vh] w-full" htmlFor="">
-          <h3 className="text-lg font-bold text-red-900">
-            Carpark {carpark_number}
-          </h3>
-          <p className="ml-4 font-semibold">{address}</p>
-          <p className="ml-4 text-red-600">{lots} lots remaining</p>
-          <p className="ml-4 text-green-900 mb-2">
+          <div className="flex justify-between space-x-4 py-2">
+            <h3 className="text-md font-bold text-red-900">
+              Carpark {carpark_number}
+            </h3>
+            <button
+              onClick={() => addToFavorite(item)}
+              className="text-green-500 text-sm border border-green-500 rounded-lg px-2 hover:border-green-900 hover:text-green-900"
+            >
+              Add to Fav
+            </button>
+          </div>
+
+          <p className="text-sm ml-4 font-semibold">{address}</p>
+          <p className="text-sm ml-4 text-red-600">{lots} lots remaining</p>
+          <p className="text-sm ml-4 text-green-900 mb-2">
             Free parking - {free_parking}
           </p>
           <GoogleMap
@@ -96,7 +109,7 @@ function MapSingleModal({
               <DirectionsRenderer directions={directionsResponse} />
             )}
           </GoogleMap>
-          <div className="mt-2 text-red-700">
+          <div className="mt-2 text-red-700 text-sm">
             <p>
               Shortest driving distance from your location:{' '}
               <span className="font-semibold">
@@ -119,16 +132,16 @@ function MapSingleModal({
           <div className="flex flex-col justify-center items-center">
             <BsSkipBackwardCircleFill
               onClick={() => map.panTo(center)}
-              className="cursor-pointer mt-3"
+              className="cursor-pointer mt-2"
               size={20}
             />
-            <p>Back</p>
+
             <a
               href={`https://www.google.com/maps/dir/?api=1&origin=${user.location}+singapore&destination=${address}+singapore&travelmode=driving`}
               rel="noreferrer noopener"
               target="_blank"
             >
-              <button className="btn btn-sm btn-success mt-3">
+              <button className="btn btn-sm btn-success mt-2">
                 Start Navigation
               </button>
             </a>

@@ -1,8 +1,10 @@
 import { useContext, useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { CarparkContext } from '../Context/CarparkContext';
 
 import { GiHamburgerMenu } from 'react-icons/gi';
 import { IoReloadCircleSharp } from 'react-icons/io5';
+import { MdFavorite } from 'react-icons/md';
 
 import Loading_icon from '../images/signal.gif';
 import Loader from '../images/spinner.gif';
@@ -193,7 +195,7 @@ function SearchPage() {
       {/* HAMBURGER */}
       {!isLoading && (
         <div className="sticky top-0">
-          <div className="fixed top-0 right-0 p-4 cursor-pointer z-50">
+          <div className="fixed top-0 right-0 p-4 flex space-x-4 cursor-pointer z-50">
             <GiHamburgerMenu
               onClick={() => setOpenSideBar(true)}
               size={34}
@@ -203,8 +205,11 @@ function SearchPage() {
         </div>
       )}
       {/* LOGO */}
-      <div className="absolute top-0 left-3 p-2 w-[55%] sm:w-[40%] md:w-[40%] lg:w-[25%]">
-        <img className="mix-blend-multiply" src={Logo} alt="logo" />
+      <div className="absolute top-0 left-1 p-2 w-[55%] sm:w-[40%] md:w-[40%] lg:w-[25%]">
+        <div className="flex justify-center items-center">
+          <img className="mix-blend-multiply" src={Logo} alt="logo" />
+        </div>
+
         {results.length > 0 && (
           <p className="ml-8 text-center text-[11px] text-red-500 w-[80%] font-semibold">
             {minutes} mins remaining prior to next data refresh. Please resubmit
@@ -255,11 +260,18 @@ function SearchPage() {
               />
               <p className="font-semibold">Reload Location</p>
             </div>
+
             <div className="flex flex-col justify-center items-center py-4 rounded-md sm:px-40 lg:pb-8 lg:shadow-sm md:w-[80vw]">
               <div>
                 <h1 className="text-2xl text-orange-400 font-semibold text-center">
                   What would you like to do today?
                 </h1>
+                <Link to="/favorites">
+                  <div className="flex justify-center items-center gap-2 text-red-500 cursor-pointer hover:underline">
+                    Go to my favorites
+                    <MdFavorite size={20} color={'red'} />
+                  </div>
+                </Link>
               </div>
               <div className="flex flex-col justify-center gap-4 mt-4 mb-3 md:flex-row md:items-baseline">
                 {/* 1. USER SERACH CP FROM OWN LOCATION */}

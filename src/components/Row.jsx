@@ -9,6 +9,7 @@ import MapSingleModal from './MapSingleModal';
 
 function Row({
   index,
+  item,
   carpark_number,
   id,
   address,
@@ -56,6 +57,7 @@ function Row({
               {address.replace('BLK', '').substring(0, 15)}
             </label>
             <MapSingleModal
+              item={item}
               id={id}
               carpark_number={carpark_number}
               lat={lat}
