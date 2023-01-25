@@ -38,7 +38,7 @@ function Favorites() {
             {/* <!-- head --> */}
             <thead>
               <tr className="font-semibold text-gray-400">
-                <th className="hidden sm:table-cell">Carpark</th>
+                <th className="hidden sm:table-cell">CP</th>
                 <th>Address</th>
                 <th>Delete</th>
               </tr>
@@ -61,7 +61,7 @@ function Favorites() {
                         >
                           <GoLocation color={'red'} size={20} />
                           <p className="text-sm">
-                            {item.address.replace('BLK', '').substring(0, 25)}
+                            {item.address.replace('BLK', '').substring(0, 20)}
                           </p>
                         </label>
                       </div>
