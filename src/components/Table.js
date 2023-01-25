@@ -154,7 +154,7 @@ function Table({
               className={`${classNameForTh} cursor-pointer`}
             >
               <div className="flex items-baseline justify-center">
-                {querySearchCoords ? 'Dist (search)' : 'Dist (self)'}
+                {querySearchCoords ? 'Dist (fr search)' : 'Dist (fr own)'}
                 <FaSort size={18} className="pt-1" />
               </div>
             </th>

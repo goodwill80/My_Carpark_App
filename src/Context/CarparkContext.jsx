@@ -43,6 +43,15 @@ function CarparkContextProvider({ children }) {
 
   // Add Favorite Carpark
   const addToFavorite = (item) => {
+    const check = favoriteCp.find((cp) => cp._id === item._id);
+    if (check) {
+      Swal.fire({
+        title: 'CP is already in Favorites',
+        icon: 'error',
+        confirmButtonText: 'okay!',
+      });
+      return;
+    }
     const newFavList = [...favoriteCp, item];
     localStorage.setItem('favoriteCarparks', JSON.stringify(newFavList));
     setFavoriteCp([...newFavList]);
