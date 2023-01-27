@@ -86,7 +86,7 @@ function MapSingleModal({
                 isFav ? 'bg-green-500 text-white' : 'text-green-500'
               } rounded-lg px-2 hover:border-green-900 hover:text-green-900`}
             >
-              Add to Fav
+              {isFav ? 'Fav' : 'Add to Fav'}
             </button>
           </div>
 
