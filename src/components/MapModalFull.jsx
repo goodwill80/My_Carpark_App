@@ -39,12 +39,12 @@ function MapModalFull({ results, user, triggerZoom, querySearchCoords }) {
 
   useEffect(() => {
     if (querySearchCoords) {
-      setTimeout(() => {
+      const timeout = setTimeout(() => {
         calculateRoute();
-      }, 3000);
-
+      }, 1500);
       setCenterPosition(querySearchCoords);
       setZoom(() => 13);
+      return () => clearInterval(timeout);
     } else {
       setDirectionsResponse(null);
       setCenterPosition({
@@ -101,7 +101,7 @@ function MapModalFull({ results, user, triggerZoom, querySearchCoords }) {
           // console.log(result);
           setDirectionsResponse(result);
         } else if (status === 'OVER_QUERY_LIMIT') {
-          console.log(status);
+          // console.log(status);
           delayFactor++;
           setTimeout(function () {
             calculateRoute();

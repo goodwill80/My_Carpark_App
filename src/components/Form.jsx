@@ -68,6 +68,12 @@ function Form({ getUserData, setSignIn }) {
 
     if (!error && agree) {
       const userInfo = { ...user, agree: agree };
+      Swal.fire({
+        title:
+          'Our monthly API calls had been exceeded. Please try again later',
+        icon: 'error',
+        confirmButtonText: 'Okay!',
+      });
       getUserData(userInfo);
       setSignIn(true);
       navigate('/search');

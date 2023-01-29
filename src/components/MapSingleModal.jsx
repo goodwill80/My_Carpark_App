@@ -73,7 +73,8 @@ function MapSingleModal({
           // console.log(result);
           setDirectionsResponse(result);
         } else if (status === 'OVER_QUERY_LIMIT') {
-          console.log(status);
+          // console.log(status);
+
           delayFactor++;
           setTimeout(function () {
             calculateRoute();
@@ -89,10 +90,11 @@ function MapSingleModal({
   };
 
   useEffect(() => {
+    // calculateRoute();
     const calRoute = setTimeout(() => {
       calculateRoute();
-      return () => clearInterval(calRoute);
     }, 1000);
+    return () => clearInterval(calRoute);
   }, [trigger, triggerZoom]);
 
   if (!isLoaded) {
