@@ -3,12 +3,15 @@ import { Link } from 'react-router-dom';
 import { CarparkContext } from '../Context/CarparkContext';
 
 import { GiHamburgerMenu } from 'react-icons/gi';
-import { IoReloadCircleSharp } from 'react-icons/io5';
+import { TbSteeringWheel } from 'react-icons/tb';
 import { MdFavorite } from 'react-icons/md';
+import { BsEmojiSmile } from 'react-icons/bs';
+import { AiFillCar } from 'react-icons/ai';
 
 import Loading_icon from '../images/signal.gif';
 import Loader from '../images/spinner.gif';
 import Logo from '../images/Logo.png';
+import Drivers from '../images/drivers.png';
 
 import * as geolib from 'geolib';
 import axios from 'axios';
@@ -191,7 +194,7 @@ function SearchPage() {
   };
 
   return (
-    <div>
+    <div className="relative">
       {/* HAMBURGER */}
       {!isLoading && (
         <div className="sticky top-0">
@@ -211,10 +214,22 @@ function SearchPage() {
         </div>
 
         {results.length > 0 && (
-          <p className="ml-8 text-center text-[11px] text-red-500 w-[80%] font-semibold">
-            {minutes} mins remaining prior to next data refresh. Please resubmit
-            query upon refresh, for viewing of updated lot info.
-          </p>
+          <div>
+            <p className="ml-8 text-center text-[11px] text-red-400 w-[80%] font-semibold">
+              <span className="bg-red-500 text-[9px] text-red-500 w-2 h-2 rounded-full p-[0.5px] px-[3px] mr-1 animate-ping">
+                1
+              </span>
+              {minutes} mins remaining prior to next data refresh. Please
+              resubmit query upon refresh, for viewing of updated lot info.
+            </p>
+            <div className="hidden justify-start items-center pl-[110px] xl:flex">
+              <img
+                className="absolute w-[120px] opacity-80 top-44 shadow-xl rounded-full"
+                src={Drivers}
+                alt="drivers"
+              />
+            </div>
+          </div>
         )}
       </div>
       <SideBar setResults={setResults} user={user} />
@@ -237,46 +252,70 @@ function SearchPage() {
             className="min-h-[100vh] h-auto flex flex-col justify-start items-center px-24 gap-4 pt-40"
           >
             <div className="flex flex-col justify-center items-center">
-              <p className="text-5xl tracking-wide text-center">
-                Hello,{' '}
-                <span className="font-bold text-blue-400 text-6xl tracking-wide text-center">
-                  {user.name}
-                </span>
-                !
+              <div className="flex justify-center items-center">
+                <p className="text-5xl tracking-wider text-center font-bold text-gray-700 pt-8">
+                  Hello,{' '}
+                  <span className="font-bold text-blue-400 text-6xl tracking-wider text-center">
+                    {user.name}
+                  </span>
+                  !
+                </p>
+                <BsEmojiSmile
+                  className="hidden lg:flex pl-2 pt-1 animate-bounce"
+                  size={45}
+                  color={'orange'}
+                />
+              </div>
+              <p className="font-bold mt-6 text-2xl text-center mb-4 text-gray-700">
+                We have found your location at:
               </p>
-
-              <p className="font-bold mt-6 text-2xl text-center mb-4">
-                We have found your location at
-              </p>
-              <p className="font-bold text-2xl text-green-600 text-center">
-                {user.location}
+              <p className="font-bold text-2xl text-green-500 tracking-wider text-center">
+                {user.location.replace('BLK', '').substring(0, 20)}
+                Somewhere in Singapore
               </p>
             </div>
-            <div className="flex flex-col justify-center items-center mt-6 cursor-pointer">
-              <IoReloadCircleSharp
+            <div className="flex gap-2">
+              {new Array(8).fill(true).map((item, index) => (
+                <TbSteeringWheel
+                  className="hover:pb-1"
+                  key={index}
+                  size={25}
+                  color={'gray'}
+                />
+              ))}
+            </div>
+            <div className="flex flex-col justify-center items-center mt-2 cursor-pointer">
+              <AiFillCar
+                className="hover:scale-110 ease-in duration-300"
                 onClick={reloadOwnPosition}
-                size={25}
+                size={35}
                 color={'red'}
               />
-              <p className="font-semibold">Reload Location</p>
+              <p className="font-bold text-gray-700 tracking-wider hover:text-gray-400">
+                Reload Location
+              </p>
             </div>
 
             <div className="flex flex-col justify-center items-center py-4 rounded-md sm:px-40 lg:pb-8 lg:shadow-sm md:w-[80vw]">
               <div>
-                <h1 className="text-2xl text-orange-400 font-semibold text-center">
+                <h1 className="text-2xl text-orange-400 font-bold text-center tracking-wider">
                   What would you like to do today?
                 </h1>
                 <Link to="/favorites">
-                  <div className="flex justify-center items-center gap-2 text-red-500 cursor-pointer hover:underline">
+                  <div className="flex justify-center items-center gap-2 font-semibold tracking-wider text-red-400 cursor-pointer hover:underline hover:scale-110 ease-in duration-300">
                     Go to my favorites
-                    <MdFavorite size={20} color={'red'} />
+                    <MdFavorite
+                      className="animate-pulse"
+                      size={20}
+                      color={'red'}
+                    />
                   </div>
                 </Link>
               </div>
               <div className="flex flex-col justify-center gap-4 mt-4 mb-3 md:flex-row md:items-baseline">
                 {/* 1. USER SERACH CP FROM OWN LOCATION */}
                 <div className="flex flex-col justify-center items-center gap-2">
-                  <h1 className="text-teal-700 font-semibold text-lg">
+                  <h1 className="text-gray-700 font-semibold text-lg tracking-wider">
                     Find carparks near you!
                   </h1>
                   <button
@@ -288,12 +327,12 @@ function SearchPage() {
                 </div>
 
                 <div className="flex flex-col justify-center items-center">
-                  <h1 className="font-bold text-3xl">OR</h1>
+                  <h1 className="font-bold text-3xl text-gray-700">OR</h1>
                 </div>
 
                 {/* 2. USER TYPE IN SEARCH FIELD and SEARCH for CP */}
                 <div className="flex flex-col justify-center items-center gap-2">
-                  <h1 className="text-teal-700 font-semibold text-lg">
+                  <h1 className="text-gray-700 font-semibold text-lg tracking-wider">
                     Search other locations!
                   </h1>
                   {/* Search Form Input field */}

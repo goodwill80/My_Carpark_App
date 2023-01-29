@@ -59,8 +59,8 @@ function Dropdown({ options, value, onChange }) {
         className="flex justify-start items center cursor-pointer"
         onClick={handleClick}
       >
-        <p className="text-semibold">
-          {value?.label || 'Select preferred distance'}
+        <p className="text-semibold text-center">
+          {value?.label || 'Your preferred distance'}
         </p>
         {/* <GoChevronDown className="text-lg" /> */}
       </Panel>

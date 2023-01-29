@@ -99,14 +99,16 @@ function Form({ getUserData, setSignIn }) {
 
   return (
     <div className="p-16 px-35 shadow-xl rounded-lg">
-      <h2 className="font-bold text-3xl mb-4 text-center">
+      <h2 className="font-bold text-3xl mb-4 text-center tracking-wider text-gray-700">
         Public Carpark App
       </h2>
-      <p className="text-center text-gray-400">User Agreement</p>
+      <p className="text-center text-gray-500">User Agreement</p>
       <form onSubmit={handlerOnSubmit}>
         {/* NAME INPUT */}
         <div className="flex flex-col items-baseline gap-2">
-          <label className="font-bold">Name:</label>
+          <label className="font-bold text-gray-700 tracking-wider">
+            Name:
+          </label>
           <input
             type="text"
             value={user.name}
@@ -118,7 +120,9 @@ function Form({ getUserData, setSignIn }) {
         </div>
         {/* EMAIL INPUT */}
         <div className="flex flex-col items-baseline gap-2 mt-4">
-          <label className="font-bold">Email:</label>
+          <label className="font-bold text-gray-700 tracking-wider">
+            Email:
+          </label>
           <input
             type="email"
             value={user.email}

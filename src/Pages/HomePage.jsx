@@ -11,7 +11,7 @@ function HomePage() {
       <Instructions />
       <Form getUserData={getUserData} setSignIn={setSignIn} />
       <div className="flex flex-col justify-center items-center">
-        <p className="text-sm flex flex-col mt-4 text-center w-[80%] md:w-[32%] text-gray-400">
+        <p className="text-[12px] flex flex-col mt-4 text-center w-[80%] md:w-[32%] text-gray-500">
           A monthly restriction of API calls had been set for this site. We
           apologise for the experience if you encounter any restrictions while
           using this app. This is a group project done by students from NTU SCTP

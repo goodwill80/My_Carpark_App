@@ -17,6 +17,8 @@ function Favorites() {
     setTrigger(!trigger);
   };
 
+  const time = 500;
+
   return (
     <div className="min-h-[100vh] flex flex-col px-10">
       <div className="flex flex-col justify-center items-center py-10">
@@ -68,6 +70,7 @@ function Favorites() {
 
                       <MapSingleModal
                         item={item}
+                        timer={900 + index * time}
                         id={item._id}
                         carpark_number={item.carpark_number}
                         lat={item.lat}

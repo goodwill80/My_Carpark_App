@@ -5,7 +5,7 @@ module.exports = {
     themes: [
       // 'light',
       // 'dark',
-      'cupcake',
+      // 'cupcake',
       // 'bumblebee',
       // 'emerald',
       // 'corporate',
@@ -19,7 +19,7 @@ module.exports = {
       // 'aqua',
       // 'lofi',
       // 'pastel',
-      // 'fantasy',
+      'fantasy',
       // 'wireframe',
       // 'black',
       // 'luxury',

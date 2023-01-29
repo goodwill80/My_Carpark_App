@@ -25,6 +25,7 @@ function Row({
   night_parking,
   handlerDelete,
   results,
+  timer,
 }) {
   const { triggerZoom, user } = useContext(CarparkContext);
   const [trigger, setTrigger] = useState(false);
@@ -69,6 +70,7 @@ function Row({
               results={results}
               triggerZoom={triggerZoom}
               trigger={trigger}
+              timer={timer}
             />
           </div>
         </td>

@@ -4,6 +4,8 @@ import { CarparkContext } from '../Context/CarparkContext';
 
 import { BsSkipBackwardCircleFill } from 'react-icons/bs';
 
+import Loader from '../images/spinner.gif';
+
 import {
   useJsApiLoader,
   GoogleMap,
@@ -23,10 +25,11 @@ function MapSingleModal({
   user,
   free_parking,
   triggerZoom,
-  results,
+  timer,
   trigger,
 }) {
   const { addToFavorite, favoriteCp } = useContext(CarparkContext);
+  const [loading, setLoading] = useState(false);
   const [map, setMap] = useState(/** @type google.maps.Map */ (null));
   const [directionsResponse, setDirectionsResponse] = useState(null);
   const { isLoaded } = useJsApiLoader({
@@ -93,7 +96,10 @@ function MapSingleModal({
     // calculateRoute();
     const calRoute = setTimeout(() => {
       calculateRoute();
-    }, 1000);
+      console.log('timer');
+      setLoading(() => false);
+    }, timer);
+    setLoading(() => true);
     return () => clearInterval(calRoute);
   }, [trigger, triggerZoom]);
 
@@ -110,8 +116,16 @@ function MapSingleModal({
       <input type="checkbox" id={`my-modal-${id}`} className="modal-toggle" />
       <label htmlFor={`my-modal-${id}`} className="modal cursor-pointer">
         <label className="modal-box relative h-[85vh] w-full" htmlFor="">
-          <div className="flex justify-between space-x-4 py-2">
-            <h3 className="text-md font-bold text-red-900">
+          <div className="relative flex justify-between space-x-4 py-2">
+            {loading && (
+              <div className="absolute w-full top-36">
+                <div className="flex flex-col justify-center items-center">
+                  <img className="h-[200px]" src={Loader} alt="loading..." />
+                  <p className="font-bold text-lg">Routing...</p>
+                </div>
+              </div>
+            )}
+            <h3 className="ml-4 text-md font-bold text-red-900">
               Carpark {carpark_number}
             </h3>
             <button

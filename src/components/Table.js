@@ -141,6 +141,8 @@ function Table({
     toggleTotalLots();
   }, [switchTotalLots]);
 
+  const time = 270;
+
   return (
     <div className="m-h-[320px] h-[680px]">
       {/* <AfterSearchFilter setCopyArray={setCopyArray} results={results} /> */}
@@ -196,6 +198,7 @@ function Table({
             <>
               <Row
                 key={i}
+                timer={900 + i * time}
                 item={item}
                 index={i}
                 carpark_number={item.carpark_number}
