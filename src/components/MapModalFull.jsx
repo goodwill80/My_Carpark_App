@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, memo, useState } from 'react';
 import axios from 'axios';
 import styles from './MapModalFull.module.css';
 import {
@@ -61,22 +61,57 @@ function MapModalFull({ results, user, triggerZoom, querySearchCoords }) {
 
   const center = centerPosition;
 
+  // const calculateRoute = async () => {
+  //   try {
+  //     const directionsService = new window.google.maps.DirectionsService();
+  //     const response = await axios.get(
+  //       `/.netlify/functions/geocodeLatLngApi?latitude=${querySearchCoords.lat}&&longtitude=${querySearchCoords.lng}`
+  //     );
+  //     const address = response.data;
+
+  //     const results = await directionsService.route({
+  //       origin: user.location,
+  //       destination: address,
+  //       travelMode: window.google.maps.TravelMode.DRIVING,
+  //     });
+  //     // console.log(results);
+  //     setDirectionsResponse(results);
+  //   } catch (e) {
+  //     console.log(e.message);
+  //   }
+  // };
+
   const calculateRoute = async () => {
     try {
-      const directionsService = new window.google.maps.DirectionsService();
+      // console.log('Full');
+      let delayFactor = 0;
       const response = await axios.get(
         `/.netlify/functions/geocodeLatLngApi?latitude=${querySearchCoords.lat}&&longtitude=${querySearchCoords.lng}`
       );
       const address = response.data;
-
-      const results = await directionsService.route({
+      const request = {
         origin: user.location,
         destination: address,
         travelMode: window.google.maps.TravelMode.DRIVING,
+      };
+      const directionsService = new window.google.maps.DirectionsService();
+
+      await directionsService.route(request, (result, status) => {
+        if (status === 'OK') {
+          // console.log(result);
+          setDirectionsResponse(result);
+        } else if (status === 'OVER_QUERY_LIMIT') {
+          console.log(status);
+          delayFactor++;
+          setTimeout(function () {
+            calculateRoute();
+          }, delayFactor * 1500);
+        } else {
+          console.log('Route: ' + status);
+        }
       });
-      // console.log(results);
-      setDirectionsResponse(results);
     } catch (e) {
+      // console.log(e);
       console.log(e.message);
     }
   };
@@ -241,4 +276,4 @@ function MapModalFull({ results, user, triggerZoom, querySearchCoords }) {
   );
 }
 
-export default MapModalFull;
+export default memo(MapModalFull);

@@ -1,4 +1,4 @@
-import { useMemo, useState, useEffect, useContext } from 'react';
+import { useMemo, memo, useState, useEffect, useContext } from 'react';
 
 import { CarparkContext } from '../Context/CarparkContext';
 
@@ -40,18 +40,50 @@ function MapSingleModal({
     [lat, lon]
   );
 
+  // const calculateRoute = async () => {
+  //   try {
+  //     const directionsService = new window.google.maps.DirectionsService();
+
+  //     const results = await directionsService.route({
+  //       origin: user.location,
+  //       destination: address,
+  //       travelMode: window.google.maps.TravelMode.DRIVING,
+  //     });
+  //     console.log(results);
+  //     setDirectionsResponse(results);
+  //   } catch (e) {
+  //     console.log(e);
+  //     console.log(e.message);
+  //   }
+  // };
+
   const calculateRoute = async () => {
     try {
-      const directionsService = new window.google.maps.DirectionsService();
-
-      const results = await directionsService.route({
+      // console.log('single');
+      let delayFactor = 0;
+      const request = {
         origin: user.location,
         destination: address,
         travelMode: window.google.maps.TravelMode.DRIVING,
+      };
+      const directionsService = new window.google.maps.DirectionsService();
+
+      await directionsService.route(request, (result, status) => {
+        if (status === 'OK') {
+          // console.log(result);
+          setDirectionsResponse(result);
+        } else if (status === 'OVER_QUERY_LIMIT') {
+          console.log(status);
+          delayFactor++;
+          setTimeout(function () {
+            calculateRoute();
+          }, delayFactor * 1500);
+        } else {
+          console.log('Route: ' + status);
+        }
       });
-      // console.log(results);
-      setDirectionsResponse(results);
     } catch (e) {
+      // console.log(e);
       console.log(e.message);
     }
   };
@@ -61,7 +93,7 @@ function MapSingleModal({
       calculateRoute();
       return () => clearInterval(calRoute);
     }, 1000);
-  }, [trigger, results, triggerZoom]);
+  }, [trigger, triggerZoom]);
 
   if (!isLoaded) {
     return (
@@ -156,4 +188,4 @@ function MapSingleModal({
   );
 }
 
-export default MapSingleModal;
+export default memo(MapSingleModal);
