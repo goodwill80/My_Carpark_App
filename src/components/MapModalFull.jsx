@@ -243,6 +243,14 @@ function MapModalFull({ results, user, triggerZoom, querySearchCoords }) {
               <DirectionsRenderer directions={directionsResponse} />
             )}
           </GoogleMap>
+          {!directionsResponse && (
+            <div className="absolute bottom-[400px] left-100 flex flex-col justify-center items-center">
+              <p className="text-center text-red-400 tracking-wider font-bold">
+                Map service unavailable at the moment
+              </p>
+              {/* <p>We apologise for the inconvenience</p> */}
+            </div>
+          )}
           <div className="flex md:flex-col md:items-center justify-center items-baseline gap-3">
             <div className="flex space-x-3">
               <div className="flex flex-col justify-center items-center">

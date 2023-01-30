@@ -143,6 +143,7 @@ function MapSingleModal({
           <p className="text-sm ml-4 text-green-900 mb-2">
             Free parking - {free_parking}
           </p>
+
           <GoogleMap
             center={center}
             zoom={12}
@@ -161,6 +162,16 @@ function MapSingleModal({
               <DirectionsRenderer directions={directionsResponse} />
             )}
           </GoogleMap>
+
+          {!directionsResponse && !loading && (
+            <div className="absolute bottom-[400px] left-24 flex flex-col justify-center items-center">
+              <p className="text-center text-red-400 tracking-wider font-bold">
+                Map service unavailable at the moment
+              </p>
+              {/* <p>We apologise for the inconvenience</p> */}
+            </div>
+          )}
+
           <div className="mt-2 text-red-700 text-sm">
             <p>
               Shortest driving distance from your location:{' '}
