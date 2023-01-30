@@ -120,6 +120,7 @@ function SearchPage() {
       );
 
       if (!response.data) {
+        setResultsLoader(false);
         Swal.fire({
           title: 'Opps, map service unavailable.',
           icon: 'Error',
