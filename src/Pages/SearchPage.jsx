@@ -219,7 +219,7 @@ function SearchPage() {
               <span className="bg-red-500 text-[9px] text-red-500 w-2 h-2 rounded-full p-[0.5px] px-[3px] mr-1 animate-ping">
                 1
               </span>
-              {minutes} mins remaining prior to next data refresh. Please
+              {minutes} min(s) remaining prior to next data refresh. Please
               resubmit query upon refresh, for viewing of updated lot info.
             </p>
             <div className="hidden justify-start items-center pl-[110px] xl:flex">

@@ -70,7 +70,7 @@ function Form({ getUserData, setSignIn }) {
       const userInfo = { ...user, agree: agree };
       Swal.fire({
         title:
-          'Our monthly API calls had been exceeded. Please try again later',
+          'Map service is unavailable, as our monthly API calls has reached its limit. Please try again later',
         icon: 'error',
         confirmButtonText: 'Okay!',
       });

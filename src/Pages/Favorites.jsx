@@ -63,7 +63,7 @@ function Favorites() {
                         >
                           <GoLocation color={'red'} size={20} />
                           <p className="text-sm">
-                            {item.address.replace('BLK', '').substring(0, 20)}
+                            {item.address.replace('BLK', '').substring(0, 17)}
                           </p>
                         </label>
                       </div>
