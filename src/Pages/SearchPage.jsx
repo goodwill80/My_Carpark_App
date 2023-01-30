@@ -271,7 +271,7 @@ function SearchPage() {
               </p>
               <p className="font-bold text-2xl text-green-500 tracking-wider text-center">
                 {user.location.replace('BLK', '').substring(0, 20)}
-                Somewhere in Singapore
+                {!user.location && 'Somewhere in Singapore'}
               </p>
             </div>
             <div className="flex gap-2">
