@@ -15,6 +15,7 @@ import Drivers from '../images/drivers.png';
 
 import * as geolib from 'geolib';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 import SideBar from '../components/SideBar';
 import Dropdown from '../components/Dropdown';
@@ -117,6 +118,15 @@ function SearchPage() {
       const response = await axios.get(
         `/.netlify/functions/geocodeAddrApi?query=${query}`
       );
+
+      if (!response.data) {
+        Swal.fire({
+          title: 'Opps, map service unavailable.',
+          icon: 'Error',
+          confirmButtonText: 'Damn!',
+        });
+        return;
+      }
 
       const coords = response.data;
       if (coords.hasOwnProperty('lat')) {
