@@ -42,15 +42,15 @@ function MapSingleModal({
 
   const calculateRoute = async () => {
     try {
-      const directionsService = new window.google.maps.DirectionsService();
-
-      const results = await directionsService.route({
-        origin: user.location,
-        destination: address,
-        travelMode: window.google.maps.TravelMode.DRIVING,
-      });
-      console.log(results);
-      setDirectionsResponse(results);
+      console.log('calling direction service');
+      // const directionsService = new window.google.maps.DirectionsService();
+      // const results = await directionsService.route({
+      //   origin: user.location,
+      //   destination: address,
+      //   travelMode: window.google.maps.TravelMode.DRIVING,
+      // });
+      // console.log(results);
+      // setDirectionsResponse(results);
     } catch (e) {
       console.log(e);
       console.log(e.message);
@@ -87,7 +87,7 @@ function MapSingleModal({
   // };
 
   useEffect(() => {
-    // console.log('effect');
+    console.log('effect');
     setLoading(true);
     // calculateRoute();
     const calRoute = setTimeout(() => {
