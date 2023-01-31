@@ -33,7 +33,7 @@ function Row({
     'text-sm text-gray-900 font-medium px-6 py-4 whitespace-nowrap';
 
   const toggle = () => {
-    console.log('trigger');
+    // console.log('trigger');
     setTrigger(!trigger);
   };
 
