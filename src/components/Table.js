@@ -141,7 +141,7 @@ function Table({
     toggleTotalLots();
   }, [switchTotalLots]);
 
-  const time = 500;
+  const time = 600;
 
   return (
     <div className="m-h-[320px] h-[680px]">
