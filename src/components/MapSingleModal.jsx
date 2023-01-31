@@ -4,8 +4,6 @@ import { CarparkContext } from '../Context/CarparkContext';
 
 import { BsSkipBackwardCircleFill } from 'react-icons/bs';
 
-import Loader from '../images/spinner.gif';
-
 import {
   useJsApiLoader,
   GoogleMap,
@@ -24,7 +22,6 @@ function MapSingleModal({
   lon,
   user,
   free_parking,
-  // triggerZoom,
   timer,
   trigger,
 }) {
@@ -43,55 +40,54 @@ function MapSingleModal({
     [lat, lon]
   );
 
-  // const calculateRoute = async () => {
-  //   try {
-  //     const directionsService = new window.google.maps.DirectionsService();
-
-  //     const results = await directionsService.route({
-  //       origin: user.location,
-  //       destination: address,
-  //       travelMode: window.google.maps.TravelMode.DRIVING,
-  //     });
-  //     console.log(results);
-  //     setDirectionsResponse(results);
-  //   } catch (e) {
-  //     console.log(e);
-  //     console.log(e.message);
-  //   }
-  // };
-
   const calculateRoute = async () => {
     try {
-      let delayFactor = 0;
-      const request = {
+      const directionsService = new window.google.maps.DirectionsService();
+
+      const results = await directionsService.route({
         origin: user.location,
         destination: address,
         travelMode: window.google.maps.TravelMode.DRIVING,
-      };
-      const directionsService = new window.google.maps.DirectionsService();
-
-      await directionsService.route(request, (result, status) => {
-        if (status === 'OK') {
-          // console.log(result);
-          setDirectionsResponse(result);
-        } else if (status === 'OVER_QUERY_LIMIT') {
-          // console.log(status);
-
-          delayFactor++;
-          setTimeout(function () {
-            calculateRoute();
-          }, delayFactor * 1500);
-        } else {
-          console.log('Route: ' + status);
-        }
       });
+      console.log(results);
+      setDirectionsResponse(results);
     } catch (e) {
-      // console.log(e);
+      console.log(e);
       console.log(e.message);
     }
   };
 
+  // const calculateRoute = async () => {
+  //   try {
+  //     // console.log('this');
+  //     let delayFactor = 0;
+  //     const request = {
+  //       origin: user.location,
+  //       destination: address,
+  //       travelMode: window.google.maps.TravelMode.DRIVING,
+  //     };
+  //     const directionsService = new window.google.maps.DirectionsService();
+
+  //     await directionsService.route(request, (result, status) => {
+  //       if (status === 'OK') {
+  //         setDirectionsResponse(result);
+  //       } else if (status === 'OVER_QUERY_LIMIT') {
+  //         delayFactor++;
+  //         setTimeout(function () {
+  //           calculateRoute();
+  //         }, delayFactor * 1500);
+  //       } else {
+  //         console.log('Route: ' + status);
+  //       }
+  //     });
+  //   } catch (e) {
+  //     // console.log(e);
+  //     console.log(e.message);
+  //   }
+  // };
+
   useEffect(() => {
+    // console.log('effect');
     setLoading(true);
     // calculateRoute();
     const calRoute = setTimeout(() => {
