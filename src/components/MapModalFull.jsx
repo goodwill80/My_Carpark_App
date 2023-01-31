@@ -204,7 +204,7 @@ function MapModalFull({ results, user, triggerZoom, querySearchCoords }) {
                   }}
                 >
                   <div className="flex flex-col justify-center items-center">
-                    <h1 className="text-center font-bold text-blue-700">
+                    <h1 className="text-center font-bold text-blue-700 text-sm">
                       {selectedMarker.address
                         .substring(0, 25)
                         .replace('BLK', '')}
@@ -248,7 +248,6 @@ function MapModalFull({ results, user, triggerZoom, querySearchCoords }) {
               <p className="text-center text-red-400 tracking-wider font-bold">
                 Map service unavailable at the moment
               </p>
-              {/* <p>We apologise for the inconvenience</p> */}
             </div>
           )}
           <div className="flex md:flex-col md:items-center justify-center items-baseline gap-3">

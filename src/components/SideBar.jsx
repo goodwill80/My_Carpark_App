@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext, useEffect, memo } from 'react';
 import { CarparkContext } from '../Context/CarparkContext';
 import ReactWhatsapp from 'react-whatsapp';
 
@@ -112,4 +112,4 @@ function SideBar({ user, setResults }) {
   );
 }
 
-export default SideBar;
+export default memo(SideBar);

@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useContext, useState } from 'react';
+import { useContext, useState, memo } from 'react';
 import { CarparkContext } from '../Context/CarparkContext';
 import Logo from '../images/Logo.png';
 
@@ -53,15 +53,16 @@ function Favorites() {
                       {item.carpark_number}
                     </td>
                     <td>
-                      <div
-                        onClick={toggle}
-                        className="flex items-center gap-2 cursor-pointer"
-                      >
+                      <div className="flex items-center gap-2 cursor-pointer">
                         <label
                           htmlFor={`my-modal-${item._id}`}
                           className="border-none flex gap-4 cursor-pointer"
                         >
-                          <GoLocation color={'red'} size={20} />
+                          <GoLocation
+                            onClick={toggle}
+                            color={'red'}
+                            size={20}
+                          />
                           <p className="text-sm">
                             {item.address.replace('BLK', '').substring(0, 17)}
                           </p>
@@ -103,4 +104,4 @@ function Favorites() {
   );
 }
 
-export default Favorites;
+export default memo(Favorites);

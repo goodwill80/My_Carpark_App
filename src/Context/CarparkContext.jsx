@@ -154,6 +154,9 @@ function CarparkContextProvider({ children }) {
         `/.netlify/functions/geocodeLatLngApi?latitude=${latitude}&&longtitude=${longitude}`
       );
       const address = response.data;
+      if (user.location === address) {
+        return;
+      }
       setUser((prev) => {
         return { ...prev, location: address };
       });
@@ -168,6 +171,13 @@ function CarparkContextProvider({ children }) {
     try {
       await navigator.geolocation.getCurrentPosition((location) => {
         getAddress(location);
+        if (
+          user.coordinates.lat === location.coords.latitude &&
+          user.coordinates.lon === location.coords.longitude
+        ) {
+          setIsLoading(false);
+          return;
+        }
         setUser((prev) => {
           return {
             ...prev,

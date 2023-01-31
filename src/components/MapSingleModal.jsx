@@ -24,7 +24,7 @@ function MapSingleModal({
   lon,
   user,
   free_parking,
-  triggerZoom,
+  // triggerZoom,
   timer,
   trigger,
 }) {
@@ -62,7 +62,6 @@ function MapSingleModal({
 
   const calculateRoute = async () => {
     try {
-      // console.log('single');
       let delayFactor = 0;
       const request = {
         origin: user.location,
@@ -93,15 +92,17 @@ function MapSingleModal({
   };
 
   useEffect(() => {
+    setLoading(true);
     // calculateRoute();
     const calRoute = setTimeout(() => {
       calculateRoute();
-      console.log('timer');
-      setLoading(() => false);
+      setLoading(false);
     }, timer);
-    setLoading(() => true);
+
     return () => clearInterval(calRoute);
-  }, [trigger, triggerZoom]);
+  }, [trigger]);
+
+  // trigger, triggerZoom;
 
   if (!isLoaded) {
     return (
@@ -117,17 +118,16 @@ function MapSingleModal({
       <label htmlFor={`my-modal-${id}`} className="modal cursor-pointer">
         <label className="modal-box relative h-[85vh] w-full" htmlFor="">
           <div className="relative flex justify-between space-x-4 py-2">
-            {loading && (
-              <div className="absolute w-full top-36">
-                <div className="flex flex-col justify-center items-center">
-                  <img className="h-[200px]" src={Loader} alt="loading..." />
-                  <p className="font-bold text-lg">Routing...</p>
-                </div>
-              </div>
-            )}
             <h3 className="ml-4 text-md font-bold text-red-900">
               Carpark {carpark_number}
             </h3>
+
+            {loading && (
+              <p className="animate-ping text-red-500 tracking-widest">
+                Routing...
+              </p>
+            )}
+
             <button
               onClick={() => addToFavorite(item)}
               className={`text-sm border border-green-500 ${
@@ -162,15 +162,6 @@ function MapSingleModal({
               <DirectionsRenderer directions={directionsResponse} />
             )}
           </GoogleMap>
-
-          {!directionsResponse && !loading && (
-            <div className="absolute bottom-[400px] left-24 flex flex-col justify-center items-center">
-              <p className="text-center text-red-400 tracking-wider font-bold">
-                Map service unavailable at the moment
-              </p>
-              {/* <p>We apologise for the inconvenience</p> */}
-            </div>
-          )}
 
           <div className="mt-2 text-red-700 text-sm">
             <p>

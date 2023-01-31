@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, memo } from 'react';
 
 import { GoLocation } from 'react-icons/go';
 import { RiDeleteBin6Line } from 'react-icons/ri';
@@ -33,6 +33,7 @@ function Row({
     'text-sm text-gray-900 font-medium px-6 py-4 whitespace-nowrap';
 
   const toggle = () => {
+    console.log('trigger');
     setTrigger(!trigger);
   };
 
@@ -126,4 +127,4 @@ function Row({
   );
 }
 
-export default Row;
+export default memo(Row);

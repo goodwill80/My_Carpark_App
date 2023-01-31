@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState, useEffect, memo } from 'react';
 import { Link } from 'react-router-dom';
 import { CarparkContext } from '../Context/CarparkContext';
 
@@ -112,18 +112,18 @@ function SearchPage() {
   // Load Carparks based on user search
   const searchCp = async () => {
     try {
-      setTriggerZoom(true);
       setResultsLoader(true);
-
       const response = await axios.get(
         `/.netlify/functions/geocodeAddrApi?query=${query}`
       );
 
       if (!response.data) {
         setResultsLoader(false);
+        setTriggerZoom(false);
         Swal.fire({
-          title: 'Opps, map service unavailable.',
-          icon: 'Error',
+          title:
+            'Opps, there is either no inputs or map service is unavailable.',
+          icon: 'error',
           confirmButtonText: 'Damn!',
         });
         return;
@@ -165,6 +165,7 @@ function SearchPage() {
         setResults(() => [...listLotsColour]);
         setResultsLoader(false);
         setPage(1);
+        setTriggerZoom(true);
         setQuery('');
       }
     } catch (e) {
@@ -462,4 +463,4 @@ function SearchPage() {
   );
 }
 
-export default SearchPage;
+export default memo(SearchPage);

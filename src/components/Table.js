@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, memo } from 'react';
 
 import { FaSort } from 'react-icons/fa';
 
@@ -141,7 +141,7 @@ function Table({
     toggleTotalLots();
   }, [switchTotalLots]);
 
-  const time = 270;
+  const time = 500;
 
   return (
     <div className="m-h-[320px] h-[680px]">
@@ -230,4 +230,4 @@ function Table({
     </div>
   );
 }
-export default Table;
+export default memo(Table);
