@@ -123,7 +123,7 @@ function MapSingleModal({
             </h3>
 
             {loading && (
-              <p className="animate-ping text-red-500 tracking-widest">
+              <p className="animate-ping text-red-500 tracking-widest text-[12px]">
                 Routing...
               </p>
             )}
