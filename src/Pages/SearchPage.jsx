@@ -253,7 +253,7 @@ function SearchPage() {
             src={Loading_icon}
             alt="Loading_icon"
           />
-          <p className="font-semibold text-gray-600">
+          <p className="font-semibold text-gray-600 px-2">
             Retrieving your location. Please stay with us!
           </p>
         </div>
