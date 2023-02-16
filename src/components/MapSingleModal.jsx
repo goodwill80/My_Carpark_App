@@ -159,7 +159,7 @@ function MapSingleModal({
             )}
           </GoogleMap>
 
-          <div className="mt-2 text-red-700 text-sm">
+          <div className="mt-2 text-red-700 text-[12px]">
             <p>
               Shortest driving distance from your location:{' '}
               {loading ? (
