@@ -162,17 +162,29 @@ function MapSingleModal({
           <div className="mt-2 text-red-700 text-sm">
             <p>
               Shortest driving distance from your location:{' '}
-              <span className="font-semibold">
-                {directionsResponse &&
-                  directionsResponse.routes[0].legs[0].distance.text}
-              </span>
+              {loading ? (
+                <span className="text-teal-400 font-semibold text-sm">
+                  loading...
+                </span>
+              ) : (
+                <span className="font-semibold">
+                  {directionsResponse &&
+                    directionsResponse.routes[0].legs[0].distance.text}
+                </span>
+              )}
             </p>
             <p>
               Estimated Time to reach destination:{' '}
-              <span className="font-semibold">
-                {directionsResponse &&
-                  directionsResponse.routes[0].legs[0].duration.text}
-              </span>
+              {loading ? (
+                <span className="text-teal-400 font-semibold text-sm">
+                  loading...
+                </span>
+              ) : (
+                <span className="font-semibold">
+                  {directionsResponse &&
+                    directionsResponse.routes[0].legs[0].duration.text}
+                </span>
+              )}
             </p>
             <p>
               Trave Mode: <span className="font-semibold">DRVING</span>

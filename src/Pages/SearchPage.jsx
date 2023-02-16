@@ -282,7 +282,7 @@ function SearchPage() {
                 We have found your location at:
               </p>
               <p className="font-bold text-2xl text-green-500 tracking-wider text-center">
-                {user.location.replace('BLK', '').substring(0, 20)}
+                {user.location.replace('BLK', '').substring(0, 30)}
                 {!user.location && 'Somewhere in Singapore'}
               </p>
             </div>

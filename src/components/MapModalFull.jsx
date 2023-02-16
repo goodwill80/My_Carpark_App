@@ -92,7 +92,7 @@ function MapModalFull({ results, user, triggerZoom, querySearchCoords }) {
         destination: address,
         travelMode: window.google.maps.TravelMode.DRIVING,
       };
-      console.log('check');
+      // console.log('check');
       const directionsService = new window.google.maps.DirectionsService();
 
       await directionsService.route(request, (result, status) => {
