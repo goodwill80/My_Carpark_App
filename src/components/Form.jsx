@@ -68,12 +68,7 @@ function Form({ getUserData, setSignIn }) {
 
     if (!error && agree) {
       const userInfo = { ...user, agree: agree };
-      // Swal.fire({
-      //   title:
-      //     'Map service is unavailable, as our monthly API calls has reached its limit. Please try again later',
-      //   icon: 'error',
-      //   confirmButtonText: 'Okay!',
-      // });
+
       getUserData(userInfo);
       setSignIn(true);
       navigate('/search');

@@ -19,7 +19,7 @@ import Favorites from './Pages/Favorites';
 import { CarparkContext } from './Context/CarparkContext';
 
 function App() {
-  const { signIn, accessAllowed } = useContext(CarparkContext);
+  const { signIn } = useContext(CarparkContext);
 
   return (
     <Router>

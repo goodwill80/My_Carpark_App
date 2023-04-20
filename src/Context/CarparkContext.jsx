@@ -35,6 +35,7 @@ function CarparkContextProvider({ children }) {
   const [counter, setCounter] = useState(60); // For passenger page
   const [countdown, setCountdown] = useState(1800); // For data refresh
 
+  // Get Favorite CPs from LocalStorage
   useEffect(() => {
     const favoriteCarparks =
       JSON.parse(localStorage.getItem('favoriteCarparks')) || [];
@@ -62,6 +63,7 @@ function CarparkContextProvider({ children }) {
     });
   };
 
+  // Remove from favorates
   const removeFrFavorite = (id) => {
     const fav = favoriteCp.find((item) => item._id === id);
     const newList = fav
@@ -85,6 +87,7 @@ function CarparkContextProvider({ children }) {
     return () => clearInterval(halfHourRefresh);
   }, []);
 
+  // Set Timer State for Data Refresh
   useEffect(() => {
     const timerToRefresh = setInterval(() => {
       setCountdown((prev) => prev - 1);
@@ -197,6 +200,7 @@ function CarparkContextProvider({ children }) {
     }
   };
 
+  // To Refresh User's Current Position on click
   const resetPosition = () => {
     navigator.geolocation.getCurrentPosition((location) => {
       getAddress(location);
