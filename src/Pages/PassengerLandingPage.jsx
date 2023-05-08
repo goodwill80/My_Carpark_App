@@ -1,14 +1,35 @@
-import { useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+import { useState, useEffect, useContext } from 'react';
 import axios from 'axios';
 import signal from '../images/signal.gif';
+import { CarparkContext } from '../Context/CarparkContext';
 
 function PassengerLandingPage() {
+  const { counter, setCounter } = useContext(CarparkContext);
   const [passengerAddress, setPassengerAddress] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
+  const redirect = useNavigate();
+
   const { driveraddress, drivername } = useParams();
-  console.log(driveraddress, drivername);
+  // console.log(driveraddress, drivername);
+
+  useEffect(() => {
+    if (!driveraddress && !drivername) {
+      redirect('/noaccess');
+    }
+    const pageExpired = setTimeout(() => {
+      redirect('/noaccess');
+    }, 60000);
+    return () => clearTimeout(pageExpired);
+  }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCounter((prev) => prev - 1);
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   const getAddress = async (location) => {
     try {
@@ -46,6 +67,9 @@ function PassengerLandingPage() {
           <h1 className="text-4xl font-bold text-red-300 text-center px-3">
             HDB Carpark App
           </h1>
+          <p className="text-lg text-red-400 text-center font-semibold">
+            Page will expire in {counter} seconds
+          </p>
           <p className="text-blue-400 text-2xl font-bold text-center px-4">
             Hello, {drivername ? drivername : 'someone'} has sent you his/her
             current position.

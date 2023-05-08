@@ -24,13 +24,61 @@ const initialUserState = {
 };
 
 function CarparkContextProvider({ children }) {
-  const [carparks, setCarparks] = useState();
-  const [user, setUser] = useState(initialUserState);
-  const [isLoading, setIsLoading] = useState(true);
-  const [signIn, setSignIn] = useState(false);
-  const [triggerZoom, setTriggerZoom] = useState(false);
-  const [openSideBar, setOpenSideBar] = useState(false);
+  const [carparks, setCarparks] = useState(); // All carparks from the 2 govt APIs
+  const [user, setUser] = useState(initialUserState); // User sign in data
+  const [isLoading, setIsLoading] = useState(true); // Initial loader after sign-in
+  const [signIn, setSignIn] = useState(false); // Sign-in and redirect routing condition
+  const [triggerZoom, setTriggerZoom] = useState(false); // Trigger different zooms on map based on search locations
+  const [openSideBar, setOpenSideBar] = useState(false); // Open and close sidebar
+  const [favoriteCp, setFavoriteCp] = useState([]); // Add favorite carparks
 
+  const [counter, setCounter] = useState(60); // For passenger page
+  const [countdown, setCountdown] = useState(1800); // For data refresh
+
+  // Get Favorite CPs from LocalStorage
+  useEffect(() => {
+    const favoriteCarparks =
+      JSON.parse(localStorage.getItem('favoriteCarparks')) || [];
+    setFavoriteCp(favoriteCarparks);
+  }, []);
+
+  // Add Favorite Carpark
+  const addToFavorite = (item) => {
+    const check = favoriteCp.find((cp) => cp._id === item._id);
+    if (check) {
+      Swal.fire({
+        title: 'CP is already in Favorites',
+        icon: 'error',
+        confirmButtonText: 'okay!',
+      });
+      return;
+    }
+    const newFavList = [...favoriteCp, item];
+    localStorage.setItem('favoriteCarparks', JSON.stringify(newFavList));
+    setFavoriteCp([...newFavList]);
+    Swal.fire({
+      title: 'Added to favorites',
+      icon: 'success',
+      confirmButtonText: 'Great!',
+    });
+  };
+
+  // Remove from favorates
+  const removeFrFavorite = (id) => {
+    const fav = favoriteCp.find((item) => item._id === id);
+    const newList = fav
+      ? favoriteCp.filter((item) => item._id !== id)
+      : favoriteCp;
+    localStorage.setItem('favoriteCarparks', JSON.stringify(newList));
+    setFavoriteCp([...newList]);
+    Swal.fire({
+      title: 'Removed from favorites',
+      icon: 'success',
+      confirmButtonText: 'Great!',
+    });
+  };
+
+  // Load all Carparks on sign-in Page and refresh every half hour
   useEffect(() => {
     fetchCarparks();
     const halfHourRefresh = setInterval(() => {
@@ -39,6 +87,26 @@ function CarparkContextProvider({ children }) {
     return () => clearInterval(halfHourRefresh);
   }, []);
 
+  // Set Timer State for Data Refresh
+  useEffect(() => {
+    const timerToRefresh = setInterval(() => {
+      setCountdown((prev) => prev - 1);
+    }, 1000);
+    return () => clearInterval(timerToRefresh);
+  }, []);
+
+  useEffect(() => {
+    if (countdown === 0) {
+      setCountdown(() => 1800);
+      Swal.fire({
+        title: 'Carpark data updated!',
+        icon: 'success',
+        confirmButtonText: 'Okay!',
+      });
+    }
+  }, [countdown]);
+
+  // Fetch APIs for all CPs
   const fetchCarparks = async () => {
     try {
       const [res1, res2] = await Promise.all([
@@ -80,6 +148,7 @@ function CarparkContextProvider({ children }) {
     }
   };
 
+  // Heper method for getUserData below to convert coords to string string address using geocoding
   const getAddress = async (location) => {
     try {
       const latitude = location.coords.latitude;
@@ -88,6 +157,9 @@ function CarparkContextProvider({ children }) {
         `/.netlify/functions/geocodeLatLngApi?latitude=${latitude}&&longtitude=${longitude}`
       );
       const address = response.data;
+      if (user.location === address) {
+        return;
+      }
       setUser((prev) => {
         return { ...prev, location: address };
       });
@@ -97,10 +169,18 @@ function CarparkContextProvider({ children }) {
   };
 
   // Get the user permission on a form, once he clicks submit.
+  // Get user cords and state all details in user state
   const getUserData = async (form) => {
     try {
       await navigator.geolocation.getCurrentPosition((location) => {
         getAddress(location);
+        if (
+          user.coordinates.lat === location.coords.latitude &&
+          user.coordinates.lon === location.coords.longitude
+        ) {
+          setIsLoading(false);
+          return;
+        }
         setUser((prev) => {
           return {
             ...prev,
@@ -120,6 +200,25 @@ function CarparkContextProvider({ children }) {
     }
   };
 
+  // To Refresh User's Current Position on click
+  const resetPosition = () => {
+    navigator.geolocation.getCurrentPosition((location) => {
+      getAddress(location);
+      setUser((prev) => {
+        return {
+          ...prev,
+          raw_data: location,
+          coordinates: {
+            lat: location.coords.latitude,
+            lon: location.coords.longitude,
+          },
+        };
+      });
+      setIsLoading(false);
+    });
+  };
+
+  // Reset of all tiggers back to default
   const signout = () => {
     setSignIn(() => false);
     setIsLoading(true);
@@ -147,6 +246,13 @@ function CarparkContextProvider({ children }) {
     openSideBar,
     setOpenSideBar,
     fetchCarparks,
+    resetPosition,
+    counter,
+    setCounter,
+    countdown,
+    addToFavorite,
+    favoriteCp,
+    removeFrFavorite,
   };
 
   return (

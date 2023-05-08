@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, memo } from 'react';
 
 import { FaSort } from 'react-icons/fa';
 
 import Row from './Row';
-import AfterSearchFilter from './AfterSearchFilter';
+// import AfterSearchFilter from './AfterSearchFilter';
 
 function Table({
   results,
@@ -13,6 +13,7 @@ function Table({
   copyArray,
   setCopyArray,
   setPage,
+  querySearchCoords,
 }) {
   const [switchDist, setSwitchDist] = useState(false);
   const [switchLots, setSwitchLots] = useState(false);
@@ -140,6 +141,8 @@ function Table({
     toggleTotalLots();
   }, [switchTotalLots]);
 
+  const time = 600;
+
   return (
     <div className="m-h-[320px] h-[680px]">
       {/* <AfterSearchFilter setCopyArray={setCopyArray} results={results} /> */}
@@ -153,7 +156,7 @@ function Table({
               className={`${classNameForTh} cursor-pointer`}
             >
               <div className="flex items-baseline justify-center">
-                Distance
+                {querySearchCoords ? 'Dist (fr search)' : 'Dist (fr own)'}
                 <FaSort size={18} className="pt-1" />
               </div>
             </th>
@@ -195,6 +198,8 @@ function Table({
             <>
               <Row
                 key={i}
+                timer={900 + i * time}
+                item={item}
                 index={i}
                 carpark_number={item.carpark_number}
                 id={item._id}
@@ -216,15 +221,13 @@ function Table({
           ))}
         </tbody>
       </table>
-      <br></br>
-      <div className="flex flex-col justify-center items-center">
+
+      <div className="flex flex-col justify-center items-center mt-4">
         <p className="font-bold text-gray-500">
           Page {page} of {totalPages}
         </p>
       </div>
-
-      <br></br>
     </div>
   );
 }
-export default Table;
+export default memo(Table);

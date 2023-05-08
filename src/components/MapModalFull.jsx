@@ -1,22 +1,32 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, memo, useState } from 'react';
+import axios from 'axios';
 import styles from './MapModalFull.module.css';
 import {
   useJsApiLoader,
   GoogleMap,
   Marker,
   InfoWindow,
+  DirectionsRenderer,
 } from '@react-google-maps/api';
 import { BsSkipBackwardCircleFill } from 'react-icons/bs';
+import { BsFillSkipForwardCircleFill } from 'react-icons/bs';
 
 import Spinner from '../images/spinner.gif';
 
 function MapModalFull({ results, user, triggerZoom, querySearchCoords }) {
   const [map, setMap] = useState(/** @type google.maps.Map */ (null));
   const [zoom, setZoom] = useState(10);
+  const [directionsResponse, setDirectionsResponse] = useState(null);
   const [selectedMarker, setSelectedMarker] = useState(null);
+  const [centerPosition, setCenterPosition] = useState({
+    lat: user.coordinates.lat,
+    lng: user.coordinates.lon,
+  });
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: process.env.REACT_APP_API_KEY,
   });
+
+  const userCoords = { lat: user.coordinates.lat, lng: user.coordinates.lon };
 
   useEffect(() => {
     if (!triggerZoom) {
@@ -27,10 +37,83 @@ function MapModalFull({ results, user, triggerZoom, querySearchCoords }) {
     return () => setZoom(10);
   }, [triggerZoom]);
 
-  const center = useMemo(
-    () => ({ lat: user.coordinates.lat, lng: user.coordinates.lon }),
-    []
-  );
+  useEffect(() => {
+    if (querySearchCoords) {
+      const timeout = setTimeout(() => {
+        calculateRoute();
+      }, 1500);
+      setCenterPosition(querySearchCoords);
+      setZoom(() => 13);
+      return () => clearInterval(timeout);
+    } else {
+      setDirectionsResponse(null);
+      setCenterPosition({
+        lat: user.coordinates.lat,
+        lng: user.coordinates.lon,
+      });
+    }
+  }, [querySearchCoords]);
+
+  // const center = useMemo(
+  //   () => ({ lat: user.coordinates.lat, lng: user.coordinates.lon }),
+  //   []
+  // );
+
+  const center = centerPosition;
+
+  // const calculateRoute = async () => {
+  //   try {
+  //     const directionsService = new window.google.maps.DirectionsService();
+  //     const response = await axios.get(
+  //       `/.netlify/functions/geocodeLatLngApi?latitude=${querySearchCoords.lat}&&longtitude=${querySearchCoords.lng}`
+  //     );
+  //     const address = response.data;
+  //     const results = await directionsService.route({
+  //       origin: user.location,
+  //       destination: address,
+  //       travelMode: window.google.maps.TravelMode.DRIVING,
+  //     });
+  //     // console.log(results);
+  //     setDirectionsResponse(results);
+  //   } catch (e) {
+  //     console.log(e.message);
+  //   }
+  // };
+
+  const calculateRoute = async () => {
+    try {
+      let delayFactor = 0;
+      const response = await axios.get(
+        `/.netlify/functions/geocodeLatLngApi?latitude=${querySearchCoords.lat}&&longtitude=${querySearchCoords.lng}`
+      );
+      const address = response.data;
+      const request = {
+        origin: user.location,
+        destination: address,
+        travelMode: window.google.maps.TravelMode.DRIVING,
+      };
+      // console.log('check');
+      const directionsService = new window.google.maps.DirectionsService();
+
+      await directionsService.route(request, (result, status) => {
+        if (status === 'OK') {
+          // console.log(result);
+          setDirectionsResponse(result);
+        } else if (status === 'OVER_QUERY_LIMIT') {
+          // console.log(status);
+          delayFactor++;
+          setTimeout(function () {
+            calculateRoute();
+          }, delayFactor * 1500);
+        } else {
+          console.log('Route: ' + status);
+        }
+      });
+    } catch (e) {
+      // console.log(e);
+      console.log(e.message);
+    }
+  };
 
   const openInfo = (item) => {
     setSelectedMarker(item);
@@ -56,7 +139,7 @@ function MapModalFull({ results, user, triggerZoom, querySearchCoords }) {
           <GoogleMap
             center={center}
             zoom={zoom}
-            mapContainerStyle={{ width: '90%', height: '100%' }}
+            mapContainerStyle={{ width: '95%', height: '100%' }}
             onLoad={(map) => setMap(map)}
             options={
               {
@@ -120,7 +203,7 @@ function MapModalFull({ results, user, triggerZoom, querySearchCoords }) {
                   }}
                 >
                   <div className="flex flex-col justify-center items-center">
-                    <h1 className="text-center font-bold text-blue-700">
+                    <h1 className="text-center font-bold text-blue-700 text-sm">
                       {selectedMarker.address
                         .substring(0, 25)
                         .replace('BLK', '')}
@@ -155,24 +238,38 @@ function MapModalFull({ results, user, triggerZoom, querySearchCoords }) {
                 </InfoWindow>
               </div>
             )}
+            {directionsResponse && (
+              <DirectionsRenderer directions={directionsResponse} />
+            )}
           </GoogleMap>
-          <div className="flex md:flex-col md:items-center justify-center items-baseline gap-3">
-            <div className="flex flex-col justify-center items-center">
-              <BsSkipBackwardCircleFill
-                onClick={() => map.panTo(center)}
-                className="cursor-pointer mt-3"
-                size={20}
-              />
-              <p className="hidden md:flex">Back</p>
+          {/* {!directionsResponse && (
+            <div className="absolute bottom-[400px] left-100 flex flex-col justify-center items-center">
+              <p className="text-center text-red-400 tracking-wider font-bold">
+                Map service unavailable at the moment
+              </p>
             </div>
-            {/* <div className="modal-action">
-              <label
-                htmlFor="my-modal"
-                className="btn btn-success hidden md:flex md:btn-md md:text-md"
-              >
-                Close
-              </label>
-            </div> */}
+          )} */}
+          <div className="flex md:flex-col md:items-center justify-center items-baseline gap-3">
+            <div className="flex space-x-3">
+              <div className="flex flex-col justify-center items-center">
+                <BsSkipBackwardCircleFill
+                  onClick={() => map.panTo(userCoords)}
+                  className="cursor-pointer mt-3"
+                  size={20}
+                />
+                <p className="hidden md:flex">Origin</p>
+              </div>
+              {querySearchCoords && (
+                <div className="flex flex-col justify-center items-center">
+                  <BsFillSkipForwardCircleFill
+                    onClick={() => map.panTo(querySearchCoords)}
+                    className="cursor-pointer mt-3"
+                    size={20}
+                  />
+                  <p className="hidden md:flex">Target</p>
+                </div>
+              )}
+            </div>
             <div className="modal-action absolute top-0 right-5 cursor-pointer">
               <label htmlFor="my-modal" className="font-bold cursor-pointer">
                 X
@@ -185,4 +282,4 @@ function MapModalFull({ results, user, triggerZoom, querySearchCoords }) {
   );
 }
 
-export default MapModalFull;
+export default memo(MapModalFull);

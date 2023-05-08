@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, memo } from 'react';
 
 import { GoLocation } from 'react-icons/go';
 import { RiDeleteBin6Line } from 'react-icons/ri';
@@ -9,6 +9,7 @@ import MapSingleModal from './MapSingleModal';
 
 function Row({
   index,
+  item,
   carpark_number,
   id,
   address,
@@ -24,6 +25,7 @@ function Row({
   night_parking,
   handlerDelete,
   results,
+  timer,
 }) {
   const { triggerZoom, user } = useContext(CarparkContext);
   const [trigger, setTrigger] = useState(false);
@@ -31,6 +33,7 @@ function Row({
     'text-sm text-gray-900 font-medium px-6 py-4 whitespace-nowrap';
 
   const toggle = () => {
+    // console.log('trigger');
     setTrigger(!trigger);
   };
 
@@ -56,6 +59,7 @@ function Row({
               {address.replace('BLK', '').substring(0, 15)}
             </label>
             <MapSingleModal
+              item={item}
               id={id}
               carpark_number={carpark_number}
               lat={lat}
@@ -67,6 +71,7 @@ function Row({
               results={results}
               triggerZoom={triggerZoom}
               trigger={trigger}
+              timer={timer}
             />
           </div>
         </td>
@@ -122,4 +127,4 @@ function Row({
   );
 }
 
-export default Row;
+export default memo(Row);
