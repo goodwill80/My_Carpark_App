@@ -15,7 +15,7 @@ The Carpark Availability App :
 2. Navigate to carpark destination using Google Direction. (Primary)
 3. Saving the carpark location to localstorage as Favorite, for retrieval and use in future. (Primary)
 4. Communicate with passager via Whatsapp API on driver's pickup location, along with navigation for passenger to reach a driver's location. (Add-on)
-5. Sending SOS help signal if driver encounters any critical situations, use-cases include (i.e. medical emergencies, dangerous situations, vehicle breakdown and etc.) (Add-on)
+5. Sending SOS help signals to nominated person if a driver encounters any critical situations. Use-cases include (i.e. medical emergencies, dangerous situations, vehicle breakdown and etc.) (Add-on)
 
 Try out our project [here](https://sensational-zabaione-393a34.netlify.app 'link to deployed site')!
 
@@ -24,6 +24,7 @@ Try out our project [here](https://sensational-zabaione-393a34.netlify.app 'link
 - No login is required
 - The User Agreement is meant to seek user's consensus of releasing his/her current coordinates
 - You'll need to enable location settings on your browser for the app to work
+- This is a proof-of-concept application done as a group project for a software engineering course.
 
 ## Features
 
