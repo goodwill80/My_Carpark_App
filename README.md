@@ -1,5 +1,8 @@
 # Carpark Availability App
 
+## Live Link
+https://sensational-zabaione-393a34.netlify.app/
+
 ## Starting the App from IDE
 
 1. npm install
