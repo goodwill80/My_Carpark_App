@@ -22,8 +22,8 @@ Try out our project [here](https://sensational-zabaione-393a34.netlify.app 'link
 ## Important to note before using the app:
 
 - No login is required
-- The User Agreement is meant to seek user's consensus of releasing his/her current coordinates
-- You'll need to enable location settings on your browser for the app to work
+- The User Agreement is meant to seek user's consensus in releasing his/her current coordinates.
+- User MUST enable location settings on their browsers for the application to work.
 - This is a proof-of-concept application done as a group project for a software engineering course.
 
 ## Features
