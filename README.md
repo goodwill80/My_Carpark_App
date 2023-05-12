@@ -11,7 +11,7 @@ https://sensational-zabaione-393a34.netlify.app/
 ## Description
 ![My Image](Carpark_app.png)
 The Carpark Availability App :
-1. Allows users to search for available lots in HDB-run carparks near their current location or a location of their choosing by using APIs to harness data from a variety of sources.
+1. Allows user to search for available lots in HDB-run carparks near their current location or a location of their choosing by using APIs to harness data from a variety of sources.
 2. Navigate to carpark destination using Google Direction.
 3. Saving the carpark location to localstorage as favorite for easy retrieval and use in future.
 4. Communicate with passager via Whatsapp API on driver's pickup location along with navigation for passenger to reach a driver's location. 
