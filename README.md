@@ -2,6 +2,7 @@
 
 ## Live Link
 https://sensational-zabaione-393a34.netlify.app/
+- App can only be used in Singapore for searching of local HDB carparks.
 - App is best experienced using Chrome Browser. 
 
 ## Starting the App from IDE
