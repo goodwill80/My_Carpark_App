@@ -2,6 +2,7 @@
 
 ## Live Link
 https://sensational-zabaione-393a34.netlify.app/
+- App is best experienced using Chrome Browser. 
 
 ## Starting the App from IDE
 
