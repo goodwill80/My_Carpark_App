@@ -5,7 +5,7 @@ https://sensational-zabaione-393a34.netlify.app/
 - App can only be used in Singapore for searching of HDB carparks.
 - App is best experienced using Chrome Browser. 
 - User must enable location setting on their browser or mobile phone.
-- To experience features on navigation, passenger-driver communication or Driver SOS, App needs to be run on a mobile phone (with Google map and Whatsapp)
+- To experience features on navigation, passenger-driver communication or Driver SOS, App needs to run on a mobile phone (with Google map and Whatsapp)
 
 ## Starting the App from IDE
 
