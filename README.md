@@ -46,7 +46,7 @@ Try out our project [here](https://sensational-zabaione-393a34.netlify.app 'link
   - One-click SOS
 - Mobile responsiveness
 
-## Resources Used
+## Dependencies
 
 - Google Directions API
 - Google Geocoding API
